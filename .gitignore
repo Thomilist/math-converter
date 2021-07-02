@@ -1,0 +1,3 @@
+# Ignore build output except executable
+build/*
+!build/math-converter.exe
