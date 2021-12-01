@@ -1,10 +1,5 @@
-/*
-math-converter
-version 0.1.0
-https://github.com/Thomilist/math-converter
+MIT License
 
-Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-SPDX-License-Identifier: MIT
 Copyright (c) 2021 Thomas Emil Jensen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,17 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-
-
-// Standard libraries
-#include <iostream>
-
-// Custom headers
-
-
-
-int main()
-{
-    
-}
