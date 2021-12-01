@@ -31,10 +31,19 @@ SOFTWARE.
 #include <iostream>
 
 // Custom headers
-
+#include "include/CharacterStream.hpp"
 
 
 int main()
 {
-    
+    mcon::CharacterStream input;
+    input.ReadFromClipboard();
+
+    char character;
+    while (character = input.Consume(0))
+    {
+        std::cout << character << "\n";
+    }
+
+    return 0;
 }
