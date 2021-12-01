@@ -1,3 +1,5 @@
-# Ignore build output except executable
+# Ignore build output
 build/*
-!build/math-converter.exe
+
+# Ignore environment configuration files
+.vscode/*
