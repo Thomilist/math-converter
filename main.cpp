@@ -32,17 +32,18 @@ SOFTWARE.
 
 // Custom headers
 #include "include/CharacterStream.hpp"
+#include "include/CharacterSet.hpp"
 
 
 int main()
 {
-    mcon::CharacterStream input;
-    input.ReadFromClipboard();
+    mcon::CharacterSet character_set;
+    character_set.LoadFromFile(".\\resources\\character-sets\\default.json");
+    character_set.LoadFromFile(".\\resources\\character-sets\\danish.json");
 
-    char character;
-    while (character = input.Consume(0))
+    for (auto& i : character_set.letter)
     {
-        std::cout << character << "\n";
+        std::cout << i << "\n";
     }
 
     return 0;

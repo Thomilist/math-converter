@@ -31,3 +31,6 @@ target_link_libraries(math-converter PRIVATE nlohmann_json::nlohmann_json)
 # Custom headers
 add_subdirectory(include)
 target_link_libraries(math-converter PRIVATE CharacterStream)
+target_link_libraries(math-converter PRIVATE Token)
+target_link_libraries(math-converter PRIVATE Lexer)
+target_link_libraries(math-converter PRIVATE CharacterSet)
