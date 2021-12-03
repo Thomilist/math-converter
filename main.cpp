@@ -38,8 +38,7 @@ SOFTWARE.
 int main()
 {
     mcon::CharacterSet character_set;
-    character_set.LoadFromFile(".\\resources\\character-sets\\default.json");
-    character_set.LoadFromFile(".\\resources\\character-sets\\danish.json");
+    character_set.LoadFromFolder(".\\resources\\character-sets");
 
     for (auto& i : character_set.letter)
     {

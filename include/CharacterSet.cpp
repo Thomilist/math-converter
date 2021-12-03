@@ -10,7 +10,13 @@ namespace mcon
     
     bool CharacterSet::LoadFromFolder(std::string a_folder_path) 
     {
-        
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(a_folder_path))
+        {
+            if (entry.path().extension() == ".json")
+            {
+                LoadFromFile(entry.path().string());
+            }
+        }
     }
     
     bool CharacterSet::LoadFromFile(std::string a_file_path)

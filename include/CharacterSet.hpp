@@ -2,6 +2,7 @@
 #define __CHARACTERSET_H__
 
 // Standard libraries
+#include <iostream>
 #include <string>
 #include <set>
 #include <vector>
