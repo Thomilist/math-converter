@@ -5,30 +5,34 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <memory>
+#include <stdexcept>
 
 // Custom headers
 #include "CharacterStream.hpp"
+#include "CharacterSet.hpp"
+#include "Token.hpp"
 
 namespace mcon
 {
-    struct CharacterSets
-    {
-        std::set<char> end_of_stream = {'\0'};
-        std::set<char> whitespace = {' ', '\t', '\v', '\n', '\r'};
-        std::set<char> letter = {   'a', 'b', 'c', 'd', 'e', 'f', 'g',
-                                    'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                                    'o', 'p', 'q', 'r', 's', 't', 'u',
-                                    'v', 'w', 'x', 'y', 'z'};
-    };
-
     class Lexer
     {
         public:
-            Lexer(CharacterStream a_characters);
+            Lexer(  
+                std::unique_ptr<CharacterStream> const &a_character_stream,
+                std::unique_ptr<CharacterSet> const &a_character_set
+            );
             ~Lexer();
+
+            void Scan();
+            Token Peek(uint8_t a_offset);
+            Token Consume(uint8_t a_offset);
+            
+            std::vector<Token> tokens;
         
         private:
-            std::vector<std::string> tokens;
+            std::unique_ptr<CharacterStream> const &character_stream;
+            std::unique_ptr<CharacterSet> const &character_set;
             
     };
 }

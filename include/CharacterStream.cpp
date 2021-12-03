@@ -49,16 +49,16 @@ namespace mcon
     
     // Return the character at the position (index + a_offset) in "buffer",
     // or the null character if the position is out of bounds.
-    char CharacterStream::Peek(uint8_t a_offset) 
+    std::string CharacterStream::Peek(uint8_t a_offset) 
     {
-        return (index + a_offset) < buffer.size() ? buffer[index + a_offset] : char(0);
+        return std::string(1, (index + a_offset) < buffer.size() ? buffer[index + a_offset] : char(0));
     }
     
     // Return the character at the position {index + a_offset} in "buffer",
     // and set {index = index + a_offset}.
-    char CharacterStream::Consume(uint8_t a_offset) 
+    std::string CharacterStream::Consume(uint8_t a_offset) 
     {
-        char character = Peek(a_offset);
+        std::string character = Peek(a_offset);
         index += a_offset + 1;
         return character;
     }

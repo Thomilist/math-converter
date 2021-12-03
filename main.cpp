@@ -29,20 +29,28 @@ SOFTWARE.
 
 // Standard libraries
 #include <iostream>
+#include <memory>
 
 // Custom headers
 #include "include/CharacterStream.hpp"
 #include "include/CharacterSet.hpp"
+#include "include/Lexer.hpp"
 
 
 int main()
 {
-    mcon::CharacterSet character_set;
-    character_set.LoadFromFolder(".\\resources\\character-sets");
+    std::unique_ptr<mcon::CharacterStream> character_stream(new mcon::CharacterStream());
+    character_stream->ReadFromClipboard();
+    
+    std::unique_ptr<mcon::CharacterSet> character_set(new mcon::CharacterSet());
+    character_set->LoadFromFolder(".\\resources\\character-sets");
 
-    for (auto& i : character_set.letter)
+    std::unique_ptr<mcon::Lexer> lexer(new mcon::Lexer(character_stream, character_set));
+    lexer->Scan();
+
+    for (auto& t : lexer->tokens)
     {
-        std::cout << i << "\n";
+        std::cout << t.content << "\n";
     }
 
     return 0;

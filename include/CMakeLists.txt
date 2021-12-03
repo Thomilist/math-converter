@@ -5,6 +5,7 @@ add_library(Token Token.cpp)
 add_library(Lexer Lexer.cpp)
 target_link_libraries(Lexer Token)
 target_link_libraries(Lexer CharacterStream)
+target_link_libraries(Lexer CharacterSet)
 
 add_library(CharacterSet CharacterSet.cpp)
 target_link_libraries(CharacterSet nlohmann_json::nlohmann_json)

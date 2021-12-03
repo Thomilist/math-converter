@@ -16,8 +16,8 @@ namespace mcon
             ~CharacterStream();
 
             bool ReadFromClipboard();
-            char Peek(uint8_t a_offset);
-            char Consume(uint8_t a_offset);
+            std::string Peek(uint8_t a_offset);
+            std::string Consume(uint8_t a_offset);
 
         private:
             std::string buffer;

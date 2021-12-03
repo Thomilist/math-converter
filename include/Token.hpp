@@ -8,6 +8,7 @@ namespace mcon
 {
     enum class TokenType
     {
+        StartOfStream,
         EndOfStream,
         Whitespace,
         Text,
@@ -18,8 +19,13 @@ namespace mcon
     class Token
     {
         public:
-            Token();
+            Token(TokenType a_type);
             ~Token();
+            
+            bool append(std::string a_character);
+
+            TokenType type;
+            std::string content;
         
         private:
     };

@@ -26,7 +26,7 @@ namespace mcon
             bool LoadFromFolder(std::string a_folder_path);
             bool LoadFromFile(std::string a_file_path);
 
-            std::set<std::string> end_of_stream = {"\0"};
+            std::set<std::string> end_of_stream = {"\0", "", std::string(1, char(0))};
             std::set<std::string> whitespace;
             std::set<std::string> letter;
             std::set<std::string> number;
