@@ -10,6 +10,7 @@ namespace mcon
     {
         StartOfStream,
         EndOfStream,
+        OutOfBounds,
         Whitespace,
         Text,
         Number,

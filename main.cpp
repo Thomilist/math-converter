@@ -48,10 +48,13 @@ int main()
     std::unique_ptr<mcon::Lexer> lexer(new mcon::Lexer(character_stream, character_set));
     lexer->Scan();
 
-    for (auto& t : lexer->tokens)
+    mcon::Token t(mcon::TokenType::OutOfBounds);
+    do
     {
-        std::cout << t.content << "\n";
-    }
+        t = lexer->Consume(0);
+        std::cout << static_cast<int>(t.type) << "|" << t.content << "\n";
+    } while (t.type != mcon::TokenType::EndOfStream);
+    
 
     return 0;
 }

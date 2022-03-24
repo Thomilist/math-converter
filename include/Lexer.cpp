@@ -80,11 +80,13 @@ namespace mcon
 
     Token Lexer::Peek(uint8_t a_offset)
     {
-        
+        return index + a_offset < tokens.size() ? tokens.at(index + a_offset) : Token(TokenType::OutOfBounds);
     }
 
     Token Lexer::Consume(uint8_t a_offset)
     {
-        
+        Token token = Peek(a_offset);
+        index += a_offset + 1;
+        return token;
     }
 }

@@ -27,12 +27,13 @@ namespace mcon
             void Scan();
             Token Peek(uint8_t a_offset);
             Token Consume(uint8_t a_offset);
-            
-            std::vector<Token> tokens;
         
         private:
             std::unique_ptr<CharacterStream> const &character_stream;
             std::unique_ptr<CharacterSet> const &character_set;
+            
+            std::vector<Token> tokens;
+            uint64_t index = 0;
             
     };
 }
