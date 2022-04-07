@@ -8,7 +8,7 @@ namespace mcon
     CharacterSet::~CharacterSet() 
     { }
     
-    bool CharacterSet::LoadFromFolder(std::string a_folder_path) 
+    void CharacterSet::LoadFromFolder(std::string a_folder_path) 
     {
         for (const auto& entry : std::filesystem::recursive_directory_iterator(a_folder_path))
         {
@@ -19,7 +19,7 @@ namespace mcon
         }
     }
     
-    bool CharacterSet::LoadFromFile(std::string a_file_path)
+    void CharacterSet::LoadFromFile(std::string a_file_path)
     {
         nlohmann::json json_character_set = LoadJSON(a_file_path);
 

@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 // JSON header
-#include <nlohmann\json.hpp>
+#include <nlohmann/json.hpp>
 
 namespace mcon
 {

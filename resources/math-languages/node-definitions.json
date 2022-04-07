@@ -1,0 +1,20 @@
+{
+    // Each element represents a node definition,
+    // with the element name corresponding to the node type,
+    // and its value indicating its number of child nodes.
+    
+    // Root node
+    "root": 1,
+
+    // Terminal nodes
+    // - nodes that do not contain other nodes
+    "number": 0,
+    "text": 0,
+
+    // Nonterminal nodes
+    // - nodes that contain other nodes
+    // (effectively a list of mathematical operations
+    // and syntactic constructs such as matrices)
+    "equality": 2,
+    "addition": 2
+}

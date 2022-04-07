@@ -12,8 +12,8 @@ namespace mcon
             throw std::runtime_error("Unable to open JSON file.");
         }
 
-        nlohmann::json json_object;
-        json_file >> json_object;
+        // Parse JSON file, allowing JavaScript-style comments
+        nlohmann::json json_object = nlohmann::json::parse(json_file, nullptr, true, true);
 
         json_file.close();
 

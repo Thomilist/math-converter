@@ -23,8 +23,8 @@ namespace mcon
             CharacterSet();
             ~CharacterSet();
 
-            bool LoadFromFolder(std::string a_folder_path);
-            bool LoadFromFile(std::string a_file_path);
+            void LoadFromFolder(std::string a_folder_path);
+            void LoadFromFile(std::string a_file_path);
 
             std::set<std::string> end_of_stream = {"\0", "", std::string(1, char(0))};
             std::set<std::string> whitespace;

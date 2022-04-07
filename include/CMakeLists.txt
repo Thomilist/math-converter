@@ -13,3 +13,5 @@ target_link_libraries(CharacterSet MconHelpers)
 
 add_library(MconHelpers MconHelpers.cpp)
 target_link_libraries(MconHelpers nlohmann_json::nlohmann_json)
+
+add_subdirectory(parsing)
