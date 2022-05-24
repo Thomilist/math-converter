@@ -29,6 +29,10 @@ namespace mcon
             {
                 char* clipboard_text(static_cast<char*>(GlobalLock(clip_handle)));
 
+                // GlobalLock can return NULL on failure, so NULL check must remain
+                #pragma GCC diagnostic push
+                #pragma GCC diagnostic ignored "-Waddress"
+
                 if (&clipboard_text != nullptr)
                 {
                     buffer = std::string(clipboard_text);
@@ -39,6 +43,8 @@ namespace mcon
                     CloseClipboard();
                     return true;
                 }
+                
+                #pragma GCC diagnostic pop
             }
         }
 

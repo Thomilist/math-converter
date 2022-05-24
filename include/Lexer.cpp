@@ -7,8 +7,8 @@ namespace mcon
         std::unique_ptr<CharacterStream> a_character_stream,
         std::unique_ptr<CharacterSet> a_character_set
     ):
-        character_set(std::move(a_character_set)),
-        character_stream(std::move(a_character_stream))
+        character_stream(std::move(a_character_stream)),
+        character_set(std::move(a_character_set))
     { }
 
     Lexer::~Lexer()
