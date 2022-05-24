@@ -4,14 +4,12 @@
 namespace mcon
 {
     Lexer::Lexer(
-        std::unique_ptr<CharacterStream> const &a_character_stream,
-        std::unique_ptr<CharacterSet> const &a_character_set
+        std::unique_ptr<CharacterStream> a_character_stream,
+        std::unique_ptr<CharacterSet> a_character_set
     ):
-        character_set(a_character_set),
-        character_stream(a_character_stream)
-    {
-        
-    }
+        character_set(std::move(a_character_set)),
+        character_stream(std::move(a_character_stream))
+    { }
 
     Lexer::~Lexer()
     { }
@@ -22,12 +20,12 @@ namespace mcon
         Token temp_token(TokenType::StartOfStream);
 
         // Pair up the character sets and their corresponding token types for easy iteration
-        std::set<std::pair<TokenType, std::set<std::string>*>> character_sets = {
-            {TokenType::EndOfStream, &character_set->end_of_stream},
-            {TokenType::Whitespace, &character_set->whitespace},
-            {TokenType::Text, &character_set->letter},
-            {TokenType::Number, &character_set->number},
-            {TokenType::Symbol, &character_set->symbol}
+        std::set<std::pair<TokenType, std::set<std::string>>> character_sets = {
+            {TokenType::EndOfStream, character_set->end_of_stream},
+            {TokenType::Whitespace, character_set->whitespace},
+            {TokenType::Text, character_set->letter},
+            {TokenType::Number, character_set->number},
+            {TokenType::Symbol, character_set->symbol}
         };
 
         // Main lexing loop
@@ -43,7 +41,7 @@ namespace mcon
             for (auto& set : character_sets)
             {
                 // Attempt to find the current character in a set
-                if (set.second->find(current_character) != set.second->end())
+                if (set.second.find(current_character) != set.second.end())
                 {
                     // If the character type does not correspond to the current token type,
                     // or if the token is of "symbol" type, which should only hold one character,

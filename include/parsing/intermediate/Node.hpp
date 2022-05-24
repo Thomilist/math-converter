@@ -11,19 +11,20 @@
 
 namespace mcon
 {
-    class Node
+    class Node : public std::enable_shared_from_this<Node>
     {
         public:
             Node();
             ~Node();
 
-            void append_node(std::unique_ptr<Node> a_node);
-            void delete_node(uint64_t a_index);
+            void add_child_node();
+            void delete_child_node(uint64_t a_index);
 
             NodeType type;
             std::string content;
+            std::weak_ptr<Node> parent_node;
             uint64_t child_node_count;
-            std::vector<std::unique_ptr<Node>> child_nodes;
+            std::vector<std::shared_ptr<Node>> child_nodes;
 
         private:
 

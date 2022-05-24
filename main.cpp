@@ -35,6 +35,9 @@ SOFTWARE.
 #include "include/CharacterStream.hpp"
 #include "include/CharacterSet.hpp"
 #include "include/Lexer.hpp"
+#include "include/parsing/mathcad/MathcadParser.hpp"
+#include "include/parsing/mathcad/MathcadGenerator.hpp"
+#include "include/parsing/intermediate/ParsingTree.hpp"
 
 
 int main()
@@ -45,7 +48,7 @@ int main()
     std::unique_ptr<mcon::CharacterSet> character_set(new mcon::CharacterSet());
     character_set->LoadFromFolder(".\\resources\\character-sets");
 
-    std::unique_ptr<mcon::Lexer> lexer(new mcon::Lexer(character_stream, character_set));
+    std::unique_ptr<mcon::Lexer> lexer(new mcon::Lexer(std::move(character_stream), std::move(character_set)));
     lexer->Scan();
 
     mcon::Token t(mcon::TokenType::OutOfBounds);
@@ -55,6 +58,10 @@ int main()
         std::cout << static_cast<int>(t.type) << "|" << t.content << "\n";
     } while (t.type != mcon::TokenType::EndOfStream);
     
+    std::unique_ptr<mcon::MathcadParser> mathcad_parser(new mcon::MathcadParser(std::move(lexer)));
+    std::unique_ptr<mcon::MathcadGenerator> mathcad_generator(new mcon::MathcadGenerator());
+
+    std::unique_ptr<mcon::ParsingTree> parsing_tree(new mcon::ParsingTree(std::move(mathcad_parser), std::move(mathcad_generator)));
 
     return 0;
 }
