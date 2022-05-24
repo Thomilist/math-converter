@@ -11,7 +11,7 @@ namespace mcon
         parser(std::move(a_parser)),
         generator(std::move(a_generator))  
     {
-        root_node = std::move(std::shared_ptr<Node>(new Node()));
+        root_node = std::move(std::make_shared<Node>());
         root_node->type = NodeType::Root;
         current_node = root_node;
     }

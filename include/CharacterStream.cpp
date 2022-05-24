@@ -3,14 +3,10 @@
 namespace mcon
 {
     CharacterStream::CharacterStream() 
-    {
-        
-    }
+    { }
     
     CharacterStream::~CharacterStream() 
-    {
-        
-    }
+    { }
     
     // Read a string of characters from the clipboard.
     // Returns true on error, false on success.

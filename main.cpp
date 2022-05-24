@@ -42,13 +42,13 @@ SOFTWARE.
 
 int main()
 {
-    std::unique_ptr<mcon::CharacterStream> character_stream(new mcon::CharacterStream());
+    auto character_stream = std::make_unique<mcon::CharacterStream>();
     character_stream->ReadFromClipboard();
     
-    std::unique_ptr<mcon::CharacterSet> character_set(new mcon::CharacterSet());
+    auto character_set = std::make_unique<mcon::CharacterSet>();
     character_set->LoadFromFolder(".\\resources\\character-sets");
 
-    std::unique_ptr<mcon::Lexer> lexer(new mcon::Lexer(std::move(character_stream), std::move(character_set)));
+    auto lexer = std::make_unique<mcon::Lexer>(std::move(character_stream), std::move(character_set));
     lexer->Scan();
 
     mcon::Token t(mcon::TokenType::OutOfBounds);
@@ -58,10 +58,10 @@ int main()
         std::cout << static_cast<int>(t.type) << "|" << t.content << "\n";
     } while (t.type != mcon::TokenType::EndOfStream);
     
-    std::unique_ptr<mcon::MathcadParser> mathcad_parser(new mcon::MathcadParser(std::move(lexer)));
-    std::unique_ptr<mcon::MathcadGenerator> mathcad_generator(new mcon::MathcadGenerator());
+    auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
+    auto mathcad_generator = std::make_unique<mcon::MathcadGenerator>();
 
-    std::unique_ptr<mcon::ParsingTree> parsing_tree(new mcon::ParsingTree(std::move(mathcad_parser), std::move(mathcad_generator)));
+    auto parsing_tree = std::make_unique<mcon::ParsingTree>(std::move(mathcad_parser), std::move(mathcad_generator));
 
     return 0;
 }

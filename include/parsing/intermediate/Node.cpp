@@ -11,7 +11,7 @@ namespace mcon
 
     void Node::add_child_node()
     {
-        child_nodes.push_back(std::move(std::shared_ptr<Node>(new Node())));
+        child_nodes.push_back(std::move(std::make_shared<Node>()));
         child_nodes.back()->parent_node = shared_from_this();
         return;
     }
