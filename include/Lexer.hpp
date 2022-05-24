@@ -19,8 +19,8 @@ namespace mcon
     {
         public:
             Lexer(  
-                std::unique_ptr<CharacterStream> const &a_character_stream,
-                std::unique_ptr<CharacterSet> const &a_character_set
+                std::unique_ptr<CharacterStream> a_character_stream,
+                std::unique_ptr<CharacterSet> a_character_set
             );
             ~Lexer();
 
@@ -29,8 +29,8 @@ namespace mcon
             Token Consume(uint8_t a_offset);
         
         private:
-            std::unique_ptr<CharacterStream> const &character_stream;
-            std::unique_ptr<CharacterSet> const &character_set;
+            std::unique_ptr<CharacterStream> character_stream;
+            std::unique_ptr<CharacterSet> character_set;
             
             std::vector<Token> tokens;
             uint64_t index = 0;
