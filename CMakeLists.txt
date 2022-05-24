@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.22.0)
 project(math-converter VERSION 0.1.0)
+
+set(ENV{CMAKE_BUILD_PARALLEL_LEVEL} 12)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 # Automated testing
 include(CTest)
