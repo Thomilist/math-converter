@@ -25,6 +25,7 @@ namespace mcon
             ~Lexer();
 
             void Scan();
+            void Reset();
             Token Peek(uint8_t a_offset);
             Token Consume(uint8_t a_offset);
         

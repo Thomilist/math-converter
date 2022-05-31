@@ -51,17 +51,21 @@ int main()
     auto lexer = std::make_unique<mcon::Lexer>(std::move(character_stream), std::move(character_set));
     lexer->Scan();
 
+    // Print tokens from lexer (for debugging)
     mcon::Token t(mcon::TokenType::OutOfBounds);
     do
     {
         t = lexer->Consume(0);
         std::cout << static_cast<int>(t.type) << "|" << t.content << "\n";
     } while (t.type != mcon::TokenType::EndOfStream);
+    lexer->Reset();
     
     auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
     auto mathcad_generator = std::make_unique<mcon::MathcadGenerator>();
 
-    auto parsing_tree = std::make_unique<mcon::ParsingTree>(std::move(mathcad_parser), std::move(mathcad_generator));
+    auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(mathcad_parser), std::move(mathcad_generator));
+
+    parsing_tree->parser->Parse(parsing_tree);
 
     return 0;
 }

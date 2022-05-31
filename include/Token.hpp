@@ -23,7 +23,7 @@ namespace mcon
             Token(TokenType a_type);
             ~Token();
             
-            bool append(std::string a_character);
+            bool Append(std::string a_character);
 
             TokenType type;
             std::string content;

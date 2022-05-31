@@ -17,8 +17,8 @@ namespace mcon
             Node();
             ~Node();
 
-            void add_child_node();
-            void delete_child_node(uint64_t a_index);
+            void AddChildNode();
+            void DeleteChildNode(uint64_t a_index);
 
             NodeType type;
             std::string content;

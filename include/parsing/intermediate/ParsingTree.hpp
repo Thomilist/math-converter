@@ -12,14 +12,17 @@
 
 namespace mcon
 {
-    class ParsingTree
+    // Forward declaration to work around circular dependency
+    class Parser;
+    
+    class ParsingTree : public std::enable_shared_from_this<ParsingTree>
     {
         public:
             ParsingTree(    std::unique_ptr<Parser> a_parser, 
                             std::unique_ptr<Generator> a_generator  );
             ~ParsingTree();
 
-            void set_current_node(std::shared_ptr<Node> a_node);
+            void SetCurrentNode(std::shared_ptr<Node> a_node);
 
             std::unique_ptr<Parser> parser;
             std::unique_ptr<Generator> generator;

@@ -10,7 +10,7 @@ namespace mcon
     Token::~Token() 
     { }
 
-    bool Token::append(std::string a_character)
+    bool Token::Append(std::string a_character)
     {
         content.append(a_character);
         return true;

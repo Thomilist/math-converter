@@ -2,4 +2,5 @@ add_library(MathcadParser MathcadParser.cpp)
 add_library(MathcadGenerator MathcadGenerator.cpp)
 
 target_link_libraries(MathcadParser Parser)
+target_link_libraries(MathcadParser ParsingTree)
 target_link_libraries(MathcadGenerator Generator)

@@ -19,9 +19,9 @@ namespace mcon
     ParsingTree::~ParsingTree()
     { }
     
-    void ParsingTree::set_current_node(std::shared_ptr<Node> a_node)
+    void ParsingTree::SetCurrentNode(std::shared_ptr<Node> a_node)
     {
-        current_node = a_node;
+        current_node = std::move(a_node);
         return;
     }
 }

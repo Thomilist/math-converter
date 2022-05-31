@@ -53,7 +53,7 @@ namespace mcon
                     }
 
                     // Append the current character to the current token
-                    character_appended = temp_token.append(character_stream->Consume(0));
+                    character_appended = temp_token.Append(character_stream->Consume(0));
 
                     // If the current token marks the end of the stream, finish lexing
                     if (temp_token.type == TokenType::EndOfStream)
@@ -74,6 +74,12 @@ namespace mcon
                 // throw std::runtime_error("Unknown character.");
             }
         }
+    }
+    
+    void Lexer::Reset()
+    {
+        index = 0;
+        return;
     }
 
     Token Lexer::Peek(uint8_t a_offset)

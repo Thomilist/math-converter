@@ -16,6 +16,7 @@ namespace mcon
 
         // Nonterminal nodes (effectively a list of mathematical operations and syntactic constructs such as matrices)
         TextComposite,
+        Label,
         Variable,
         Unit,
         Constant,
