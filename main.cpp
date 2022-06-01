@@ -63,11 +63,12 @@ int main()
     
     auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
     auto latex_generator = std::make_unique<mcon::LatexGenerator>(character_set);
-
     auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(mathcad_parser), std::move(latex_generator));
 
     parsing_tree->parser->Parse(parsing_tree);
+    parsing_tree->parser->Clean(parsing_tree->root_node);
     parsing_tree->generator->Generate(parsing_tree);
+    
     std::cout << parsing_tree->output << "\n";
 
     return 0;

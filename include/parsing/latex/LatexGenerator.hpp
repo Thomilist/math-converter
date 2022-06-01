@@ -39,6 +39,7 @@ namespace mcon
                 {NodeType::Multiplication, "{#0}\\cdot{#1}"},
                 {NodeType::Division, "\\frac{#0}{#1}"},
                 {NodeType::Unit, "{#0}{\\;\\mathrm{#1}}"},
+                {NodeType::Root, "\\sqrt[#0]{#1}"},
             };
     };
 }

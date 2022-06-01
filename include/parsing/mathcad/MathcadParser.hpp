@@ -24,6 +24,7 @@ namespace mcon
             ~MathcadParser();
 
             void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
+            void Clean(std::shared_ptr<Node> a_node);
         
         private:
             ParserState state = ParserState::LookingForExpression;
@@ -42,6 +43,8 @@ namespace mcon
                 {"/", NodeType::Division},
                 {"@SCALE", NodeType::Unit},
                 {"@RSCALE", NodeType::Unit},
+                {"@RPLACEHOLDER", NodeType::Void},
+                {"@NTHROOT", NodeType::Root},
             };
     };
 }

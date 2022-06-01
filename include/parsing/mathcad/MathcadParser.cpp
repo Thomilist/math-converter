@@ -111,4 +111,34 @@ namespace mcon
 
         return;
     }
+    
+    void MathcadParser::Clean(std::shared_ptr<Node> a_node)
+    {
+        // Recursively iterate over all child nodes
+        if (a_node->child_node_count > 0)
+        {
+            for (auto child_node : a_node->child_nodes)
+            {
+                Clean(child_node);
+            }
+        }
+
+        // Actual cleaning happens after this point
+
+        // Remove @PLACEHOLDER and @RPLACEHOLDER that Mathcad uses in blank fields
+        if (    a_node->type != NodeType::Label &&
+                a_node->child_node_count > 0
+        )
+        {
+            for (auto child_node : a_node->child_nodes)
+            {
+                if (    child_node->type == NodeType::Text  &&
+                        (child_node->content == "@PLACEHOLDER" || child_node->content == "@RPLACEHOLDER")
+                )
+                {
+                    child_node->content = "";
+                }
+            }
+        }
+    }
 }

@@ -23,6 +23,7 @@ namespace mcon
             ~Parser();
 
             virtual void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
+            virtual void Clean(std::shared_ptr<Node> a_node);
 
             std::unique_ptr<Lexer> lexer;
 

@@ -10,10 +10,13 @@ namespace mcon
     Parser::~Parser()
     { }
     
-    // Virtual function implementation is intentionally left blank
+    // Virtual function implementations are intentionally left blank
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wunused-parameter"
     void Parser::Parse(std::shared_ptr<ParsingTree> a_parsing_tree)
+    { }
+
+    void Parser::Clean(std::shared_ptr<Node> a_node)
     { }
     #pragma GCC diagnostic pop
 }
