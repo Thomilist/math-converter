@@ -57,9 +57,10 @@ namespace mcon
                         child_node->type = NodeType::Text;
                         child_node->content = current_token.content;
 
-                        while ( lexer->Peek(0).type == TokenType::Text      ||
+                        while ((lexer->Peek(0).type == TokenType::Text      ||
                                 lexer->Peek(0).type == TokenType::Symbol    ||
-                                lexer->Peek(0).type == TokenType::Number    )
+                                lexer->Peek(0).type == TokenType::Number)   &&
+                                lexer->Peek(0).content != ")")
                         {
                             child_node->content = child_node->content + lexer->Consume(0).content;
                         }

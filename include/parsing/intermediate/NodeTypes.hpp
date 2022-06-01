@@ -13,6 +13,7 @@ namespace mcon
         Text,
         TextSubscript,
         TextSuperscript,
+        Void,
 
         // Nonterminal nodes (effectively a list of mathematical operations and syntactic constructs such as matrices)
         TextComposite,

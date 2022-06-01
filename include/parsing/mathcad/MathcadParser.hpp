@@ -7,9 +7,7 @@
 #include <unordered_map>
 
 // Custom headers
-#include "../intermediate/ParsingTree.hpp"
 #include "../Parser.hpp"
-#include "../intermediate/NodeTypes.hpp"
 
 namespace mcon
 {
@@ -42,6 +40,8 @@ namespace mcon
                 {"-", NodeType::Subtraction},
                 {"*", NodeType::Multiplication},
                 {"/", NodeType::Division},
+                {"@SCALE", NodeType::Unit},
+                {"@RSCALE", NodeType::Unit},
             };
     };
 }

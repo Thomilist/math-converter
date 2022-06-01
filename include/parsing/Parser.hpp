@@ -9,6 +9,7 @@
 #include "../Lexer.hpp"
 #include "intermediate/Node.hpp"
 #include "intermediate/ParsingTree.hpp"
+#include "intermediate/NodeTypes.hpp"
 
 namespace mcon
 {

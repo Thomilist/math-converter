@@ -17,7 +17,7 @@
 
 namespace mcon
 {
-    class CharacterSet
+    class CharacterSet : public std::enable_shared_from_this<CharacterSet>
     {
         public:
             CharacterSet();

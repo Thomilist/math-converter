@@ -1,0 +1,7 @@
+add_library(LatexParser LatexParser.cpp)
+add_library(LatexGenerator LatexGenerator.cpp)
+
+target_link_libraries(LatexParser Parser)
+target_link_libraries(LatexParser ParsingTree)
+target_link_libraries(LatexGenerator Generator)
+target_link_libraries(LatexGenerator ParsingTree)

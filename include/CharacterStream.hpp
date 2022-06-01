@@ -12,7 +12,7 @@ namespace mcon
     class CharacterStream
     {
         public:
-            CharacterStream();
+            CharacterStream(std::string a_buffer = "");
             ~CharacterStream();
 
             bool ReadFromClipboard();

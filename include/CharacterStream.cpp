@@ -2,7 +2,8 @@
 
 namespace mcon
 {
-    CharacterStream::CharacterStream() 
+    CharacterStream::CharacterStream(std::string a_buffer)
+        : buffer(a_buffer)
     { }
     
     CharacterStream::~CharacterStream() 

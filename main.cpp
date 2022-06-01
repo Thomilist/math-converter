@@ -36,7 +36,7 @@ SOFTWARE.
 #include "include/CharacterSet.hpp"
 #include "include/Lexer.hpp"
 #include "include/parsing/mathcad/MathcadParser.hpp"
-#include "include/parsing/mathcad/MathcadGenerator.hpp"
+#include "include/parsing/latex/LatexGenerator.hpp"
 #include "include/parsing/intermediate/ParsingTree.hpp"
 
 
@@ -45,10 +45,10 @@ int main()
     auto character_stream = std::make_unique<mcon::CharacterStream>();
     character_stream->ReadFromClipboard();
     
-    auto character_set = std::make_unique<mcon::CharacterSet>();
+    auto character_set = std::make_shared<mcon::CharacterSet>();
     character_set->LoadFromFolder(".\\resources\\character-sets");
 
-    auto lexer = std::make_unique<mcon::Lexer>(std::move(character_stream), std::move(character_set));
+    auto lexer = std::make_unique<mcon::Lexer>(std::move(character_stream), character_set);
     lexer->Scan();
 
     // Print tokens from lexer (for debugging)
@@ -56,16 +56,19 @@ int main()
     do
     {
         t = lexer->Consume(0);
-        std::cout << static_cast<int>(t.type) << "|" << t.content << "\n";
+        std::cout << "\'" << t.content;
     } while (t.type != mcon::TokenType::EndOfStream);
+    std::cout << "\'\n";
     lexer->Reset();
     
     auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
-    auto mathcad_generator = std::make_unique<mcon::MathcadGenerator>();
+    auto latex_generator = std::make_unique<mcon::LatexGenerator>(character_set);
 
-    auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(mathcad_parser), std::move(mathcad_generator));
+    auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(mathcad_parser), std::move(latex_generator));
 
     parsing_tree->parser->Parse(parsing_tree);
+    parsing_tree->generator->Generate(parsing_tree);
+    std::cout << parsing_tree->output << "\n";
 
     return 0;
 }

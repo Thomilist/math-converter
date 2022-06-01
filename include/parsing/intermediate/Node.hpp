@@ -23,7 +23,7 @@ namespace mcon
             NodeType type;
             std::string content;
             std::weak_ptr<Node> parent_node;
-            uint64_t child_node_count;
+            uint64_t child_node_count = 0;
             std::vector<std::shared_ptr<Node>> child_nodes;
 
         private:

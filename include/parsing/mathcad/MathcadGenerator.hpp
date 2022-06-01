@@ -13,7 +13,7 @@ namespace mcon
     class MathcadGenerator : public Generator
     {
         public:
-            MathcadGenerator();
+            MathcadGenerator(std::unique_ptr<CharacterSet> a_character_set);
             ~MathcadGenerator();
 
         private:
