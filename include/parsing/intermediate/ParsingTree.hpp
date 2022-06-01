@@ -29,7 +29,7 @@ namespace mcon
             std::unique_ptr<Generator> generator;
             std::shared_ptr<Node> root_node;
             std::weak_ptr<Node> current_node;
-            std::string output;
+            std::wstring output;
 
         private:
 

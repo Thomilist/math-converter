@@ -3,6 +3,7 @@
 
 // Standard libraries
 #include <string>
+#include <iostream>
 
 // Windows header
 #include <windows.h>
@@ -12,15 +13,15 @@ namespace mcon
     class CharacterStream
     {
         public:
-            CharacterStream(std::string a_buffer = "");
+            CharacterStream(std::wstring a_buffer = L"");
             ~CharacterStream();
 
             bool ReadFromClipboard();
-            std::string Peek(uint8_t a_offset);
-            std::string Consume(uint8_t a_offset);
+            std::wstring Peek(uint8_t a_offset);
+            std::wstring Consume(uint8_t a_offset);
 
         private:
-            std::string buffer;
+            std::wstring buffer;
             uint64_t index = 0;
 
     };

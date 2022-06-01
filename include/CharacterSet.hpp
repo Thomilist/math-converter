@@ -8,6 +8,8 @@
 #include <vector>
 #include <utility>
 #include <filesystem>
+#include <locale>
+#include <codecvt>
 
 // JSON header
 #include <nlohmann\json.hpp>
@@ -26,11 +28,11 @@ namespace mcon
             void LoadFromFolder(std::string a_folder_path);
             void LoadFromFile(std::string a_file_path);
 
-            std::set<std::string> end_of_stream = {"\0", "", std::string(1, char(0))};
-            std::set<std::string> whitespace;
-            std::set<std::string> letter;
-            std::set<std::string> number;
-            std::set<std::string> symbol;
+            std::set<std::wstring> end_of_stream = {L"\0", L"", std::wstring(1, char(0))};
+            std::set<std::wstring> whitespace;
+            std::set<std::wstring> letter;
+            std::set<std::wstring> number;
+            std::set<std::wstring> symbol;
         
         private:
 

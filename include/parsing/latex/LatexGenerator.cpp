@@ -17,13 +17,13 @@ namespace mcon
         return;
     }
     
-    std::string LatexGenerator::Substitute(std::shared_ptr<Node> a_node)
+    std::wstring LatexGenerator::Substitute(std::shared_ptr<Node> a_node)
     {
-        std::string result = "";
+        std::wstring result = L"";
         
         try
         {
-            std::string template_text = math_operators.at(a_node->type);
+            std::wstring template_text = math_operators.at(a_node->type);
             auto template_stream = std::make_unique<CharacterStream>(template_text);
             auto new_character_set = std::make_shared<mcon::CharacterSet>();
             new_character_set->LoadFromFolder(".\\resources\\character-sets");
@@ -39,7 +39,7 @@ namespace mcon
 
             while (current_token.type != TokenType::EndOfStream)
             {
-                if (current_token.content == "#")
+                if (current_token.content == L"#")
                 {
                     current_token = lexer.Consume(0);
 
@@ -51,7 +51,7 @@ namespace mcon
                     }
                     else
                     {
-                        result += "MATH_TEMPLATE_ERROR";
+                        result += L"MATH_TEMPLATE_ERROR";
                     }
                 }
                 else
@@ -72,7 +72,7 @@ namespace mcon
         {
             std::cerr << "Out-of-range exception in " << e.what() << "\n";
             std::cerr << "Unable to print math expression.\n";
-            return "MATH_OPERATOR_ERROR";
+            return L"MATH_OPERATOR_ERROR";
         }
 
         return result;

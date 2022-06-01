@@ -20,7 +20,7 @@ namespace mcon
         Token temp_token(TokenType::StartOfStream);
 
         // Pair up the character sets and their corresponding token types for easy iteration
-        std::set<std::pair<TokenType, std::set<std::string>>> character_sets = {
+        std::set<std::pair<TokenType, std::set<std::wstring>>> character_sets = {
             {TokenType::EndOfStream, character_set->end_of_stream},
             {TokenType::Whitespace, character_set->whitespace},
             {TokenType::Text, character_set->letter},
@@ -35,7 +35,7 @@ namespace mcon
             bool character_appended = false;
 
             // Obtain the current character
-            std::string current_character = character_stream->Peek(0);
+            std::wstring current_character = character_stream->Peek(0);
 
             // Iterate over the character sets
             for (auto& set : character_sets)

@@ -21,7 +21,7 @@ namespace mcon
             void DeleteChildNode(uint64_t a_index);
 
             NodeType type;
-            std::string content;
+            std::wstring content;
             std::weak_ptr<Node> parent_node;
             uint64_t child_node_count = 0;
             std::vector<std::shared_ptr<Node>> child_nodes;

@@ -30,21 +30,21 @@ namespace mcon
             ParserState state = ParserState::LookingForExpression;
             int depth = 0;
 
-            const std::unordered_map<std::string, NodeType> math_operators = 
+            const std::unordered_map<std::wstring, NodeType> math_operators = 
             {
-                {"@LABEL", NodeType::Label},
-                {"@PARENS", NodeType::Parentheses},
-                {"=", NodeType::EqualityEvaluation},
-                {"@EQ", NodeType::EqualityComparison},
-                {":=", NodeType::EqualityDefinition},
-                {"+", NodeType::Addition},
-                {"-", NodeType::Subtraction},
-                {"*", NodeType::Multiplication},
-                {"/", NodeType::Division},
-                {"@SCALE", NodeType::Unit},
-                {"@RSCALE", NodeType::Unit},
-                {"@RPLACEHOLDER", NodeType::Void},
-                {"@NTHROOT", NodeType::Root},
+                {L"@LABEL", NodeType::Label},
+                {L"@PARENS", NodeType::Parentheses},
+                {L"=", NodeType::EqualityEvaluation},
+                {L"@EQ", NodeType::EqualityComparison},
+                {L":=", NodeType::EqualityDefinition},
+                {L"+", NodeType::Addition},
+                {L"-", NodeType::Subtraction},
+                {L"*", NodeType::Multiplication},
+                {L"/", NodeType::Division},
+                {L"@SCALE", NodeType::Unit},
+                {L"@RSCALE", NodeType::Unit},
+                {L"@RPLACEHOLDER", NodeType::Void},
+                {L"@NTHROOT", NodeType::Root},
             };
     };
 }

@@ -30,6 +30,7 @@ SOFTWARE.
 // Standard libraries
 #include <iostream>
 #include <memory>
+#include <fcntl.h>
 
 // Custom headers
 #include "include/CharacterStream.hpp"
@@ -42,6 +43,12 @@ SOFTWARE.
 
 int main()
 {
+    // Support wide characters
+    //https://stackoverflow.com/a/50055280/17557793
+    std::ios_base::sync_with_stdio(false);
+    std::locale utf8( std::locale(), new std::codecvt_utf8_utf16<wchar_t> );
+    std::wcout.imbue(utf8);
+
     auto character_stream = std::make_unique<mcon::CharacterStream>();
     character_stream->ReadFromClipboard();
     
@@ -56,9 +63,9 @@ int main()
     do
     {
         t = lexer->Consume(0);
-        std::cout << "\'" << t.content;
+        std::wcout << L"\'" << t.content;
     } while (t.type != mcon::TokenType::EndOfStream);
-    std::cout << "\'\n";
+    std::wcout << L"\'\n";
     lexer->Reset();
     
     auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
@@ -69,7 +76,7 @@ int main()
     parsing_tree->parser->Clean(parsing_tree->root_node);
     parsing_tree->generator->Generate(parsing_tree);
     
-    std::cout << parsing_tree->output << "\n";
+    std::wcout << parsing_tree->output << std::endl;
 
     return 0;
 }

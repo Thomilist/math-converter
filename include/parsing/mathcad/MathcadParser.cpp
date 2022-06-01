@@ -27,7 +27,7 @@ namespace mcon
             {
                 case ParserState::LookingForExpression:
                 {
-                    if (current_token.content == "(")
+                    if (current_token.content == L"(")
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         current_node->AddChildNode();
@@ -35,7 +35,7 @@ namespace mcon
                         state = ParserState::IdentifyingOperator;
                         depth++;
                     }
-                    else if (current_token.content == ")")
+                    else if (current_token.content == L")")
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         a_parsing_tree->SetCurrentNode(current_node->parent_node.lock());
@@ -60,7 +60,7 @@ namespace mcon
                         while ((lexer->Peek(0).type == TokenType::Text      ||
                                 lexer->Peek(0).type == TokenType::Symbol    ||
                                 lexer->Peek(0).type == TokenType::Number)   &&
-                                lexer->Peek(0).content != ")")
+                                lexer->Peek(0).content != L")")
                         {
                             child_node->content = child_node->content + lexer->Consume(0).content;
                         }
@@ -70,7 +70,7 @@ namespace mcon
                 }
                 case ParserState::IdentifyingOperator:
                 {
-                    std::string current_math_operator;
+                    std::wstring current_math_operator;
                     
                     if (lexer->Peek(0).type != TokenType::Whitespace)
                     {
@@ -89,8 +89,8 @@ namespace mcon
                     }
                     catch(const std::out_of_range& e)
                     {
-                        std::cerr << "Out-of-range exception in " << e.what() << "\n";
-                        std::cerr << "Unknown math operator: " << current_math_operator << "\n";
+                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n";
+                        std::wcerr << L"Unknown math operator: " << current_math_operator << L"\n";
                         return;
                     }
 
@@ -98,16 +98,11 @@ namespace mcon
 
                     break;
                 }
-                
-                default:
-                {
-                    break;
-                }
             }
 
             current_token = lexer->Consume(0);
 
-        } while (depth);
+        } while (depth && current_token.type != TokenType::EndOfStream);
 
         return;
     }
@@ -133,10 +128,10 @@ namespace mcon
             for (auto child_node : a_node->child_nodes)
             {
                 if (    child_node->type == NodeType::Text  &&
-                        (child_node->content == "@PLACEHOLDER" || child_node->content == "@RPLACEHOLDER")
+                        (child_node->content == L"@PLACEHOLDER" || child_node->content == L"@RPLACEHOLDER")
                 )
                 {
-                    child_node->content = "";
+                    child_node->content = L"";
                 }
             }
         }
