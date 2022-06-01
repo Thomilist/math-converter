@@ -13,11 +13,11 @@ namespace mcon
     
     void LatexGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
-        a_parsing_tree->output = Substitute(a_parsing_tree->root_node->child_nodes.front());
+        a_parsing_tree->output = ApplyTemplates(a_parsing_tree->root_node->child_nodes.front());
         return;
     }
     
-    std::wstring LatexGenerator::Substitute(std::shared_ptr<Node> a_node)
+    std::wstring LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
     {
         std::wstring result = L"";
         
@@ -46,7 +46,7 @@ namespace mcon
                     if (current_token.type == TokenType::Number)
                     {
                         int index = std::stoi(current_token.content);
-                        result += Substitute(a_node->child_nodes.at(index));
+                        result += ApplyTemplates(a_node->child_nodes.at(index));
                         current_token = lexer.Consume(0);
                     }
                     else
@@ -76,5 +76,24 @@ namespace mcon
         }
 
         return result;
+    }
+    
+    void LatexGenerator::Substitute(std::shared_ptr<ParsingTree> a_parsing_tree)
+    {
+        for (auto& substitution_item : substitution_list)
+        {
+            while (true)
+            {
+                std::size_t position = a_parsing_tree->output.find(substitution_item.first);
+
+                if (position == std::wstring::npos)
+                {
+                    break;
+                }
+
+                a_parsing_tree->output.replace(position, substitution_item.first.length(), substitution_item.second);
+            }
+        }
+        return;
     }
 }

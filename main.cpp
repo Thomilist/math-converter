@@ -75,6 +75,7 @@ int main()
     parsing_tree->parser->Parse(parsing_tree);
     parsing_tree->parser->Clean(parsing_tree->root_node);
     parsing_tree->generator->Generate(parsing_tree);
+    parsing_tree->generator->Substitute(parsing_tree);
     
     std::wcout << parsing_tree->output << std::endl;
 

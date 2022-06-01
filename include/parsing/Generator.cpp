@@ -11,10 +11,13 @@ namespace mcon
     Generator::~Generator()
     { }
     
-    // Virtual function implementation is intentionally left blank
+    // Virtual function implementations are intentionally left blank
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wunused-parameter"
     void Generator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
+    { }
+    
+    void Generator::Substitute(std::shared_ptr<ParsingTree> a_parsing_tree)
     { }
     #pragma GCC diagnostic pop
 }

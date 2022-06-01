@@ -25,6 +25,7 @@ namespace mcon
             ~Generator();
             
             virtual void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
+            virtual void Substitute(std::shared_ptr<ParsingTree> a_parsing_tree);
             
             std::shared_ptr<CharacterSet> character_set;
 
