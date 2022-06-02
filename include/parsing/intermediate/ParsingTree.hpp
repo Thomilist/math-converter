@@ -25,12 +25,14 @@ namespace mcon
 
             void SetCurrentNode(std::shared_ptr<Node> a_node);
             void Reset();
+            void Clean(std::shared_ptr<Node> a_node);
 
             std::unique_ptr<Parser> parser;
             std::unique_ptr<Generator> generator;
             std::shared_ptr<Node> root_node;
             std::weak_ptr<Node> current_node;
             std::wstring output;
+            std::wstring decimal_point = L".";
 
         private:
 

@@ -44,6 +44,9 @@ namespace mcon
             };
             const std::unordered_map<std::wstring, std::wstring> substitution_list =
             {
+                // Redundant code cleanup
+                {L"{\\;\\mathrm{}}", L""},
+
                 // Greek letters
                 {L"α", L"{\\alpha}"},
                 {L"Α", L"{A}"},

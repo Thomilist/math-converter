@@ -13,6 +13,7 @@ namespace mcon
     
     void MathcadParser::Parse(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
+        // Initialise from start of token stream
         depth = 0;
         Token current_token(TokenType::StartOfStream);
 
@@ -21,26 +22,34 @@ namespace mcon
             current_token = lexer->Consume(0);
         }
         
+        // Parse token stream
         do
         {
             switch (state)
             {
                 case ParserState::LookingForExpression:
                 {
+                    // Complex expressions begin with an opening parens
+                    // They contain other expressions, so this increases the parsing depth
                     if (current_token.content == L"(")
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         current_node->AddChildNode();
                         a_parsing_tree->SetCurrentNode(current_node->child_nodes.back());
-                        state = ParserState::IdentifyingOperator;
                         depth++;
+                        
+                        // An opening parens is always followed by an operator
+                        state = ParserState::IdentifyingOperator;
                     }
+                    // Complex expressions end with a closing parens
+                    // This decreases the parsing depth
                     else if (current_token.content == L")")
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         a_parsing_tree->SetCurrentNode(current_node->parent_node.lock());
                         depth--;
                     }
+                    // Numbers do not contain other expressions, so the parsing depth is unaffected
                     else if (current_token.type == TokenType::Number)
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
@@ -48,7 +57,21 @@ namespace mcon
                         auto child_node = current_node->child_nodes.back();
                         child_node->type = NodeType::Number;
                         child_node->content = current_token.content;
+
+                        // Handling of decimal numbers
+                        if (    lexer->Peek(0).type == TokenType::Symbol    &&
+                                lexer->Peek(0).content == L"."              &&
+                                lexer->Peek(1).type == TokenType::Number
+                        )
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                current_token = lexer->Consume(0);
+                                child_node->content += current_token.content;
+                            }
+                        }
                     }
+                    // Symbols and basic text do not contain other expressions, so the parsing depth is unaffected
                     else if (current_token.type == TokenType::Text || current_token.type == TokenType::Symbol)
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
@@ -72,10 +95,12 @@ namespace mcon
                 {
                     std::wstring current_math_operator;
                     
+                    // Math operators can consist of two symbols or an @ followed by a word...
                     if (lexer->Peek(0).type != TokenType::Whitespace)
                     {
                         current_math_operator = current_token.content + lexer->Consume(0).content;
                     }
+                    // ... or of a single symbol
                     else
                     {
                         current_math_operator = current_token.content;
@@ -83,6 +108,7 @@ namespace mcon
 
                     auto current_node = a_parsing_tree->current_node.lock();
 
+                    // Conversion can only happen for operators defined in the math_operators map
                     try
                     {
                         current_node->type = math_operators.at(current_math_operator);
@@ -94,6 +120,7 @@ namespace mcon
                         return;
                     }
 
+                    // Operators are always followed by at least one expression
                     state = ParserState::LookingForExpression;
 
                     break;

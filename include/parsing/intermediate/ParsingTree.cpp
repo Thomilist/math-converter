@@ -33,4 +33,38 @@ namespace mcon
         current_node = root_node;
         return;
     }
+    
+    void ParsingTree::Clean(std::shared_ptr<Node> a_node)
+    {
+        // Recursively iterate over all child nodes
+        if (a_node->child_node_count > 0)
+        {
+            for (auto child_node : a_node->child_nodes)
+            {
+                Clean(child_node);
+            }
+        }
+
+        // Actual cleaning happens after this point
+
+        // Substitute the decimal point
+        if (a_node->type == NodeType::Number)
+        {
+            // Look for period as decimal point
+            std::size_t position = a_node->content.find(L".");
+            if (position != std::wstring::npos)
+            {
+                a_node->content.replace(position, 1, decimal_point);
+            }
+
+            // Look for comma as decimal point
+            position = a_node->content.find(L",");
+            if (position != std::wstring::npos)
+            {
+                a_node->content.replace(position, 1, decimal_point);
+            }
+        }
+
+        return;
+    }
 }
