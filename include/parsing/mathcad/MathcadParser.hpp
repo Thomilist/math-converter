@@ -24,27 +24,29 @@ namespace mcon
             ~MathcadParser();
 
             void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
+            void ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree);
             void Clean(std::shared_ptr<Node> a_node);
         
         private:
             ParserState state = ParserState::LookingForExpression;
-            int depth = 0;
+            Token current_token = Token(TokenType::OutOfBounds);
 
             const std::unordered_map<std::wstring, NodeType> math_operators = 
             {
-                {L"@LABEL", NodeType::Label},
-                {L"@PARENS", NodeType::Parentheses},
-                {L"=", NodeType::EqualityEvaluation},
-                {L"@EQ", NodeType::EqualityComparison},
-                {L":=", NodeType::EqualityDefinition},
-                {L"+", NodeType::Addition},
-                {L"-", NodeType::Subtraction},
-                {L"*", NodeType::Multiplication},
-                {L"/", NodeType::Division},
-                {L"@SCALE", NodeType::Unit},
-                {L"@RSCALE", NodeType::Unit},
-                {L"@RPLACEHOLDER", NodeType::Void},
-                {L"@NTHROOT", NodeType::Root},
+                {L"@LABEL",         NodeType::Label},
+                {L"@PARENS",        NodeType::Parentheses},
+                {L"=",              NodeType::EqualityEvaluation},
+                {L"@EQ",            NodeType::EqualityComparison},
+                {L":=",             NodeType::EqualityDefinition},
+                {L"+",              NodeType::Addition},
+                {L"-",              NodeType::Subtraction},
+                {L"*",              NodeType::Multiplication},
+                {L"/",              NodeType::Division},
+                {L"@SCALE",         NodeType::Unit},
+                {L"@RSCALE",        NodeType::Unit},
+                {L"@RPLACEHOLDER",  NodeType::Void},
+                {L"@NTHROOT",       NodeType::Root},
+                {L"^",              NodeType::Exponentiation},
             };
     };
 }

@@ -14,15 +14,23 @@ namespace mcon
     void MathcadParser::Parse(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
         // Initialise from start of token stream
-        depth = 0;
-        Token current_token(TokenType::StartOfStream);
+        current_token = Token(TokenType::StartOfStream);
 
         while (current_token.type == TokenType::StartOfStream)
         {
             current_token = lexer->Consume(0);
         }
+
+        state = ParserState::LookingForExpression;
         
         // Parse token stream
+        ParseExpression(a_parsing_tree);
+
+        return;
+    }
+    
+    void MathcadParser::ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree)
+    {
         do
         {
             switch (state)
@@ -36,10 +44,13 @@ namespace mcon
                         auto current_node = a_parsing_tree->current_node.lock();
                         current_node->AddChildNode();
                         a_parsing_tree->SetCurrentNode(current_node->child_nodes.back());
-                        depth++;
                         
                         // An opening parens is always followed by an operator
                         state = ParserState::IdentifyingOperator;
+
+                        current_token = lexer->Consume(0);
+
+                        ParseExpression(a_parsing_tree);
                     }
                     // Complex expressions end with a closing parens
                     // This decreases the parsing depth
@@ -47,7 +58,7 @@ namespace mcon
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         a_parsing_tree->SetCurrentNode(current_node->parent_node.lock());
-                        depth--;
+                        return;
                     }
                     // Numbers do not contain other expressions, so the parsing depth is unaffected
                     else if (current_token.type == TokenType::Number)
@@ -115,8 +126,10 @@ namespace mcon
                     }
                     catch(const std::out_of_range& e)
                     {
-                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n";
                         std::wcerr << L"Unknown math operator: " << current_math_operator << L"\n";
+                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n";
+                        
+                        state = ParserState::LookingForExpression;
                         return;
                     }
 
@@ -128,8 +141,7 @@ namespace mcon
             }
 
             current_token = lexer->Consume(0);
-
-        } while (depth && current_token.type != TokenType::EndOfStream);
+        } while (current_token.type != TokenType::EndOfStream);
 
         return;
     }

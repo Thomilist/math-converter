@@ -82,6 +82,7 @@ int main()
         // Hotkeys trigger the WM_HOTKEY message with the hotkey ID in wParam
         if (msg.message == WM_HOTKEY)
         {
+            std::wcout << std::endl;
             parsing_tree->Reset();
             parsing_tree->parser->lexer->character_stream->ReadFromClipboard();
             parsing_tree->parser->lexer->Reset();

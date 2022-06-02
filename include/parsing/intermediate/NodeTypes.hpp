@@ -26,6 +26,8 @@ namespace mcon
         Keyword,
         Parentheses,
         Matrix,
+        MatrixSize,
+        MatrixRow,
         EqualityDefinition,
         EqualityComparison,
         EqualityEvaluation,
