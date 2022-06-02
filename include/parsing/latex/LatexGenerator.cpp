@@ -13,7 +13,12 @@ namespace mcon
     
     void LatexGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
-        a_parsing_tree->output = ApplyTemplates(a_parsing_tree->root_node->child_nodes.front());
+        a_parsing_tree->output = L"";
+        
+        if (a_parsing_tree->root_node->child_node_count > 0)
+        {
+            a_parsing_tree->output = ApplyTemplates(a_parsing_tree->root_node->child_nodes.at(0));
+        }
         return;
     }
     

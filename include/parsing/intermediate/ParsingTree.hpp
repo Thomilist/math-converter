@@ -24,6 +24,7 @@ namespace mcon
             ~ParsingTree();
 
             void SetCurrentNode(std::shared_ptr<Node> a_node);
+            void Reset();
 
             std::unique_ptr<Parser> parser;
             std::unique_ptr<Generator> generator;

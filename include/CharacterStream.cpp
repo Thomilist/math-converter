@@ -13,6 +13,8 @@ namespace mcon
     // Returns true on error, false on success.
     bool CharacterStream::ReadFromClipboard() 
     {
+        index = 0;
+        
         if (!OpenClipboard(NULL))
         {
             return true;
@@ -46,8 +48,6 @@ namespace mcon
         }
 
         CloseClipboard();
-
-        std::wcout << buffer << "\n";
         
         return false;
     }

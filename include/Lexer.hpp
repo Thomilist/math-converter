@@ -28,11 +28,11 @@ namespace mcon
             void Reset();
             Token Peek(uint8_t a_offset);
             Token Consume(uint8_t a_offset);
-        
-        private:
+
             std::unique_ptr<CharacterStream> character_stream;
             std::shared_ptr<CharacterSet> character_set;
-            
+        
+        private:
             std::vector<Token> tokens;
             uint64_t index = 0;
             

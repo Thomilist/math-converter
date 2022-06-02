@@ -31,6 +31,7 @@ SOFTWARE.
 #include <iostream>
 #include <memory>
 #include <fcntl.h>
+#include <windows.h>
 
 // Custom headers
 #include "include/CharacterStream.hpp"
@@ -39,6 +40,9 @@ SOFTWARE.
 #include "include/parsing/mathcad/MathcadParser.hpp"
 #include "include/parsing/latex/LatexGenerator.hpp"
 #include "include/parsing/intermediate/ParsingTree.hpp"
+
+// Definitions
+#define MCON_HOTKEY_SEND 1
 
 
 int main()
@@ -50,34 +54,47 @@ int main()
     std::wcout.imbue(utf8);
 
     auto character_stream = std::make_unique<mcon::CharacterStream>();
-    character_stream->ReadFromClipboard();
-    
     auto character_set = std::make_shared<mcon::CharacterSet>();
     character_set->LoadFromFolder(".\\resources\\character-sets");
-
     auto lexer = std::make_unique<mcon::Lexer>(std::move(character_stream), character_set);
-    lexer->Scan();
-
-    // Print tokens from lexer (for debugging)
-    mcon::Token t(mcon::TokenType::OutOfBounds);
-    do
-    {
-        t = lexer->Consume(0);
-        std::wcout << L"\'" << t.content;
-    } while (t.type != mcon::TokenType::EndOfStream);
-    std::wcout << L"\'\n";
-    lexer->Reset();
-    
     auto mathcad_parser = std::make_unique<mcon::MathcadParser>(std::move(lexer));
     auto latex_generator = std::make_unique<mcon::LatexGenerator>(character_set);
     auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(mathcad_parser), std::move(latex_generator));
 
-    parsing_tree->parser->Parse(parsing_tree);
-    parsing_tree->parser->Clean(parsing_tree->root_node);
-    parsing_tree->generator->Generate(parsing_tree);
-    parsing_tree->generator->Substitute(parsing_tree);
-    
-    std::wcout << parsing_tree->output << std::endl;
+    // Register hotkey ALT + G or print error if it fails to register
+    if (RegisterHotKey(NULL, MCON_HOTKEY_SEND, MOD_CONTROL | MOD_SHIFT, 'V'))
+    {
+        std::wcout << L"Hotkey registered successfully." << std::endl;
+    }
+    else
+    {
+        std::wcerr << L"Hotkey registration error." << std::endl;
+        return 1;
+    }
+
+    // Poll the message queue for hotkey triggers
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+    MSG msg = {0};
+    #pragma GCC diagnostic push
+    while (GetMessage(&msg, NULL, 0, 0) != 0)
+    {
+        // Hotkeys trigger the WM_HOTKEY message with the hotkey ID in wParam
+        if (msg.message == WM_HOTKEY)
+        {
+            parsing_tree->Reset();
+            parsing_tree->parser->lexer->character_stream->ReadFromClipboard();
+            parsing_tree->parser->lexer->Reset();
+            parsing_tree->parser->lexer->Scan();
+            parsing_tree->parser->Parse(parsing_tree);
+            parsing_tree->parser->Clean(parsing_tree->root_node);
+            parsing_tree->generator->Generate(parsing_tree);
+            parsing_tree->generator->Substitute(parsing_tree);
+            std::wcout << L"Input: " << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
+            std::wcout << L"Output: " << parsing_tree->output << std::endl;
+            mcon::SendInputString(parsing_tree->output);
+        }
+    }
 
     return 0;
 }

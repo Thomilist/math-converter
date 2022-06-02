@@ -19,9 +19,12 @@ namespace mcon
 
     void Node::DeleteChildNode(uint64_t a_index)
     {
-        child_nodes.at(a_index).reset();
-        child_nodes.erase(child_nodes.begin() + (a_index - 1));
-        child_node_count--;
+        if (child_nodes.size() > 0)
+        {
+            child_nodes.erase(child_nodes.begin() + a_index);
+            child_node_count--;
+        }
+        
         return;
     }
 }

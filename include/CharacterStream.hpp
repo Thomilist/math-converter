@@ -19,9 +19,10 @@ namespace mcon
             bool ReadFromClipboard();
             std::wstring Peek(uint8_t a_offset);
             std::wstring Consume(uint8_t a_offset);
+            
+            std::wstring buffer;
 
         private:
-            std::wstring buffer;
             uint64_t index = 0;
 
     };

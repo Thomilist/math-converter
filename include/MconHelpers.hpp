@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <windows.h>
 
 // JSON header
 #include <nlohmann/json.hpp>
@@ -13,6 +14,7 @@
 namespace mcon
 {
     nlohmann::json LoadJSON(std::string a_file_path);
+    void SendInputString(std::wstring str);
 }
 
 #endif // __MCONHELPERS_H__

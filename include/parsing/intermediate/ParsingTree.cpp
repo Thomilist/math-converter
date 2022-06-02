@@ -24,4 +24,13 @@ namespace mcon
         current_node = std::move(a_node);
         return;
     }
+    
+    void ParsingTree::Reset()
+    {
+        root_node.reset();
+        root_node = std::move(std::make_shared<Node>());
+        root_node->type = NodeType::Root;
+        current_node = root_node;
+        return;
+    }
 }

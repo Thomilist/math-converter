@@ -16,6 +16,9 @@ namespace mcon
     
     void Lexer::Scan()
     {
+        // Clear any old tokens first
+        tokens.clear();
+        
         // Create an initial token to mark the start of the token sequence
         Token temp_token(TokenType::StartOfStream);
 
