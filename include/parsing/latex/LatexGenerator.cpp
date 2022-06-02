@@ -59,7 +59,9 @@ namespace mcon
         while (current_token.type != TokenType::EndOfStream)
         {
             // LaTeX expressions placeholders begin with #...
-            if (current_token.content == L"#")
+            if (    current_token.content == L"#"   &&
+                    lexer.Peek(-1).content != L"\\"
+            )
             {
                 current_token = lexer.Consume(0);
 

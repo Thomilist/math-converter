@@ -28,6 +28,8 @@ namespace mcon
             const std::unordered_map<NodeType, std::wstring> math_operators =
             {
                 // LaTeX expression placeholders are denoted #i, with #0 being the first
+                // Provide a string containing only a space to use the content of a nose as-is
+                // Provide an empty string to not use the content of a node at all
                 {NodeType::Void,                L""},
                 {NodeType::Number,              L" "},
                 {NodeType::Text,                L" "},
@@ -41,13 +43,29 @@ namespace mcon
                 {NodeType::Multiplication,      L"{#0}\\cdot{#1}"},
                 {NodeType::Division,            L"\\frac{#0}{#1}"},
                 {NodeType::Unit,                L"{#0}{\\;\\mathrm{#1}}"},
-                {NodeType::Root,                L"\\sqrt[#0]{#1}"},
+                {NodeType::Radix,               L"\\sqrt[#0]{#1}"},
                 {NodeType::Exponentiation,      L"{#0}^{#1}"},
+                {NodeType::TextComposite,       L"{#0}{#1}"},
+                {NodeType::TextSubscript,       L"_{#0}"},
+                {NodeType::Factorial,           L"{#0}!"},
+                {NodeType::LessThan,            L"{#0}<{#1}"},
+                {NodeType::GreaterThan,         L"{#0}>{#1}"},
+                {NodeType::LessThanOrEqual,     L"{#0}\\leq{#1}"},
+                {NodeType::GreaterThanOrEqual,  L"{#0}\\geq{#1}"},
+                {NodeType::Absolute,            L"|{#0}|"},
+                {NodeType::VectorProduct,       L"{#0}\\times{#1}"},
+                {NodeType::Range,               L"{#0}\\;..\\;{#1}"},
+                {NodeType::Arguments,           L"\\left({#0}\\right)"},
+                {NodeType::Function,            L"\\mathrm{#0}{#1}"},
+                {NodeType::Negative,            L"-{#0}"},
             };
             const std::unordered_map<std::wstring, std::wstring> substitution_list =
             {
                 // Redundant code cleanup
                 {L"{\\;\\mathrm{}}", L""},
+
+                // Characters requiring an escape sequence
+                //{L"#", L"\\#"},
 
                 // Greek letters
                 {L"α", L"{\\alpha}"},

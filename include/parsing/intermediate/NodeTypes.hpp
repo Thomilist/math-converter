@@ -43,14 +43,9 @@ namespace mcon
         Division,
         Exponentiation,
         Radix,
+        VectorProduct,
         Differentiation,
         Integration,
-        Sine,
-        Cosine,
-        Tangent,
-        Cosecant,
-        Secant,
-        Cotangent,
         Absolute,
         Factorial,
         LogicalNOT,
@@ -60,6 +55,9 @@ namespace mcon
         LogicalNOR,
         LogicalXOR,
         LogicalXNOR,
+        Range,
+        Arguments,
+        Negative,
     };
 }
 

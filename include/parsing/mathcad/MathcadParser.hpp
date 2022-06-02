@@ -45,8 +45,21 @@ namespace mcon
                 {L"@SCALE",         NodeType::Unit},
                 {L"@RSCALE",        NodeType::Unit},
                 {L"@RPLACEHOLDER",  NodeType::Void},
-                {L"@NTHROOT",       NodeType::Root},
+                {L"@NTHROOT",       NodeType::Radix},
                 {L"^",              NodeType::Exponentiation},
+                {L"@ID",            NodeType::TextComposite},
+                {L"@SUB",           NodeType::TextSubscript},
+                {L"!",              NodeType::Factorial},
+                {L"<",              NodeType::LessThan},
+                {L">",              NodeType::GreaterThan},
+                {L"@LEQ",           NodeType::LessThanOrEqual},
+                {L"@GEQ",           NodeType::GreaterThanOrEqual},
+                {L"@ABS",           NodeType::Absolute},
+                {L"@CROSS",         NodeType::VectorProduct},
+                {L"@RANGE",         NodeType::Range},
+                {L"@ARGS",          NodeType::Arguments},
+                {L"@APPLY",         NodeType::Function},
+                {L"@NEG",           NodeType::Negative},
             };
     };
 }

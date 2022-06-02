@@ -174,5 +174,18 @@ namespace mcon
                 }
             }
         }
+
+        // Escape # characters
+        if (a_node->type == NodeType::Text)
+        {
+            std::size_t position = a_node->content.find(L"#");
+
+            if (position != std::wstring::npos)
+            {
+                a_node->content.replace(position, 1, L"\\#");
+            }
+        }
+
+        return;
     }
 }
