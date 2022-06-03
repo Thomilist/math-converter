@@ -20,6 +20,7 @@ namespace mcon
             void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
             std::wstring ApplyTemplates(std::shared_ptr<Node> a_node);
             void Substitute(std::shared_ptr<ParsingTree> a_parsing_tree);
+            std::wstring GenerateMatrix(std::shared_ptr<Node> a_node);
 
             std::shared_ptr<CharacterSet> character_set;
         
@@ -38,6 +39,7 @@ namespace mcon
                 {NodeType::EqualityEvaluation,  L"{#0}={#1}"},
                 {NodeType::EqualityComparison,  L"{#0}={#1}"},
                 {NodeType::EqualityDefinition,  L"{#0}:={#1}"},
+                {NodeType::NotEqual,            L"{#0}\\neq{#1}"},
                 {NodeType::SymbolicEvaluation,  L"{#0}\\xrightarrow{#1}{#2}"},
                 {NodeType::Definition,          L"{#0}\\equiv{#1}"},
                 {NodeType::KeywordStack,        L"{#0}"},

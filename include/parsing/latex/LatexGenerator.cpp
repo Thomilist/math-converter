@@ -25,6 +25,12 @@ namespace mcon
     
     std::wstring LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
     {
+        // Special case for matrices
+        if (a_node->type == NodeType::Matrix)
+        {
+            return GenerateMatrix(a_node);
+        }
+        
         std::wstring result = L"";
         std::wstring template_text;
         
@@ -123,5 +129,40 @@ namespace mcon
             }
         }
         return;
+    }
+    
+    std::wstring LatexGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
+    {
+        uint64_t row_count = std::stoi(a_node->child_nodes.at(0)->content);
+        uint64_t collumn_count = std::stoi(a_node->child_nodes.at(1)->content);
+        
+        std::wstring matrix_begin = L"\\left[\\begin{matrix}";
+        std::wstring matrix_end = L"\\end{matrix}\\right]";
+        std::wstring matrix_break = L"\\\\[0.0em]";
+        
+        std::wstring result = matrix_begin;
+
+        for (uint64_t row = 0; row < row_count; row++)
+        {
+            for (uint64_t collumn = 0; collumn < collumn_count; collumn++)
+            {
+                uint64_t index = 2 + row * collumn_count + collumn;
+                result += L"{" + ApplyTemplates(a_node->child_nodes.at(index)) + L"}";
+
+                if ((collumn + 1) < collumn_count)
+                {
+                    result += L"&";
+                }
+            }
+
+            if ((row + 1) < row_count)
+            {
+                result += matrix_break;
+            }
+        }
+
+        result += matrix_end;
+
+        return result;
     }
 }

@@ -31,6 +31,8 @@ namespace mcon
     
     void MathcadParser::ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
+        std::wstring current_math_operator;
+        
         do
         {
             switch (state)
@@ -104,8 +106,6 @@ namespace mcon
                 }
                 case ParserState::IdentifyingOperator:
                 {
-                    std::wstring current_math_operator;
-
                     // Math operators consist of at least one symbol
                     current_math_operator = current_token.content;
 
@@ -182,6 +182,13 @@ namespace mcon
             {
                 a_node->content.replace(position, 1, L"\\#");
             }
+        }
+
+        // Correct type of matrix size nodes
+        if (a_node->type == NodeType::Matrix)
+        {
+            a_node->child_nodes.at(0)->type = NodeType::MatrixRowCount;
+            a_node->child_nodes.at(1)->type = NodeType::MatrixCollumnCount;
         }
 
         return;

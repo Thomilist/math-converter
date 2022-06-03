@@ -38,6 +38,7 @@ namespace mcon
                 {L"=",              NodeType::EqualityEvaluation},
                 {L"@EQ",            NodeType::EqualityComparison},
                 {L":=",             NodeType::EqualityDefinition},
+                {L"@NEQ",           NodeType::NotEqual},
                 {L"@SYM_EVAL",      NodeType::SymbolicEvaluation},
                 {L"@IS",            NodeType::EqualityComparison},
                 {L"@GLOBAL_DEF",    NodeType::Definition},
@@ -78,6 +79,7 @@ namespace mcon
                 {L"%",              NodeType::Percent},
                 {L"@ELEMENT_OF",    NodeType::ElementOf},
                 {L"@DEG",           NodeType::Degree},
+                {L"@MATRIX",        NodeType::Matrix},
             };
     };
 }

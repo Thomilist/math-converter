@@ -14,6 +14,8 @@ namespace mcon
         TextSubscript,
         TextSuperscript,
         Void,
+        MatrixRowCount,
+        MatrixCollumnCount,
 
         // Nonterminal nodes (effectively a list of mathematical operations and syntactic constructs such as matrices)
         TextComposite,
@@ -26,8 +28,6 @@ namespace mcon
         Keyword,
         Parentheses,
         Matrix,
-        MatrixSize,
-        MatrixRow,
         EqualityDefinition,
         EqualityComparison,
         EqualityEvaluation,
