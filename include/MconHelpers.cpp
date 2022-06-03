@@ -64,9 +64,9 @@ namespace mcon
 
             // Insert delay, otherwise consecutive identical characters (especially curly braces) sometimes only print the first
             // If not for this, all characters could be sent in the same SendInput call
-            if (    current_character == previous_character )
+            if (current_character == previous_character)
             {
-                Sleep(1);
+                Sleep(5);
             }
 
             // Send the actual character array

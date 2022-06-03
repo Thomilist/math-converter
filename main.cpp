@@ -92,7 +92,7 @@ int main()
             parsing_tree->Clean(parsing_tree->root_node);
             parsing_tree->generator->Generate(parsing_tree);
             parsing_tree->generator->Substitute(parsing_tree);
-            std::wcout << L"Input: " << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
+            std::wcout << L"Input:  " << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
             std::wcout << L"Output: " << parsing_tree->output << std::endl;
             mcon::SendInputString(parsing_tree->output);
         }

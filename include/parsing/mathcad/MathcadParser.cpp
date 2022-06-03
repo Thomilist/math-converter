@@ -105,16 +105,14 @@ namespace mcon
                 case ParserState::IdentifyingOperator:
                 {
                     std::wstring current_math_operator;
-                    
-                    // Math operators can consist of two symbols or an @ followed by a word...
-                    if (lexer->Peek(0).type != TokenType::Whitespace)
+
+                    // Math operators consist of at least one symbol
+                    current_math_operator = current_token.content;
+
+                    // Some math operators consists of two symbols, or of an @ and a word
+                    while (lexer->Peek(0).type != TokenType::Whitespace)
                     {
-                        current_math_operator = current_token.content + lexer->Consume(0).content;
-                    }
-                    // ... or of a single symbol
-                    else
-                    {
-                        current_math_operator = current_token.content;
+                        current_math_operator += lexer->Consume(0).content;
                     }
 
                     auto current_node = a_parsing_tree->current_node.lock();
