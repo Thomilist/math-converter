@@ -1,3 +1,3 @@
 # math-converter
 
-A simple program to convert text representations of math expressions between different formats, such as Mathcad and LaTeX. 
+A simple program to convert text representations of math expressions between different formats, such as Mathcad and LaTeX. Originally conceived and written haphazardly in AutoHotkey during the writing of an engineering report at university, it has been reimagined in C++ with since-obtained knowledge to achieve greater code quality and improved modularity. While the original could only convert from Mathcad to LaTeX, the intention for the new math-converter is to be able to convert back and forth between several different plain-text representations of math.

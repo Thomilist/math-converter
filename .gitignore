@@ -3,3 +3,6 @@ build/*
 
 # Ignore environment configuration files
 .vscode/*
+
+# Ignore releases
+releases/*
