@@ -1,4 +1,4 @@
-# User guide for math-converter-1.0.0
+# User guide for math-converter-1.0.1
 
 ## Hotkeys
 
@@ -45,6 +45,7 @@ Mathcad is the starting point for the program, and the feature set reflects this
 - Percentage
 - Range and step range
 - Element of
+- Complex numbers
 
 ## Configuration
 

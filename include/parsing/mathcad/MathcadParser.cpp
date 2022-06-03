@@ -182,16 +182,9 @@ namespace mcon
             }
         }
 
-        // Escape # characters
-        if (a_node->type == NodeType::Text)
-        {
-            std::size_t position = a_node->content.find(L"#");
-
-            if (position != std::wstring::npos)
-            {
-                a_node->content.replace(position, 1, L"\\#");
-            }
-        }
+        // Escape characters
+        EscapeCharacter(a_node, L"#", L"\\#");
+        EscapeCharacter(a_node, L"_", L"\\_");
 
         // Correct type of matrix size nodes
         if (a_node->type == NodeType::Matrix)
@@ -201,5 +194,18 @@ namespace mcon
         }
 
         return;
+    }
+    
+    void MathcadParser::EscapeCharacter(std::shared_ptr<Node> a_node, std::wstring a_find, std::wstring a_replace)
+    {
+        if (a_node->type == NodeType::Text)
+        {
+            std::size_t position = a_node->content.find(a_find);
+
+            if (position != std::wstring::npos)
+            {
+                a_node->content.replace(position, a_find.length(), a_replace);
+            }
+        }
     }
 }

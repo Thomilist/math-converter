@@ -26,6 +26,7 @@ namespace mcon
             void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
             void ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree);
             void Clean(std::shared_ptr<Node> a_node);
+            void EscapeCharacter(std::shared_ptr<Node> a_node, std::wstring a_find, std::wstring a_replace);
         
         private:
             ParserState state = ParserState::LookingForExpression;
