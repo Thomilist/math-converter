@@ -103,8 +103,14 @@ namespace mcon
                 }
                 else
                 {
+                    if (a_node->type == NodeType::Number)
+                    {
+                        a_node->content = FormatComplexNumber(a_node->content);
+                    }
+                    
                     result += a_node->content;
                 }
+
                 current_token = lexer.Consume(0);
             }
         }
@@ -164,5 +170,21 @@ namespace mcon
         result += matrix_end;
 
         return result;
+    }
+    
+    std::wstring LatexGenerator::FormatComplexNumber(std::wstring a_number)
+    {
+        int index = a_number.length() - 1;
+
+        if (a_number.at(index) == L'i')
+        {
+            a_number.replace(index, 1, L"\\mathrm{i}");
+        }
+        else if (a_number.at(index) == L'j')
+        {
+            a_number.replace(index, 1, L"\\mathrm{j}");
+        }
+
+        return a_number;
     }
 }

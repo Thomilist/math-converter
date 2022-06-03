@@ -83,6 +83,15 @@ namespace mcon
                                 child_node->content += current_token.content;
                             }
                         }
+
+                        // Handling of complex numbers
+                        if (    lexer->Peek(0).type == TokenType::Text  &&
+                                (lexer->Peek(0).content == L"i" || lexer->Peek(0).content == L"j")
+                        )
+                        {
+                            current_token = lexer->Consume(0);
+                            child_node->content += current_token.content;
+                        }
                     }
                     // Symbols and basic text do not contain other expressions, so the parsing depth is unaffected
                     else if (current_token.type == TokenType::Text || current_token.type == TokenType::Symbol)

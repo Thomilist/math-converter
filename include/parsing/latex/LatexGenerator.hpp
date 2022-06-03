@@ -21,6 +21,7 @@ namespace mcon
             std::wstring ApplyTemplates(std::shared_ptr<Node> a_node);
             void Substitute(std::shared_ptr<ParsingTree> a_parsing_tree);
             std::wstring GenerateMatrix(std::shared_ptr<Node> a_node);
+            std::wstring FormatComplexNumber(std::wstring a_number);
 
             std::shared_ptr<CharacterSet> character_set;
         
@@ -86,6 +87,7 @@ namespace mcon
                 // Special characters
                 {L"∞", L"\\infty"},
                 {L"{\\:\\mathrm{{deg}}}", L"^{\\circ}"},
+                {L"{\\:\\mathrm{deg}}", L"^{\\circ}"},
 
                 // Trigonometric functions
                 {L"\\mathrm{sin}", L"\\sin"},
