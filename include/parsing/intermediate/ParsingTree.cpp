@@ -54,14 +54,14 @@ namespace mcon
             std::size_t position = a_node->content.find(L".");
             if (position != std::wstring::npos)
             {
-                a_node->content.replace(position, 1, decimal_point);
+                a_node->content.replace(position, 1, decimal_separator);
             }
 
             // Look for comma as decimal point
             position = a_node->content.find(L",");
             if (position != std::wstring::npos)
             {
-                a_node->content.replace(position, 1, decimal_point);
+                a_node->content.replace(position, 1, decimal_separator);
             }
         }
 

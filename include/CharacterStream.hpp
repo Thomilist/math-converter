@@ -16,7 +16,8 @@ namespace mcon
             CharacterStream(std::wstring a_buffer = L"");
             ~CharacterStream();
 
-            bool ReadFromClipboard();
+            void Read(std::wstring a_input);
+            void ReadFromClipboard();
             std::wstring Peek(uint8_t a_offset);
             std::wstring Consume(uint8_t a_offset);
             

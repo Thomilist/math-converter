@@ -32,7 +32,7 @@ namespace mcon
             std::shared_ptr<Node> root_node;
             std::weak_ptr<Node> current_node;
             std::wstring output;
-            std::wstring decimal_point = L".";
+            std::wstring decimal_separator = L".";
 
         private:
 

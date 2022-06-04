@@ -9,15 +9,22 @@ namespace mcon
     CharacterStream::~CharacterStream() 
     { }
     
+    void CharacterStream::Read(std::wstring a_input)
+    {
+        index = 0;
+        buffer = a_input;
+        return;
+    }
+    
     // Read a string of characters from the clipboard.
     // Returns true on error, false on success.
-    bool CharacterStream::ReadFromClipboard() 
+    void CharacterStream::ReadFromClipboard() 
     {
         index = 0;
         
         if (!OpenClipboard(NULL))
         {
-            return true;
+            return;
         }
 
         if (IsClipboardFormatAvailable(CF_UNICODETEXT))
@@ -40,7 +47,7 @@ namespace mcon
                 else
                 {
                     CloseClipboard();
-                    return true;
+                    return;
                 }
                 
                 #pragma GCC diagnostic pop
@@ -49,7 +56,7 @@ namespace mcon
 
         CloseClipboard();
         
-        return false;
+        return;
     }
     
     // Return the character at the position (index + a_offset) in "buffer",

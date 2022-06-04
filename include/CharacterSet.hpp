@@ -3,6 +3,7 @@
 
 // Standard libraries
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <set>
 #include <vector>
@@ -14,9 +15,6 @@
 // JSON header
 #include <nlohmann\json.hpp>
 
-// Custom headers
-#include "MconHelpers.hpp"
-
 namespace mcon
 {
     class CharacterSet : public std::enable_shared_from_this<CharacterSet>
@@ -25,6 +23,7 @@ namespace mcon
             CharacterSet();
             ~CharacterSet();
 
+            nlohmann::json LoadJSON(std::string a_file_path);
             void LoadFromFolder(std::string a_folder_path);
             void LoadFromFile(std::string a_file_path);
 
