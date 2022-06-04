@@ -1,9 +1,8 @@
-# User guide for math-converter-1.0.1
+# User guide for math-converter-1.1.0
 
 ## Hotkeys
 
-There is currently only one hotkey in math-converter: `CTRL + SHIFT + V`.
-This will attempt to convert plain text from the user's clipboard from the selected input math language to the selected output math language and then type it into the active window.
+There is only one hotkey in math-converter: `CTRL + SHIFT + V`. This will attempt to convert plain text from the user's clipboard from the selected input math language to the selected output math language and then type it into the active window.
 
 ## Supported math languages
 
@@ -23,8 +22,7 @@ List of supported math languages for output:
 
 ## Supported math features
 
-While not all math syntax is supported, a variety of commonly-used features are implemented.
-Mathcad is the starting point for the program, and the feature set reflects this.
+While not all math syntax is supported, a variety of commonly-used features are implemented. Mathcad is the starting point for the program, and the feature set reflects this.
 
 - Addition, subtraction, multiplication and division
 - Root and power
@@ -49,8 +47,28 @@ Mathcad is the starting point for the program, and the feature set reflects this
 
 ## Configuration
 
-There are currently no configuration options.
-However, the supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`. 
+The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. At the moment, configuration is not saved across sessions. The currently supported configuration commands include:
+
+- Display help
+- Set decimal separator
+
+The commands to set input and output math languages are also present, but they currently have no effect.
+
+### Display help
+
+This command displays help about the configuration commands.
+
+Command aliases: `h help ?`<br>
+Available arguments: none<br>
+Example: `help`
+
+### Set decimal separator
+
+This command sets the decimal separator to either a period or a comma. The default is a period.
+
+Command aliases: `d dec ds sep`<br>
+Available arguments: `period . comma ,`<br>
+Example: `d comma`
 
 ## Contact
 
