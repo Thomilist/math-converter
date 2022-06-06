@@ -134,7 +134,7 @@ namespace mcon
                     catch(const std::out_of_range& e)
                     {
                         std::wcerr << L"Unknown math operator: " << current_math_operator << L"\n";
-                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n";
+                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n" << std::endl;
                         
                         state = ParserState::LookingForExpression;
                         return;

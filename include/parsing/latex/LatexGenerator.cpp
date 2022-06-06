@@ -20,6 +20,7 @@ namespace mcon
         {
             a_parsing_tree->output = ApplyTemplates(a_parsing_tree->root_node->child_nodes.at(0));
         }
+
         return;
     }
     
@@ -42,15 +43,13 @@ namespace mcon
         catch(const std::out_of_range& e)
         {
             std::wcerr << L"Unable to print math expression.\n";
-            std::wcerr << L"Out-of-range exception in " << e.what() << "\n";
+            std::wcerr << L"Out-of-range exception in " << e.what() << "\n" << std::endl;
             return L"#ERROR";
         }
 
         // Run the template text through a lexer
         auto template_stream = std::make_unique<CharacterStream>(template_text);
-        auto new_character_set = std::make_shared<mcon::CharacterSet>();
-        new_character_set->LoadFromFolder(".\\resources\\character-sets");
-        auto lexer = Lexer(std::move(template_stream), new_character_set);
+        auto lexer = Lexer(std::move(template_stream), character_set);
         lexer.Scan();
 
         // Prepare token stream
@@ -83,7 +82,7 @@ namespace mcon
                     catch(const std::out_of_range& e)
                     {
                         std::wcerr << L"LaTeX template indexing error.\n";
-                        std::wcerr << L"Out-of-range exception in " << e.what() << "\n";
+                        std::wcerr << L"Out-of-range exception in " << e.what() << "\n" << std::endl;
                         result += L"#ERROR";
                     }
 

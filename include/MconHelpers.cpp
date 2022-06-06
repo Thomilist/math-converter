@@ -75,11 +75,11 @@ namespace mcon
         // Register hotkey ALT + G or print error if it fails to register
         if (RegisterHotKey(NULL, MCON_HOTKEY_SEND, MOD_CONTROL | MOD_SHIFT, 'V'))
         {
-            std::wcout << L"Hotkey registered successfully." << std::endl;
+            std::wcout << L"Hotkey registered successfully.\n" << std::endl;
         }
         else
         {
-            std::wcerr << L"Hotkey registration error." << std::endl;
+            std::wcerr << L"Hotkey registration error.\n" << std::endl;
             return;
         }
 

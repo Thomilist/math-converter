@@ -47,6 +47,8 @@ int main()
     std::locale utf8(std::locale(), new std::codecvt_utf8_utf16<wchar_t>);
     std::wcout.imbue(utf8);
 
+    std::wcout << L"Initialising math-converter-1.1.0..." << std::endl;
+
     auto settings_mutex = std::make_shared<std::mutex>();
     auto settings = std::make_shared<mcon::Settings>();
 
