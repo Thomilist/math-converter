@@ -14,7 +14,8 @@ namespace mcon
         Whitespace,
         Text,
         Number,
-        Symbol
+        Symbol,
+        Unknown
     };
 
     class Token

@@ -148,7 +148,9 @@ namespace mcon
             }
 
             current_token = lexer->Consume(0);
-        } while (current_token.type != TokenType::EndOfStream);
+        } while (   current_token.type != TokenType::EndOfStream    &&
+                    current_token.type != TokenType::OutOfBounds
+        );
 
         return;
     }

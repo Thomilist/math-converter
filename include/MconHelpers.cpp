@@ -111,7 +111,6 @@ namespace mcon
 
                 a_settings_mutex->unlock();
                 
-                std::wcout << std::endl;
                 parsing_tree->Reset();
                 parsing_tree->parser->lexer->character_stream->ReadFromClipboard();
                 parsing_tree->parser->lexer->Scan();
@@ -121,7 +120,7 @@ namespace mcon
                 parsing_tree->generator->Generate(parsing_tree);
                 parsing_tree->generator->Substitute(parsing_tree);
                 std::wcout << L"Input:  " << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
-                std::wcout << L"Output: " << parsing_tree->output << std::endl;
+                std::wcout << L"Output: " << parsing_tree->output << L"\n" << std::endl;
                 mcon::SendInputString(parsing_tree->output);
             }
         }

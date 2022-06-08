@@ -70,11 +70,15 @@ namespace mcon
             // Check if the character was not found in any of the character sets
             if (!character_appended)
             {
-                // Ignore character and continue...
-                character_stream->Consume(0);
+                // If the character does not belong to a set, place it in a token of type Unknown
+                tokens.push_back(temp_token);
+                temp_token = Token(TokenType::Unknown);
+                temp_token.Append(character_stream->Consume(0));
 
-                // ... or throw exception
-                // throw std::runtime_error("Unknown character.");
+                // Report the error to the console
+                std::wcout << L"Unknown character: " << current_character << L"\n"
+                << L"The character was not found in any of the supplied character sets." << L"\n"
+                << std::endl;
             }
         }
     }

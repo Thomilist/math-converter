@@ -1,4 +1,4 @@
-# User guide for math-converter-1.1.0
+# User guide for math-converter-1.1.2
 
 ## Hotkeys
 
@@ -47,7 +47,7 @@ While not all math syntax is supported, a variety of commonly-used features are 
 
 ## Configuration
 
-The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. At the moment, configuration is not saved across sessions. The currently supported configuration commands include:
+The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`, which are loaded at program launch. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. At the moment, configuration is not saved across sessions. The currently supported configuration commands include:
 
 - Display help
 - Set decimal separator
