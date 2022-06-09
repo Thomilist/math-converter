@@ -51,15 +51,15 @@ namespace mcon
         if (a_node->type == NodeType::Number)
         {
             // Look for period as decimal point
-            std::size_t position = a_node->content.find(L".");
-            if (position != std::wstring::npos)
+            std::size_t position = a_node->content.find(STR("."));
+            if (position != String::npos)
             {
                 a_node->content.replace(position, 1, decimal_separator);
             }
 
             // Look for comma as decimal point
-            position = a_node->content.find(L",");
-            if (position != std::wstring::npos)
+            position = a_node->content.find(STR(","));
+            if (position != String::npos)
             {
                 a_node->content.replace(position, 1, decimal_separator);
             }

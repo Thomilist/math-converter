@@ -50,6 +50,7 @@ While not all math syntax is supported, a variety of commonly-used features are 
 The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`, which are loaded at program launch. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. At the moment, configuration is not saved across sessions. The currently supported configuration commands include:
 
 - Display help
+- Open download page
 - Set decimal separator
 
 The commands to set input and output math languages are also present, but they currently have no effect.
@@ -61,6 +62,14 @@ This command displays help about the configuration commands.
 Command aliases: `h help ?`<br>
 Available arguments: none<br>
 Example: `help`
+
+### Open download page
+
+This command opens the Releases page on math-converter's Github for ease of access to the latest version.
+
+Command aliases: `download`<br>
+Available arguments: none<br>
+Example: `download`
 
 ### Set decimal separator
 

@@ -4,13 +4,13 @@
 namespace mcon
 {
     // Wrapper function for SendInput to send an entire unicode string
-    void SendInputString(std::wstring str)
+    void SendInputString(String str)
     {
         std::vector<INPUT> characters;
         INPUT input_base;
         input_base.type = INPUT_KEYBOARD;
         WORD current_character;
-        WORD previous_character = L'\0';
+        WORD previous_character = STR('\0');
 
         // Release modifier keys SHIFT, CONTROL and ALT to avoid conflicts with user-pressed keys
         input_base.ki.dwFlags = KEYEVENTF_KEYUP;
@@ -75,11 +75,11 @@ namespace mcon
         // Register hotkey ALT + G or print error if it fails to register
         if (RegisterHotKey(NULL, MCON_HOTKEY_SEND, MOD_CONTROL | MOD_SHIFT, 'V'))
         {
-            std::wcout << L"Hotkey registered successfully.\n" << std::endl;
+            STRING_OUTPUT << STR("Hotkey registered successfully.\n") << std::endl;
         }
         else
         {
-            std::wcerr << L"Hotkey registration error.\n" << std::endl;
+            ERROR_OUTPUT << STR("Hotkey registration error.\n") << std::endl;
             return;
         }
 
@@ -99,12 +99,12 @@ namespace mcon
                 {
                     case DecimalSeparator::Period:
                     {
-                        parsing_tree->decimal_separator = L".";
+                        parsing_tree->decimal_separator = STR(".");
                         break;
                     }
                     case DecimalSeparator::Comma:
                     {
-                        parsing_tree->decimal_separator = L",";
+                        parsing_tree->decimal_separator = STR(",");
                         break;
                     }
                 }
@@ -119,8 +119,8 @@ namespace mcon
                 parsing_tree->Clean(parsing_tree->root_node);
                 parsing_tree->generator->Generate(parsing_tree);
                 parsing_tree->generator->Substitute(parsing_tree);
-                std::wcout << L"Input:  " << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
-                std::wcout << L"Output: " << parsing_tree->output << L"\n" << std::endl;
+                STRING_OUTPUT << STR("Input:  ") << parsing_tree->parser->lexer->character_stream->buffer << std::endl;
+                STRING_OUTPUT << STR("Output: ") << parsing_tree->output << STR("\n") << std::endl;
                 mcon::SendInputString(parsing_tree->output);
             }
         }
@@ -132,7 +132,7 @@ namespace mcon
                         std::shared_ptr<std::mutex> a_settings_mutex
     )
     {
-        std::wstring input;
+        String input;
 
         while (true)
         {

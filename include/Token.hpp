@@ -1,6 +1,8 @@
 #ifndef __TOKEN_H__
 #define __TOKEN_H__
 
+#include "definitions.hpp"
+
 // Standard libraries
 #include <string>
 
@@ -24,10 +26,10 @@ namespace mcon
             Token(TokenType a_type);
             ~Token();
             
-            bool Append(std::wstring a_character);
+            bool Append(String a_character);
 
             TokenType type;
-            std::wstring content;
+            String content;
         
         private:
     };

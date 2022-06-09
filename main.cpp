@@ -26,14 +26,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+#include "include/definitions.hpp"
 
 // Standard libraries
 #include <iostream>
 #include <memory>
 #include <fcntl.h>
-#include <windows.h>
 #include <thread>
 #include <mutex>
+#ifdef WINDOWS
+#include <windows.h>
+#endif
 
 // Custom headers
 #include "include/MconHelpers.hpp"
@@ -41,13 +44,15 @@ SOFTWARE.
 
 int main()
 {
+    #ifdef WINDOWS
     // Support wide characters
     //https://stackoverflow.com/a/50055280/17557793
     std::ios_base::sync_with_stdio(false);
     std::locale utf8(std::locale(), new std::codecvt_utf8_utf16<wchar_t>);
     std::wcout.imbue(utf8);
+    #endif
 
-    std::wcout << L"Initialising math-converter-1.1.2..." << std::endl;
+    STRING_OUTPUT << STR("math-converter-") << VERSION << std::endl;
 
     auto settings_mutex = std::make_shared<std::mutex>();
     auto settings = std::make_shared<mcon::Settings>();

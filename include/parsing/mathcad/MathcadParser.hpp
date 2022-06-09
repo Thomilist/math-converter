@@ -1,6 +1,8 @@
 #ifndef __MATHCADPARSER_H__
 #define __MATHCADPARSER_H__
 
+#include "../../definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <memory>
@@ -26,61 +28,61 @@ namespace mcon
             void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
             void ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree);
             void Clean(std::shared_ptr<Node> a_node);
-            void EscapeCharacter(std::shared_ptr<Node> a_node, std::wstring a_find, std::wstring a_replace);
+            void EscapeCharacter(std::shared_ptr<Node> a_node, String a_find, String a_replace);
         
         private:
             ParserState state = ParserState::LookingForExpression;
             Token current_token = Token(TokenType::OutOfBounds);
 
-            const std::unordered_map<std::wstring, NodeType> math_operators = 
+            const std::unordered_map<String, NodeType> math_operators = 
             {
-                {L"@LABEL",         NodeType::Label},
-                {L"@PARENS",        NodeType::Parentheses},
-                {L"=",              NodeType::EqualityEvaluation},
-                {L"@EQ",            NodeType::EqualityComparison},
-                {L":=",             NodeType::EqualityDefinition},
-                {L"@NEQ",           NodeType::NotEqual},
-                {L"@SYM_EVAL",      NodeType::SymbolicEvaluation},
-                {L"@IS",            NodeType::EqualityComparison},
-                {L"@GLOBAL_DEF",    NodeType::Definition},
-                {L"@KW_STACK",      NodeType::KeywordStack},
-                {L"@SEP",           NodeType::Separator},
-                {L"+",              NodeType::Addition},
-                {L"-",              NodeType::Subtraction},
-                {L"*",              NodeType::Multiplication},
-                {L"/",              NodeType::Division},
-                {L"@SCALE",         NodeType::Unit},
-                {L"@RSCALE",        NodeType::Unit},
-                {L"@RPLACEHOLDER",  NodeType::Void},
-                {L"@NTHROOT",       NodeType::Radix},
-                {L"^",              NodeType::Exponentiation},
-                {L"@ID",            NodeType::TextComposite},
-                {L"@SUB",           NodeType::TextSubscript},
-                {L"!",              NodeType::Factorial},
-                {L"<",              NodeType::LessThan},
-                {L">",              NodeType::GreaterThan},
-                {L"@LEQ",           NodeType::LessThanOrEqual},
-                {L"@GEQ",           NodeType::GreaterThanOrEqual},
-                {L"@ABS",           NodeType::Absolute},
-                {L"@CROSS",         NodeType::VectorProduct},
-                {L"@RANGE",         NodeType::Range},
-                {L"@STEPRANGE",     NodeType::StepRange},
-                {L"@ARGS",          NodeType::Arguments},
-                {L"@APPLY",         NodeType::Function},
-                {L"@FUNCTION",      NodeType::Function},
-                {L"@NEG",           NodeType::Negative},
-                {L"@NOT",           NodeType::LogicalNOT},
-                {L"@AND",           NodeType::LogicalAND},
-                {L"@OR",            NodeType::LogicalOR},
-                {L"@SUM",           NodeType::Sum},
-                {L"@PRODUCT",       NodeType::Product},
-                {L"@POLAR",         NodeType::Polar},
-                {L"@DERIV",         NodeType::Derivative},
-                {L"@INTEGRAL",      NodeType::Integral},
-                {L"%",              NodeType::Percent},
-                {L"@ELEMENT_OF",    NodeType::ElementOf},
-                {L"@DEG",           NodeType::Degree},
-                {L"@MATRIX",        NodeType::Matrix},
+                {STR("@LABEL"),         NodeType::Label},
+                {STR("@PARENS"),        NodeType::Parentheses},
+                {STR("="),              NodeType::EqualityEvaluation},
+                {STR("@EQ"),            NodeType::EqualityComparison},
+                {STR(":="),             NodeType::EqualityDefinition},
+                {STR("@NEQ"),           NodeType::NotEqual},
+                {STR("@SYM_EVAL"),      NodeType::SymbolicEvaluation},
+                {STR("@IS"),            NodeType::EqualityComparison},
+                {STR("@GLOBAL_DEF"),    NodeType::Definition},
+                {STR("@KW_STACK"),      NodeType::KeywordStack},
+                {STR("@SEP"),           NodeType::Separator},
+                {STR("+"),              NodeType::Addition},
+                {STR("-"),              NodeType::Subtraction},
+                {STR("*"),              NodeType::Multiplication},
+                {STR("/"),              NodeType::Division},
+                {STR("@SCALE"),         NodeType::Unit},
+                {STR("@RSCALE"),        NodeType::Unit},
+                {STR("@RPLACEHOLDER"),  NodeType::Void},
+                {STR("@NTHROOT"),       NodeType::Radix},
+                {STR("^"),              NodeType::Exponentiation},
+                {STR("@ID"),            NodeType::TextComposite},
+                {STR("@SUB"),           NodeType::TextSubscript},
+                {STR("!"),              NodeType::Factorial},
+                {STR("<"),              NodeType::LessThan},
+                {STR(">"),              NodeType::GreaterThan},
+                {STR("@LEQ"),           NodeType::LessThanOrEqual},
+                {STR("@GEQ"),           NodeType::GreaterThanOrEqual},
+                {STR("@ABS"),           NodeType::Absolute},
+                {STR("@CROSS"),         NodeType::VectorProduct},
+                {STR("@RANGE"),         NodeType::Range},
+                {STR("@STEPRANGE"),     NodeType::StepRange},
+                {STR("@ARGS"),          NodeType::Arguments},
+                {STR("@APPLY"),         NodeType::Function},
+                {STR("@FUNCTION"),      NodeType::Function},
+                {STR("@NEG"),           NodeType::Negative},
+                {STR("@NOT"),           NodeType::LogicalNOT},
+                {STR("@AND"),           NodeType::LogicalAND},
+                {STR("@OR"),            NodeType::LogicalOR},
+                {STR("@SUM"),           NodeType::Sum},
+                {STR("@PRODUCT"),       NodeType::Product},
+                {STR("@POLAR"),         NodeType::Polar},
+                {STR("@DERIV"),         NodeType::Derivative},
+                {STR("@INTEGRAL"),      NodeType::Integral},
+                {STR("%"),              NodeType::Percent},
+                {STR("@ELEMENT_OF"),    NodeType::ElementOf},
+                {STR("@DEG"),           NodeType::Degree},
+                {STR("@MATRIX"),        NodeType::Matrix},
             };
     };
 }

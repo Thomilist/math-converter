@@ -1,6 +1,8 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
 
+#include "definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <memory>
@@ -14,6 +16,7 @@ namespace mcon
     enum class Setting
     {
         Help,
+        Download,
         DecimalSeparator,
         InputLanguage,
         OutputLanguage
@@ -30,7 +33,11 @@ namespace mcon
         Mathcad,
         Latex,
         UnicodeMath,
-        MathML
+        AsciiMath,
+        MathML,
+        Mathematica,
+        Excel,
+        MathJSON
     };
 
     enum class OutputLanguage
@@ -38,7 +45,11 @@ namespace mcon
         Mathcad,
         Latex,
         UnicodeMath,
-        MathML
+        AsciiMath,
+        MathML,
+        Mathematica,
+        Excel,
+        MathJSON
     };
     
     class Settings : public std::enable_shared_from_this<Settings>
@@ -47,73 +58,75 @@ namespace mcon
             Settings();
             ~Settings();
             
-            void UpdateSettings(std::wstring a_console_input);
+            void UpdateSettings(String a_console_input);
 
             DecimalSeparator decimal_separator;
             InputLanguage input_language;
             OutputLanguage output_language;
 
         private:
-            void CommandNotRecognised(std::wstring a_unknown_command);
+            void CommandNotRecognised(String a_unknown_command);
             void PrintHelp();
+            void Download();
 
             std::unique_ptr<CharacterStream> character_stream = std::make_unique<CharacterStream>();
             std::shared_ptr<CharacterSet> character_set = std::make_shared<CharacterSet>();
             Lexer lexer;
 
-            const std::unordered_map<std::wstring, Setting> commands = 
+            const std::unordered_map<String, Setting> commands = 
             {
-                {L"h",      Setting::Help},
-                {L"help",   Setting::Help},
-                {L"?",      Setting::Help},
-                {L"d",      Setting::DecimalSeparator},
-                {L"dec",    Setting::DecimalSeparator},
-                {L"ds",     Setting::DecimalSeparator},
-                {L"sep",    Setting::DecimalSeparator},
-                {L"i",      Setting::InputLanguage},
-                {L"in",     Setting::InputLanguage},
-                {L"input",  Setting::InputLanguage},
-                {L"o",      Setting::OutputLanguage},
-                {L"out",    Setting::OutputLanguage},
-                {L"output", Setting::OutputLanguage},
+                {STR("h"),          Setting::Help},
+                {STR("help"),       Setting::Help},
+                {STR("?"),          Setting::Help},
+                {STR("download"),   Setting::Download},
+                {STR("d"),          Setting::DecimalSeparator},
+                {STR("dec"),        Setting::DecimalSeparator},
+                {STR("ds"),         Setting::DecimalSeparator},
+                {STR("sep"),        Setting::DecimalSeparator},
+                {STR("i"),          Setting::InputLanguage},
+                {STR("in"),         Setting::InputLanguage},
+                {STR("input"),      Setting::InputLanguage},
+                {STR("o"),          Setting::OutputLanguage},
+                {STR("out"),        Setting::OutputLanguage},
+                {STR("output"),     Setting::OutputLanguage},
             };
 
-            const std::unordered_map<std::wstring, DecimalSeparator> decimal_separator_settings = 
+            const std::unordered_map<String, DecimalSeparator> decimal_separator_settings = 
             {
-                {L"period",     DecimalSeparator::Period},
-                {L".",          DecimalSeparator::Period},
-                {L"comma",      DecimalSeparator::Comma},
-                {L",",          DecimalSeparator::Comma},
+                {STR("period"),     DecimalSeparator::Period},
+                {STR("."),          DecimalSeparator::Period},
+                {STR("comma"),      DecimalSeparator::Comma},
+                {STR(","),          DecimalSeparator::Comma},
             };
 
-            const std::unordered_map<std::wstring, InputLanguage> input_language_settings = 
+            const std::unordered_map<String, InputLanguage> input_language_settings = 
             {
-                {L"Mathcad",        InputLanguage::Mathcad},
-                {L"mathcad",        InputLanguage::Mathcad},
-                {L"LaTeX",          InputLanguage::Latex},
-                {L"Latex",          InputLanguage::Latex},
-                {L"latex",          InputLanguage::Latex},
-                {L"UnicodeMath",    InputLanguage::UnicodeMath},
-                {L"unicodemath",    InputLanguage::UnicodeMath},
-                {L"Unicode",        InputLanguage::UnicodeMath},
-                {L"unicode",        InputLanguage::UnicodeMath},
-                {L"MathML",         InputLanguage::MathML},
-                {L"mathml",         InputLanguage::MathML},
+                {STR("Mathcad"),        InputLanguage::Mathcad},
+                {STR("mathcad"),        InputLanguage::Mathcad},
+                {STR("LaTeX"),          InputLanguage::Latex},
+                {STR("Latex"),          InputLanguage::Latex},
+                {STR("latex"),          InputLanguage::Latex},
+                {STR("UnicodeMath"),    InputLanguage::UnicodeMath},
+                {STR("unicodemath"),    InputLanguage::UnicodeMath},
+                {STR("Unicode"),        InputLanguage::UnicodeMath},
+                {STR("unicode"),        InputLanguage::UnicodeMath},
+                {STR("MathML"),         InputLanguage::MathML},
+                {STR("mathml"),         InputLanguage::MathML},
             };
 
-            const std::unordered_map<std::wstring, OutputLanguage> output_language_settings = 
+            const std::unordered_map<String, OutputLanguage> output_language_settings = 
             {
-                {L"Mathcad",        OutputLanguage::Mathcad},
-                {L"mathcad",        OutputLanguage::Mathcad},
-                {L"LaTeX",          OutputLanguage::Latex},
-                {L"Latex",          OutputLanguage::Latex},
-                {L"latex",          OutputLanguage::Latex},
-                {L"UnicodeMath",    OutputLanguage::UnicodeMath},
-                {L"unicodemath",    OutputLanguage::UnicodeMath},
-                {L"Unicode",        OutputLanguage::UnicodeMath},
-                {L"unicode",        OutputLanguage::UnicodeMath},
-                {L"MathML",         OutputLanguage::MathML},
-                {L"mathml",         OutputLanguage::MathML},
+                {STR("Mathcad"),        OutputLanguage::Mathcad},
+                {STR("mathcad"),        OutputLanguage::Mathcad},
+                {STR("LaTeX"),          OutputLanguage::Latex},
+                {STR("Latex"),          OutputLanguage::Latex},
+                {STR("latex"),          OutputLanguage::Latex},
+                {STR("UnicodeMath"),    OutputLanguage::UnicodeMath},
+                {STR("unicodemath"),    OutputLanguage::UnicodeMath},
+                {STR("Unicode"),        OutputLanguage::UnicodeMath},
+                {STR("unicode"),        OutputLanguage::UnicodeMath},
+                {STR("MathML"),         OutputLanguage::MathML},
+                {STR("mathml"),         OutputLanguage::MathML},
             };
     };
 }

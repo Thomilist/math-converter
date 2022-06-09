@@ -1,6 +1,8 @@
 #ifndef __NODE_H__
 #define __NODE_H__
 
+#include "../../definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <vector>
@@ -21,7 +23,7 @@ namespace mcon
             void DeleteChildNode(uint64_t a_index);
 
             NodeType type;
-            std::wstring content;
+            String content;
             std::weak_ptr<Node> parent_node;
             uint64_t child_node_count = 0;
             std::vector<std::shared_ptr<Node>> child_nodes;

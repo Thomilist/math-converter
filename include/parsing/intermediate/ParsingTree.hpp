@@ -1,6 +1,8 @@
 #ifndef __PARSINGTREE_H__
 #define __PARSINGTREE_H__
 
+#include "../../definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <memory>
@@ -31,8 +33,8 @@ namespace mcon
             std::unique_ptr<Generator> generator;
             std::shared_ptr<Node> root_node;
             std::weak_ptr<Node> current_node;
-            std::wstring output;
-            std::wstring decimal_separator = L".";
+            String output;
+            String decimal_separator = STR(".");
 
         private:
 

@@ -23,7 +23,7 @@ namespace mcon
         Token temp_token(TokenType::StartOfStream);
 
         // Pair up the character sets and their corresponding token types for easy iteration
-        std::set<std::pair<TokenType, std::set<std::wstring>>> character_sets = {
+        std::set<std::pair<TokenType, std::set<String>>> character_sets = {
             {TokenType::EndOfStream, character_set->end_of_stream},
             {TokenType::Whitespace, character_set->whitespace},
             {TokenType::Text, character_set->letter},
@@ -38,7 +38,7 @@ namespace mcon
             bool character_appended = false;
 
             // Obtain the current character
-            std::wstring current_character = character_stream->Peek(0);
+            String current_character = character_stream->Peek(0);
 
             // Iterate over the character sets
             for (auto& set : character_sets)
@@ -76,8 +76,8 @@ namespace mcon
                 temp_token.Append(character_stream->Consume(0));
 
                 // Report the error to the console
-                std::wcout << L"Unknown character: " << current_character << L"\n"
-                << L"The character was not found in any of the supplied character sets." << L"\n"
+                ERROR_OUTPUT << STR("Unknown character: ") << current_character << STR("\n")
+                << STR("The character was not found in any of the supplied character sets.\n")
                 << std::endl;
             }
         }

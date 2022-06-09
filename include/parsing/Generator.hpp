@@ -1,6 +1,8 @@
 #ifndef __GENERATOR_H__
 #define __GENERATOR_H__
 
+#include "../definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <memory>

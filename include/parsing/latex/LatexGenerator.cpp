@@ -13,7 +13,7 @@ namespace mcon
     
     void LatexGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
-        a_parsing_tree->output = L"";
+        a_parsing_tree->output = STR("");
         
         // Only allow generation if the parsing tree is not empty
         if (a_parsing_tree->root_node->child_node_count > 0)
@@ -24,7 +24,7 @@ namespace mcon
         return;
     }
     
-    std::wstring LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
+    String LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
     {
         // Special case for matrices
         if (a_node->type == NodeType::Matrix)
@@ -32,8 +32,8 @@ namespace mcon
             return GenerateMatrix(a_node);
         }
         
-        std::wstring result = L"";
-        std::wstring template_text;
+        String result = STR("");
+        String template_text;
         
         // Fetch math operator template text
         try
@@ -42,9 +42,9 @@ namespace mcon
         }
         catch(const std::out_of_range& e)
         {
-            std::wcerr << L"Unable to print math expression.\n";
-            std::wcerr << L"Out-of-range exception in " << e.what() << "\n" << std::endl;
-            return L"#ERROR";
+            ERROR_OUTPUT << STR("Unable to print math expression.\n");
+            ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
+            return STR("#ERROR");
         }
 
         // Run the template text through a lexer
@@ -64,8 +64,8 @@ namespace mcon
         while (current_token.type != TokenType::EndOfStream)
         {
             // LaTeX expressions placeholders begin with #...
-            if (    current_token.content == L"#"   &&
-                    lexer.Peek(-1).content != L"\\"
+            if (    current_token.content == STR("#")   &&
+                    lexer.Peek(-1).content != STR("\\")
             )
             {
                 current_token = lexer.Consume(0);
@@ -81,16 +81,16 @@ namespace mcon
                     }
                     catch(const std::out_of_range& e)
                     {
-                        std::wcerr << L"LaTeX template indexing error.\n";
-                        std::wcerr << L"Out-of-range exception in " << e.what() << "\n" << std::endl;
-                        result += L"#ERROR";
+                        ERROR_OUTPUT << STR("LaTeX template indexing error.\n");
+                        ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
+                        result += STR("#ERROR");
                     }
 
                     current_token = lexer.Consume(0);
                 }
                 else
                 {
-                    result += L"#ERROR";
+                    result += STR("#ERROR");
                 }
             }
             // Non-placeholder text is simply appended
@@ -125,7 +125,7 @@ namespace mcon
             {
                 std::size_t position = a_parsing_tree->output.find(substitution_item.first);
 
-                if (position == std::wstring::npos)
+                if (position == String::npos)
                 {
                     break;
                 }
@@ -136,27 +136,27 @@ namespace mcon
         return;
     }
     
-    std::wstring LatexGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
+    String LatexGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
     {
         uint64_t row_count = std::stoi(a_node->child_nodes.at(0)->content);
         uint64_t collumn_count = std::stoi(a_node->child_nodes.at(1)->content);
         
-        std::wstring matrix_begin = L"\\left[\\begin{matrix}";
-        std::wstring matrix_end = L"\\end{matrix}\\right]";
-        std::wstring matrix_break = L"\\\\[0.0em]";
+        String matrix_begin = STR("\\left[\\begin{matrix}");
+        String matrix_end = STR("\\end{matrix}\\right]");
+        String matrix_break = STR("\\\\[0.0em]");
         
-        std::wstring result = matrix_begin;
+        String result = matrix_begin;
 
         for (uint64_t row = 0; row < row_count; row++)
         {
             for (uint64_t collumn = 0; collumn < collumn_count; collumn++)
             {
                 uint64_t index = 2 + row * collumn_count + collumn;
-                result += L"{" + ApplyTemplates(a_node->child_nodes.at(index)) + L"}";
+                result += STR("{") + ApplyTemplates(a_node->child_nodes.at(index)) + STR("}");
 
                 if ((collumn + 1) < collumn_count)
                 {
-                    result += L"&";
+                    result += STR("&");
                 }
             }
 
@@ -171,17 +171,17 @@ namespace mcon
         return result;
     }
     
-    std::wstring LatexGenerator::FormatComplexNumber(std::wstring a_number)
+    String LatexGenerator::FormatComplexNumber(String a_number)
     {
         int index = a_number.length() - 1;
 
-        if (a_number.at(index) == L'i')
+        if (a_number.at(index) == STR('i'))
         {
-            a_number.replace(index, 1, L"\\mathrm{i}");
+            a_number.replace(index, 1, STR("\\mathrm{i}"));
         }
-        else if (a_number.at(index) == L'j')
+        else if (a_number.at(index) == STR('j'))
         {
-            a_number.replace(index, 1, L"\\mathrm{j}");
+            a_number.replace(index, 1, STR("\\mathrm{j}"));
         }
 
         return a_number;

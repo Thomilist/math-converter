@@ -40,14 +40,16 @@ namespace mcon
     {
         nlohmann::json json_character_set = LoadJSON(a_file_path);
 
-        std::set<std::pair<std::string, std::set<std::wstring>*>> character_sets = {
+        std::set<std::pair<std::string, std::set<String>*>> character_sets = {
             {"whitespace", &whitespace},
             {"letter", &letter},
             {"number", &number},
             {"symbol", &symbol}
         };
 
+        #ifdef WINDOWS
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+        #endif
 
         // Iterate over the four character sets
         for (auto& set : character_sets)
@@ -59,7 +61,11 @@ namespace mcon
                 for (auto& character : json_character_set.at(set.first).items())
                 {
                     // Insert new character if not present already
-                    set.second->insert(converter.from_bytes(character.value()));
+                    #ifdef WINDOWS
+                        set.second->insert(converter.from_bytes(character.value()));
+                    #else
+                        set.second->insert(character.value());
+                    #endif
                 }
             }
         }

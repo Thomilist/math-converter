@@ -1,6 +1,8 @@
 #ifndef __LEXER_H__
 #define __LEXER_H__
 
+#include "definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <vector>

@@ -1,6 +1,8 @@
 #ifndef __LATEXPARSER_H__
 #define __LATEXPARSER_H__
 
+#include "../../definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <memory>

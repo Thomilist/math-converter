@@ -42,20 +42,14 @@ namespace mcon
             catch(const std::out_of_range& e)
             {
                 CommandNotRecognised(current_token.content);
-                std::wcerr << L"Out-of-range exception in " << e.what() << L"\n" << std::endl;
+                ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
                 return;
             }
         }
         else
         {
             CommandNotRecognised(current_token.content);
-            std::wcerr << std::endl;
-        }
-        
-        if (setting == Setting::Help)
-        {
-            PrintHelp();
-            return;
+            ERROR_OUTPUT << std::endl;
         }
 
         current_token = lexer.Consume(0);
@@ -63,10 +57,16 @@ namespace mcon
         // Read argument
         while (true)
         {
-            if (current_token.type == TokenType::EndOfStream)
+            if (    setting == Setting::Help    ||
+                    setting == Setting::Download
+            )
             {
-                std::wcerr  << L"The command is incomplete. Please provide an argument.\n"
-                            << L"Use the command \"help\" to display help.\n" << std::endl;
+                break;
+            }
+            else if (current_token.type == TokenType::EndOfStream)
+            {
+                ERROR_OUTPUT  << STR("The command is incomplete. Please provide an argument.\n")
+                            << STR("Use the command \"help\" to display help.\n") << std::endl;
                 return;
             }
             else if (   current_token.type == TokenType::Text   ||
@@ -88,22 +88,27 @@ namespace mcon
                     PrintHelp();
                     break;
                 }
+                case Setting::Download:
+                {
+                    Download();
+                    break;
+                }
                 case Setting::DecimalSeparator:
                 {
                     decimal_separator = decimal_separator_settings.at(current_token.content);
-                    std::wcout << L"Decimal separator updated.\n" << std::endl;
+                    STRING_OUTPUT << STR("Decimal separator updated.\n") << std::endl;
                     break;
                 }
                 case Setting::InputLanguage:
                 {
                     input_language = input_language_settings.at(current_token.content);
-                    std::wcout << L"Input language updated.\n" << std::endl;
+                    STRING_OUTPUT << STR("Input language updated.\n") << std::endl;
                     break;
                 }
                 case Setting::OutputLanguage:
                 {
                     output_language = output_language_settings.at(current_token.content);
-                    std::wcout << L"Output language updated.\n" << std::endl;
+                    STRING_OUTPUT << STR("Output language updated.\n") << std::endl;
                     break;
                 }
             }
@@ -111,7 +116,7 @@ namespace mcon
         catch(const std::out_of_range& e)
         {
             CommandNotRecognised(current_token.content);
-            std::wcerr << L"Out-of-range exception in " << e.what() << L"\n" << std::endl;
+            ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
         }
 
         return;
@@ -119,39 +124,52 @@ namespace mcon
     
     void Settings::CommandNotRecognised(std::wstring a_unknown_command)
     {
-        std::wcerr  << L"Command \"" << a_unknown_command << L"\" not recognised.\n"
-                    << L"Use the command \"help\" to display help.\n";
+        ERROR_OUTPUT  << STR("Command \"") << a_unknown_command << STR("\" not recognised.\n")
+                    << STR("Use the command \"help\" to display help.\n");
         return;
     }
     
     void Settings::PrintHelp()
     {
-        std::wcout
-        << L"\n"
-        << L"Displaying help for math-converter\n"
-        << L"\n"
-        << L"Command format:\n"
-        << L"COMMAND ARGUMENT\n"
-        << L"\n"
-        << L"Available commands:\n"
-        << L"\n"
-        << L"Display help\n"
-        << L"COMMAND aliases:       h help ?\n"
-        << L"Available ARGUMENTs:   none\n"
-        << L"\n"
-        << L"Set decimal separator\n"
-        << L"COMMAND aliases:       d dec ds sep\n"
-        << L"Available ARGUMENTs:   period . comma ,\n"
-        << L"\n"
-        << L"Set input language\n"
-        << L"COMMAND aliases:       i in input\n"
-        << L"Available ARGUMENTs:   Mathcad LaTeX UnicodeMath MathML\n"
-        << L"\n"
-        << L"Set output language\n"
-        << L"COMMAND aliases:       o out output\n"
-        << L"Available ARGUMENTs:   Mathcad LaTeX UnicodeMath MathML\n"
+        STRING_OUTPUT
+        << STR("\n")
+        << STR("Displaying help for math-converter\n")
+        << STR("\n")
+        << STR("Command format:\n")
+        << STR("COMMAND ARGUMENT\n")
+        << STR("\n")
+        << STR("Available commands:\n")
+        << STR("\n")
+        << STR("Display help\n")
+        << STR("COMMAND aliases:       h help ?\n")
+        << STR("Available ARGUMENTs:   none\n")
+        << STR("\n")
+        << STR("Open download page\n")
+        << STR("COMMAND aliases:       download\n")
+        << STR("Available ARGUMENTs:   none\n")
+        << STR("\n")
+        << STR("Set decimal separator\n")
+        << STR("COMMAND aliases:       d dec ds sep\n")
+        << STR("Available ARGUMENTs:   period . comma ,\n")
+        /*
+        << STR("\n")
+        << STR("Set input language\n")
+        << STR("COMMAND aliases:       i in input\n")
+        << STR("Available ARGUMENTs:   Mathcad LaTeX UnicodeMath MathML\n")
+        << STR("\n")
+        << STR("Set output language\n")
+        << STR("COMMAND aliases:       o out output\n")
+        << STR("Available ARGUMENTs:   Mathcad LaTeX UnicodeMath MathML\n")
+        */
         << std::endl;
         
+        return;
+    }
+    
+    void Settings::Download()
+    {
+        system("start https://github.com/Thomilist/math-converter/releases");
+        STRING_OUTPUT << STR("Opening download page in browser...\n") << std::endl;
         return;
     }
 }

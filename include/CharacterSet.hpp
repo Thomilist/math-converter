@@ -1,6 +1,8 @@
 #ifndef __CHARACTERSET_H__
 #define __CHARACTERSET_H__
 
+#include "definitions.hpp"
+
 // Standard libraries
 #include <iostream>
 #include <fstream>
@@ -27,11 +29,11 @@ namespace mcon
             void LoadFromFolder(std::string a_folder_path);
             void LoadFromFile(std::string a_file_path);
 
-            std::set<std::wstring> end_of_stream = {L"\0", L"", std::wstring(1, char(0))};
-            std::set<std::wstring> whitespace;
-            std::set<std::wstring> letter;
-            std::set<std::wstring> number;
-            std::set<std::wstring> symbol;
+            std::set<String> end_of_stream = {STR("\0"), STR(""), String(1, char(0))};
+            std::set<String> whitespace;
+            std::set<String> letter;
+            std::set<String> number;
+            std::set<String> symbol;
         
         private:
 

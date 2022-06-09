@@ -31,7 +31,7 @@ namespace mcon
     
     void MathcadParser::ParseExpression(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
-        std::wstring current_math_operator;
+        String current_math_operator;
         
         do
         {
@@ -41,7 +41,7 @@ namespace mcon
                 {
                     // Complex expressions begin with an opening parens
                     // They contain other expressions, so this increases the parsing depth
-                    if (current_token.content == L"(")
+                    if (current_token.content == STR("("))
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         current_node->AddChildNode();
@@ -56,7 +56,7 @@ namespace mcon
                     }
                     // Complex expressions end with a closing parens
                     // This decreases the parsing depth
-                    else if (current_token.content == L")")
+                    else if (current_token.content == STR(")"))
                     {
                         auto current_node = a_parsing_tree->current_node.lock();
                         a_parsing_tree->SetCurrentNode(current_node->parent_node.lock());
@@ -73,7 +73,7 @@ namespace mcon
 
                         // Handling of decimal numbers
                         if (    lexer->Peek(0).type == TokenType::Symbol    &&
-                                lexer->Peek(0).content == L"."              &&
+                                lexer->Peek(0).content == STR(".")          &&
                                 lexer->Peek(1).type == TokenType::Number
                         )
                         {
@@ -86,7 +86,7 @@ namespace mcon
 
                         // Handling of complex numbers
                         if (    lexer->Peek(0).type == TokenType::Text  &&
-                                (lexer->Peek(0).content == L"i" || lexer->Peek(0).content == L"j")
+                                (lexer->Peek(0).content == STR("i") || lexer->Peek(0).content == STR("j"))
                         )
                         {
                             current_token = lexer->Consume(0);
@@ -105,7 +105,7 @@ namespace mcon
                         while ((lexer->Peek(0).type == TokenType::Text      ||
                                 lexer->Peek(0).type == TokenType::Symbol    ||
                                 lexer->Peek(0).type == TokenType::Number)   &&
-                                lexer->Peek(0).content != L")")
+                                lexer->Peek(0).content != STR(")"))
                         {
                             child_node->content = child_node->content + lexer->Consume(0).content;
                         }
@@ -133,8 +133,8 @@ namespace mcon
                     }
                     catch(const std::out_of_range& e)
                     {
-                        std::wcerr << L"Unknown math operator: " << current_math_operator << L"\n";
-                        std::wcerr << L"Out-of-range exception in " << e.what() << L"\n" << std::endl;
+                        ERROR_OUTPUT << STR("Unknown math operator: ") << current_math_operator << STR("\n");
+                        ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
                         
                         state = ParserState::LookingForExpression;
                         return;
@@ -176,17 +176,17 @@ namespace mcon
             for (auto child_node : a_node->child_nodes)
             {
                 if (    child_node->type == NodeType::Text  &&
-                        (child_node->content == L"@PLACEHOLDER" || child_node->content == L"@RPLACEHOLDER")
+                        (child_node->content == STR("@PLACEHOLDER") || child_node->content == STR("@RPLACEHOLDER"))
                 )
                 {
-                    child_node->content = L"";
+                    child_node->content = STR("");
                 }
             }
         }
 
         // Escape characters
-        EscapeCharacter(a_node, L"#", L"\\#");
-        EscapeCharacter(a_node, L"_", L"\\_");
+        EscapeCharacter(a_node, STR("#"), STR("\\#"));
+        EscapeCharacter(a_node, STR("_"), STR("\\_"));
 
         // Correct type of matrix size nodes
         if (a_node->type == NodeType::Matrix)
@@ -198,13 +198,13 @@ namespace mcon
         return;
     }
     
-    void MathcadParser::EscapeCharacter(std::shared_ptr<Node> a_node, std::wstring a_find, std::wstring a_replace)
+    void MathcadParser::EscapeCharacter(std::shared_ptr<Node> a_node, String a_find, String a_replace)
     {
         if (a_node->type == NodeType::Text)
         {
             std::size_t position = a_node->content.find(a_find);
 
-            if (position != std::wstring::npos)
+            if (position != String::npos)
             {
                 a_node->content.replace(position, a_find.length(), a_replace);
             }

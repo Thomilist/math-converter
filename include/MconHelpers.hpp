@@ -1,13 +1,18 @@
 #ifndef __MCONHELPERS_H__
 #define __MCONHELPERS_H__
 
+#include "definitions.hpp"
+
 // Standard libraries
 #include <string>
 #include <iostream>
 #include <stdexcept>
-#include <windows.h>
 #include <memory>
 #include <mutex>
+
+#ifdef WINDOWS
+#include <windows.h>
+#endif
 
 // JSON header
 #include <nlohmann/json.hpp>
@@ -33,7 +38,7 @@ namespace mcon
     class Parser;
     class Generator;
     
-    void SendInputString(std::wstring str);
+    void SendInputString(String str);
     void MathConversionHotkey(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
     void ConfigInput(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
 }
