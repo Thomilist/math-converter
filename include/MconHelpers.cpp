@@ -138,7 +138,7 @@ namespace mcon
                 // Read and apply settings
                 a_settings_mutex->lock();
 
-                switch (a_settings->decimal_separator)
+                switch (a_settings->decimal_separator.first)
                 {
                     case DecimalSeparator::Period:
                     {
@@ -152,9 +152,9 @@ namespace mcon
                     }
                 }
 
-                input_language = a_settings->input_language;
-                output_language = a_settings->output_language;
-                output_mode = a_settings->output_mode;
+                input_language = a_settings->input_language.first;
+                output_language = a_settings->output_language.first;
+                output_mode = a_settings->output_mode.first;
 
                 a_settings_mutex->unlock();
                 
@@ -207,7 +207,7 @@ namespace mcon
         {
             std::getline(std::wcin, input);
             a_settings_mutex->lock();
-            a_settings->UpdateSettings(input);
+            a_settings->UpdateSettings(input, true);
             a_settings_mutex->unlock();
         }
 

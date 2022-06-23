@@ -26,20 +26,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "include/definitions.hpp"
-
 // Standard libraries
 #include <iostream>
 #include <memory>
 #include <fcntl.h>
 #include <thread>
 #include <mutex>
+
+// Forward declarations
+#include "include/Definitions.hpp"
+#include "include/ForwardDeclarations.hpp"
+
+// OS-specific libraries
 #ifdef WINDOWS
 #include <windows.h>
 #endif
-
-// Forward declarations
-#include "include/ForwardDeclarations.hpp"
 
 // Custom headers
 #include "include/MconHelpers.hpp"

@@ -9,12 +9,13 @@ namespace mcon
     {
         character_set->LoadFromFolder(".\\resources\\character-sets");
         STRING_OUTPUT << STR("For usage information, enter \"help\" (without the quote marks) or read the associated user guide.") << std::endl;
+        LoadSettings();
     }
     
     Settings::~Settings()
     { }
     
-    void Settings::UpdateSettings(std::wstring a_console_input)
+    void Settings::UpdateSettings(std::wstring a_console_input, bool a_user_triggered)
     {
         lexer.character_stream->Read(a_console_input);
         lexer.Scan();
@@ -102,28 +103,49 @@ namespace mcon
                 }
                 case Setting::DecimalSeparator:
                 {
-                    decimal_separator = decimal_separator_settings.at(current_token.content);
-                    STRING_OUTPUT << STR("\nDecimal separator updated.\n") << std::endl;
+                    decimal_separator.first = decimal_separator_settings.at(current_token.content);
+                    decimal_separator.second = a_console_input;
+                    if (a_user_triggered)
+                    {
+                        STRING_OUTPUT << STR("\nDecimal separator updated.\n") << std::endl;
+                    }
                     break;
                 }
                 case Setting::OutputMode:
                 {
-                    output_mode = output_mode_settings.at(current_token.content);
-                    STRING_OUTPUT << STR("\nOutput mode updated.\n") << std::endl;
+                    output_mode.first = output_mode_settings.at(current_token.content);
+                    output_mode.second = a_console_input;
+                    if (a_user_triggered)
+                    {
+                        STRING_OUTPUT << STR("\nOutput mode updated.\n") << std::endl;
+                    }
                     break;
                 }
                 case Setting::InputLanguage:
                 {
-                    input_language = input_language_settings.at(current_token.content);
-                    STRING_OUTPUT << STR("\nInput language updated.\n") << std::endl;
+                    input_language.first = input_language_settings.at(current_token.content);
+                    input_language.second = a_console_input;
+                    if (a_user_triggered)
+                    {
+                        STRING_OUTPUT << STR("\nInput language updated.\n") << std::endl;
+                    }
                     break;
                 }
                 case Setting::OutputLanguage:
                 {
-                    output_language = output_language_settings.at(current_token.content);
-                    STRING_OUTPUT << STR("\nOutput language updated.\n") << std::endl;
+                    output_language.first = output_language_settings.at(current_token.content);
+                    output_language.second = a_console_input;
+                    if (a_user_triggered)
+                    {
+                        STRING_OUTPUT << STR("\nOutput language updated.\n") << std::endl;
+                    }
                     break;
                 }
+            }
+
+            if (a_user_triggered)
+            {
+                SaveSettings();
             }
         }
         catch(const std::out_of_range& e)
@@ -231,10 +253,10 @@ namespace mcon
 
         try
         {
-            current_decimal_separator = decimal_separator_names.at(decimal_separator);
-            current_output_mode = output_mode_names.at(output_mode);
-            current_input_language = input_language_names.at(input_language);
-            current_output_language = output_language_names.at(output_language);
+            current_decimal_separator = decimal_separator_names.at(decimal_separator.first);
+            current_output_mode = output_mode_names.at(output_mode.first);
+            current_input_language = input_language_names.at(input_language.first);
+            current_output_language = output_language_names.at(output_language.first);
         }
         catch(const std::out_of_range& e)
         {
@@ -261,6 +283,32 @@ namespace mcon
         << current_output_language
         << STR("\n")
         << std::endl;
+
+        return;
+    }
+    
+    void Settings::LoadSettings()
+    {
+        std::wifstream config_file(".\\config\\settings.conf");
+        
+        for (String command; std::getline(config_file, command); )
+        {
+            UpdateSettings(command, false);
+        }
+
+        return;
+    }
+    
+    void Settings::SaveSettings()
+    {
+        String commands =
+            decimal_separator.second + STR("\n") +
+            output_mode.second + STR("\n") +
+            input_language.second + STR("\n") +
+            output_language.second + STR("\n");
+        
+        std::wofstream config_file(".\\config\\settings.conf");
+        config_file << commands;
 
         return;
     }

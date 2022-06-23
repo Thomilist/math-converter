@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
+#include <fstream>
 
 // Definitions and forward declarations
 #include "Definitions.hpp"
@@ -72,13 +73,15 @@ namespace mcon
             Settings();
             ~Settings();
             
-            void UpdateSettings(String a_console_input);
+            void UpdateSettings(String a_console_input, bool a_user_triggered);
             void ShowSettings();
+            void LoadSettings();
+            void SaveSettings();
 
-            DecimalSeparator decimal_separator = DecimalSeparator::Period;
-            OutputMode output_mode = OutputMode::Keystrokes;
-            InputLanguage input_language = InputLanguage::Mathcad;
-            OutputLanguage output_language = OutputLanguage::Latex;
+            std::pair<DecimalSeparator, String> decimal_separator = {DecimalSeparator::Period, STR("decimal period")};
+            std::pair<OutputMode, String> output_mode = {OutputMode::Keystrokes, STR("mode keystrokes")};
+            std::pair<InputLanguage, String> input_language = {InputLanguage::Mathcad, STR("input mathcad")};
+            std::pair<OutputLanguage, String> output_language = {OutputLanguage::Latex, STR("output latex")};
 
         private:
             void CommandNotRecognised(String a_unknown_command);
