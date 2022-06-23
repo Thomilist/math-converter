@@ -38,6 +38,9 @@ SOFTWARE.
 #include <windows.h>
 #endif
 
+// Forward declarations
+#include "include/ForwardDeclarations.hpp"
+
 // Custom headers
 #include "include/MconHelpers.hpp"
 #include "include/Settings.hpp"

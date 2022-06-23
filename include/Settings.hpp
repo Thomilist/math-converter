@@ -1,12 +1,14 @@
 #ifndef __SETTINGS_H__
 #define __SETTINGS_H__
 
-#include "definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <memory>
 #include <unordered_map>
+
+// Definitions and forward declarations
+#include "Definitions.hpp"
+#include "ForwardDeclarations.hpp"
 
 // Custom headers
 #include "Lexer.hpp"
@@ -16,10 +18,12 @@ namespace mcon
     enum class Setting
     {
         Help,
+        ShowSettings,
         Download,
         DecimalSeparator,
         InputLanguage,
-        OutputLanguage
+        OutputLanguage,
+        OutputMode
     };
     
     enum class DecimalSeparator
@@ -31,6 +35,7 @@ namespace mcon
     enum class InputLanguage
     {
         Mathcad,
+        /*
         Latex,
         UnicodeMath,
         AsciiMath,
@@ -38,18 +43,27 @@ namespace mcon
         Mathematica,
         Excel,
         MathJSON
+        */
     };
 
     enum class OutputLanguage
     {
         Mathcad,
         Latex,
+        /*
         UnicodeMath,
         AsciiMath,
         MathML,
         Mathematica,
         Excel,
         MathJSON
+        */
+    };
+
+    enum class OutputMode
+    {
+        Keystrokes,
+        Clipboard
     };
     
     class Settings : public std::enable_shared_from_this<Settings>
@@ -59,10 +73,12 @@ namespace mcon
             ~Settings();
             
             void UpdateSettings(String a_console_input);
+            void ShowSettings();
 
-            DecimalSeparator decimal_separator;
-            InputLanguage input_language;
-            OutputLanguage output_language;
+            DecimalSeparator decimal_separator = DecimalSeparator::Period;
+            OutputMode output_mode = OutputMode::Keystrokes;
+            InputLanguage input_language = InputLanguage::Mathcad;
+            OutputLanguage output_language = OutputLanguage::Latex;
 
         private:
             void CommandNotRecognised(String a_unknown_command);
@@ -79,6 +95,9 @@ namespace mcon
                 {STR("help"),       Setting::Help},
                 {STR("?"),          Setting::Help},
                 {STR("download"),   Setting::Download},
+                {STR("s"),          Setting::ShowSettings},
+                {STR("show"),       Setting::ShowSettings},
+                {STR("settings"),   Setting::ShowSettings},
                 {STR("d"),          Setting::DecimalSeparator},
                 {STR("dec"),        Setting::DecimalSeparator},
                 {STR("ds"),         Setting::DecimalSeparator},
@@ -89,6 +108,14 @@ namespace mcon
                 {STR("o"),          Setting::OutputLanguage},
                 {STR("out"),        Setting::OutputLanguage},
                 {STR("output"),     Setting::OutputLanguage},
+                {STR("mode"),       Setting::OutputMode},
+                {STR("m"),          Setting::OutputMode},
+            };
+
+            const std::unordered_map<DecimalSeparator, String> decimal_separator_names =
+            {
+                {DecimalSeparator::Period,  STR("Period (.)")},
+                {DecimalSeparator::Comma,   STR("Comma (,)")},
             };
 
             const std::unordered_map<String, DecimalSeparator> decimal_separator_settings = 
@@ -99,10 +126,39 @@ namespace mcon
                 {STR(","),          DecimalSeparator::Comma},
             };
 
+            const std::unordered_map<OutputMode, String> output_mode_names =
+            {
+                {OutputMode::Keystrokes,    STR("Keystrokes")},
+                {OutputMode::Clipboard,     STR("Clipboard")},
+            };
+
+            const std::unordered_map<String, OutputMode> output_mode_settings = 
+            {
+                {STR("keystrokes"),     OutputMode::Keystrokes},
+                {STR("keys"),           OutputMode::Keystrokes},
+                {STR("clipboard"),      OutputMode::Clipboard},
+                {STR("clip"),           OutputMode::Clipboard},
+            };
+
+            const std::unordered_map<InputLanguage, String> input_language_names =
+            {
+                {InputLanguage::Mathcad,        STR("Mathcad")},
+                /*
+                {InputLanguage::Latex,          STR("LaTeX")},
+                {InputLanguage::UnicodeMath,    STR("UnicodeMath")},
+                {InputLanguage::AsciiMath,      STR("AsciiMath")},
+                {InputLanguage::MathML,         STR("MathML")},
+                {InputLanguage::Mathematica,    STR("Mathematica")},
+                {InputLanguage::Excel,          STR("Excel")},
+                {InputLanguage::MathJSON,       STR("MathJSON")},
+                */
+            };
+
             const std::unordered_map<String, InputLanguage> input_language_settings = 
             {
                 {STR("Mathcad"),        InputLanguage::Mathcad},
                 {STR("mathcad"),        InputLanguage::Mathcad},
+                /*
                 {STR("LaTeX"),          InputLanguage::Latex},
                 {STR("Latex"),          InputLanguage::Latex},
                 {STR("latex"),          InputLanguage::Latex},
@@ -110,8 +166,36 @@ namespace mcon
                 {STR("unicodemath"),    InputLanguage::UnicodeMath},
                 {STR("Unicode"),        InputLanguage::UnicodeMath},
                 {STR("unicode"),        InputLanguage::UnicodeMath},
+                {STR("AsciiMath"),      InputLanguage::AsciiMath},
+                {STR("asciimath"),      InputLanguage::AsciiMath},
+                {STR("Ascii"),          InputLanguage::AsciiMath},
+                {STR("ASCII"),          InputLanguage::AsciiMath},
+                {STR("ascii"),          InputLanguage::AsciiMath},
                 {STR("MathML"),         InputLanguage::MathML},
                 {STR("mathml"),         InputLanguage::MathML},
+                {STR("Mathematica"),    InputLanguage::Mathematica},
+                {STR("mathematica"),    InputLanguage::Mathematica},
+                {STR("Excel"),          InputLanguage::Excel},
+                {STR("excel"),          InputLanguage::Excel},
+                {STR("MathJSON"),       InputLanguage::MathJSON},
+                {STR("mathjson"),       InputLanguage::MathJSON},
+                {STR("JSON"),           InputLanguage::MathJSON},
+                {STR("json"),           InputLanguage::MathJSON},
+                */
+            };
+
+            const std::unordered_map<OutputLanguage, String> output_language_names =
+            {
+                {OutputLanguage::Mathcad,       STR("Mathcad")},
+                {OutputLanguage::Latex,         STR("LaTeX")},
+                /*
+                {OutputLanguage::UnicodeMath,   STR("UnicodeMath")},
+                {OutputLanguage::AsciiMath,     STR("AsciiMath")},
+                {OutputLanguage::MathML,        STR("MathML")},
+                {OutputLanguage::Mathematica,   STR("Mathematica")},
+                {OutputLanguage::Excel,         STR("Excel")},
+                {OutputLanguage::MathJSON,      STR("MathJSON")},
+                */
             };
 
             const std::unordered_map<String, OutputLanguage> output_language_settings = 
@@ -121,12 +205,27 @@ namespace mcon
                 {STR("LaTeX"),          OutputLanguage::Latex},
                 {STR("Latex"),          OutputLanguage::Latex},
                 {STR("latex"),          OutputLanguage::Latex},
+                /*
                 {STR("UnicodeMath"),    OutputLanguage::UnicodeMath},
                 {STR("unicodemath"),    OutputLanguage::UnicodeMath},
                 {STR("Unicode"),        OutputLanguage::UnicodeMath},
                 {STR("unicode"),        OutputLanguage::UnicodeMath},
+                {STR("AsciiMath"),      OutputLanguage::AsciiMath},
+                {STR("asciimath"),      OutputLanguage::AsciiMath},
+                {STR("Ascii"),          OutputLanguage::AsciiMath},
+                {STR("ASCII"),          OutputLanguage::AsciiMath},
+                {STR("ascii"),          OutputLanguage::AsciiMath},
                 {STR("MathML"),         OutputLanguage::MathML},
                 {STR("mathml"),         OutputLanguage::MathML},
+                {STR("Mathematica"),    OutputLanguage::Mathematica},
+                {STR("mathematica"),    OutputLanguage::Mathematica},
+                {STR("Excel"),          OutputLanguage::Excel},
+                {STR("excel"),          OutputLanguage::Excel},
+                {STR("MathJSON"),       OutputLanguage::MathJSON},
+                {STR("mathjson"),       OutputLanguage::MathJSON},
+                {STR("JSON"),           OutputLanguage::MathJSON},
+                {STR("json"),           OutputLanguage::MathJSON},
+                */
             };
     };
 }

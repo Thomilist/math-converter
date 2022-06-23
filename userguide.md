@@ -1,8 +1,8 @@
-# User guide for math-converter-1.1.2
+# User guide for math-converter-1.2.0
 
 ## Hotkeys
 
-There is only one hotkey in math-converter: `CTRL + SHIFT + V`. This will attempt to convert plain text from the user's clipboard from the selected input math language to the selected output math language and then type it into the active window.
+There is only one hotkey in math-converter: `CTRL + SHIFT + V`. This will attempt to convert plain text from the user's clipboard from the selected input math language to the selected output math language and then type it into the active window or place it in the user's clipboard.
 
 ## Supported math languages
 
@@ -18,6 +18,7 @@ When copying from Mathcad, be sure to copy from within a math field i.e. with th
 
 List of supported math languages for output:
 
+- Mathcad
 - LaTeX
 
 ## Supported math features
@@ -52,8 +53,9 @@ The supported input character set can be extended with additional, user-made `.j
 - Display help
 - Open download page
 - Set decimal separator
-
-The commands to set input and output math languages are also present, but they currently have no effect.
+- Set output mode
+- Set input language
+- Set output language
 
 ### Display help
 
@@ -78,6 +80,30 @@ This command sets the decimal separator to either a period or a comma. The defau
 Command aliases: `d dec ds sep`<br>
 Available arguments: `period . comma ,`<br>
 Example: `d comma`
+
+### Set output mode
+
+This command sets the output mode. When using the `Keystrokes` mode, the output is sent to the focused window via simulated keystrokes. Alternatively, the output can be placed in the clipboard by using the `Clipboard` mode, after which it can be pasted with the usual `CTRL + V` shortcut. Some programs provide autocompletion of user input, which may prevent the `Keystrokes` mode from functioning correctly. The `Clipboard` mode is intended to circumvent this.
+
+Command aliases: `m mode`<br>
+Available arguments: `keystrokes keys clipboard clip`<br>
+Example: `m clip`
+
+### Set input language
+
+This command sets the input language. This is the language of the source math that the user copies to the clipboard. If the clipboard contents do not correspond to the input language setting, math-converter will not function correctly. 
+
+Command aliases: `i in input`<br>
+Available arguments: `Mathcad mathcad`<br>
+Example: `i mathcad`
+
+### Set output language
+
+This command sets the output language. This is the math language to convert to for use at the destination.
+
+Command aliases: `o out output`<br>
+Available arguments: `Mathcad mathcad LaTeX Latex latex`<br>
+Example: `o latex`
 
 ## Contact
 

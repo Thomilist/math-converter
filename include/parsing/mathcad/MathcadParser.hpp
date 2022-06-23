@@ -1,12 +1,14 @@
 #ifndef __MATHCADPARSER_H__
 #define __MATHCADPARSER_H__
 
-#include "../../definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <memory>
 #include <unordered_map>
+
+// Definitions and forward declarations
+#include "../../Definitions.hpp"
+#include "../../ForwardDeclarations.hpp"
 
 // Custom headers
 #include "../Parser.hpp"
@@ -22,7 +24,7 @@ namespace mcon
     class MathcadParser : public Parser
     {
         public:
-            MathcadParser(std::unique_ptr<Lexer> a_lexer);
+            MathcadParser(std::shared_ptr<Lexer> a_lexer);
             ~MathcadParser();
 
             void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
@@ -51,8 +53,9 @@ namespace mcon
                 {STR("-"),              NodeType::Subtraction},
                 {STR("*"),              NodeType::Multiplication},
                 {STR("/"),              NodeType::Division},
-                {STR("@SCALE"),         NodeType::Unit},
-                {STR("@RSCALE"),        NodeType::Unit},
+                {STR("@SCALE"),         NodeType::ScaledField},
+                {STR("@RSCALE"),        NodeType::ScaledResult},
+                {STR("@PLACEHOLDER"),   NodeType::Void},
                 {STR("@RPLACEHOLDER"),  NodeType::Void},
                 {STR("@NTHROOT"),       NodeType::Radix},
                 {STR("^"),              NodeType::Exponentiation},

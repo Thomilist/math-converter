@@ -5,11 +5,11 @@
 namespace mcon
 {
     ParsingTree::ParsingTree(
-        std::unique_ptr<Parser> a_parser, 
-        std::unique_ptr<Generator> a_generator
+        std::unordered_map<InputLanguage, std::unique_ptr<Parser>> a_parsers, 
+        std::unordered_map<OutputLanguage, std::unique_ptr<Generator>> a_generators
     ):
-        parser(std::move(a_parser)),
-        generator(std::move(a_generator))  
+        parsers(std::move(a_parsers)),
+        generators(std::move(a_generators))  
     {
         root_node = std::move(std::make_shared<Node>());
         root_node->type = NodeType::Root;

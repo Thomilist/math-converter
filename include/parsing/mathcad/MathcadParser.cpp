@@ -1,11 +1,12 @@
 #include "MathcadParser.hpp"
+#include "../intermediate/ParsingTree.hpp"
 
 
 
 namespace mcon
 {
-    MathcadParser::MathcadParser(std::unique_ptr<Lexer> a_lexer)
-        : Parser(std::move(a_lexer))
+    MathcadParser::MathcadParser(std::shared_ptr<Lexer> a_lexer)
+        : Parser(a_lexer)
     { }
     
     MathcadParser::~MathcadParser()
@@ -74,8 +75,7 @@ namespace mcon
                         // Handling of decimal numbers
                         if (    lexer->Peek(0).type == TokenType::Symbol    &&
                                 lexer->Peek(0).content == STR(".")          &&
-                                lexer->Peek(1).type == TokenType::Number
-                        )
+                                lexer->Peek(1).type == TokenType::Number    )
                         {
                             for (int i = 0; i < 2; i++)
                             {
@@ -85,9 +85,8 @@ namespace mcon
                         }
 
                         // Handling of complex numbers
-                        if (    lexer->Peek(0).type == TokenType::Text  &&
-                                (lexer->Peek(0).content == STR("i") || lexer->Peek(0).content == STR("j"))
-                        )
+                        if (    lexer->Peek(0).type == TokenType::Text                                      &&
+                                (lexer->Peek(0).content == STR("i") || lexer->Peek(0).content == STR("j"))  )
                         {
                             current_token = lexer->Consume(0);
                             child_node->content += current_token.content;
@@ -105,9 +104,16 @@ namespace mcon
                         while ((lexer->Peek(0).type == TokenType::Text      ||
                                 lexer->Peek(0).type == TokenType::Symbol    ||
                                 lexer->Peek(0).type == TokenType::Number)   &&
-                                lexer->Peek(0).content != STR(")"))
+                                lexer->Peek(0).content != STR(")")          )
                         {
                             child_node->content = child_node->content + lexer->Consume(0).content;
+                        }
+
+                        // Handle Mathcad placeholders
+                        if (    child_node->content == STR("@PLACEHOLDER")  ||
+                                child_node->content == STR("@RPLACEHOLDER") )
+                        {
+                            child_node->type = NodeType::Void;
                         }
                     }
 
@@ -149,8 +155,7 @@ namespace mcon
 
             current_token = lexer->Consume(0);
         } while (   current_token.type != TokenType::EndOfStream    &&
-                    current_token.type != TokenType::OutOfBounds
-        );
+                    current_token.type != TokenType::OutOfBounds    );
 
         return;
     }
@@ -175,9 +180,8 @@ namespace mcon
         {
             for (auto child_node : a_node->child_nodes)
             {
-                if (    child_node->type == NodeType::Text  &&
-                        (child_node->content == STR("@PLACEHOLDER") || child_node->content == STR("@RPLACEHOLDER"))
-                )
+                if (    child_node->type == NodeType::Text                                                          &&
+                        (child_node->content == STR("@PLACEHOLDER") || child_node->content == STR("@RPLACEHOLDER")) )
                 {
                     child_node->content = STR("");
                 }

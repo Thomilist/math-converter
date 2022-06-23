@@ -1,11 +1,13 @@
 #ifndef __GENERATOR_H__
 #define __GENERATOR_H__
 
-#include "../definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <memory>
+
+// Definitions and forward declarations
+#include "../Definitions.hpp"
+#include "../ForwardDeclarations.hpp"
 
 // Custom headers
 #include "../CharacterStream.hpp"
@@ -17,9 +19,6 @@
 
 namespace mcon
 {
-    // Forward declaration to work around circular dependency
-    class ParsingTree;
-
     class Generator
     {
         public:

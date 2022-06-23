@@ -18,3 +18,4 @@ target_link_libraries(MconHelpers Settings)
 
 add_library(Settings Settings.cpp)
 target_link_libraries(Settings Lexer)
+target_link_libraries(Settings ParsingTree)

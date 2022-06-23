@@ -1,12 +1,14 @@
 #ifndef __LATEXGENERATOR_H__
 #define __LATEXGENERATOR_H__
 
-#include "../../definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <memory>
 #include <unordered_map>
+
+// Definitions and forward declarations
+#include "../../Definitions.hpp"
+#include "../../ForwardDeclarations.hpp"
 
 // Custom headers
 #include "../Generator.hpp"
@@ -49,7 +51,8 @@ namespace mcon
                 {NodeType::Subtraction,         STR("{#0}-{#1}")},
                 {NodeType::Multiplication,      STR("{#0}\\cdot{#1}")},
                 {NodeType::Division,            STR("\\frac{#0}{#1}")},
-                {NodeType::Unit,                STR("{#0}{\\:\\mathrm{#1}}")},
+                {NodeType::ScaledField,         STR("{#0}{\\:\\mathrm{#1}}")},
+                {NodeType::ScaledResult,        STR("{#0}{\\:\\mathrm{#1}}")},
                 {NodeType::Radix,               STR("\\sqrt[#0]{#1}")},
                 {NodeType::Exponentiation,      STR("{#0}^{#1}")},
                 {NodeType::TextComposite,       STR("{#0}{#1}")},

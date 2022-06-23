@@ -1,4 +1,5 @@
 #include "LatexParser.hpp"
+#include "../intermediate/ParsingTree.hpp"
 
 
 

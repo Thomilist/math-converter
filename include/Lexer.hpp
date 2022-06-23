@@ -1,14 +1,16 @@
 #ifndef __LEXER_H__
 #define __LEXER_H__
 
-#include "definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <vector>
 #include <set>
 #include <memory>
 #include <stdexcept>
+
+// Definitions and forward declarations
+#include "Definitions.hpp"
+#include "ForwardDeclarations.hpp"
 
 // Custom headers
 #include "CharacterStream.hpp"

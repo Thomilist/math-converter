@@ -1,8 +1,6 @@
 #ifndef __CHARACTERSET_H__
 #define __CHARACTERSET_H__
 
-#include "definitions.hpp"
-
 // Standard libraries
 #include <iostream>
 #include <fstream>
@@ -13,6 +11,10 @@
 #include <filesystem>
 #include <locale>
 #include <codecvt>
+
+// Definitions and forward declarations
+#include "Definitions.hpp"
+#include "ForwardDeclarations.hpp"
 
 // JSON header
 #include <nlohmann\json.hpp>

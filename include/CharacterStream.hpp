@@ -1,11 +1,13 @@
 #ifndef __CHARACTERSTREAM_H__
 #define __CHARACTERSTREAM_H__
 
-#include "definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <iostream>
+
+// Definitions and forward declarations
+#include "Definitions.hpp"
+#include "ForwardDeclarations.hpp"
 
 // Windows header
 #include <windows.h>

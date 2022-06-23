@@ -1,8 +1,6 @@
 #ifndef __MCONHELPERS_H__
 #define __MCONHELPERS_H__
 
-#include "definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <iostream>
@@ -10,35 +8,36 @@
 #include <memory>
 #include <mutex>
 
+// JSON header
+#include <nlohmann/json.hpp>
+
+// Definitions and forward declarations
+#include "Definitions.hpp"
+#include "ForwardDeclarations.hpp"
+
 #ifdef WINDOWS
 #include <windows.h>
 #endif
-
-// JSON header
-#include <nlohmann/json.hpp>
 
 // Custom headers
 #include "CharacterStream.hpp"
 #include "CharacterSet.hpp"
 #include "Lexer.hpp"
-#include "parsing/mathcad/MathcadParser.hpp"
-#include "parsing/latex/LatexGenerator.hpp"
 #include "Settings.hpp"
+#include "parsing/Parser.hpp"
+#include "parsing/Generator.hpp"
+#include "parsing/mathcad/MathcadParser.hpp"
+#include "parsing/mathcad/MathcadGenerator.hpp"
+#include "parsing/latex/LatexParser.hpp"
+#include "parsing/latex/LatexGenerator.hpp"
 
 // Definitions
 #define MCON_HOTKEY_SEND 1
 
 namespace mcon
 {
-    class CharacterSet;
-    class CharacterStream;
-    class Token;
-    class Node;
-    class Lexer;
-    class Parser;
-    class Generator;
-    
-    void SendInputString(String str);
+    void SendInputString(String a_string);
+    void SetClipboardString(String a_string);
     void MathConversionHotkey(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
     void ConfigInput(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
 }

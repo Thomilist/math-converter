@@ -147,9 +147,9 @@ namespace mcon
         
         String result = matrix_begin;
 
-        for (uint64_t row = 0; row < row_count; row++)
+        for (uint64_t row = 0; row < row_count; ++row)
         {
-            for (uint64_t collumn = 0; collumn < collumn_count; collumn++)
+            for (uint64_t collumn = 0; collumn < collumn_count; ++collumn)
             {
                 uint64_t index = 2 + row * collumn_count + collumn;
                 result += STR("{") + ApplyTemplates(a_node->child_nodes.at(index)) + STR("}");

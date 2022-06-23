@@ -1,11 +1,14 @@
 #ifndef __PARSINGTREE_H__
 #define __PARSINGTREE_H__
 
-#include "../../definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <memory>
+#include <unordered_map>
+
+// Definitions and forward declarations
+#include "../../Definitions.hpp"
+#include "../../ForwardDeclarations.hpp"
 
 // Custom headers
 #include "Node.hpp"
@@ -14,23 +17,20 @@
 
 namespace mcon
 {
-    // Forward declaration to work around circular dependency
-    class Parser;
-    class Generator;
-    
     class ParsingTree : public std::enable_shared_from_this<ParsingTree>
     {
         public:
-            ParsingTree(    std::unique_ptr<Parser> a_parser, 
-                            std::unique_ptr<Generator> a_generator  );
+            ParsingTree(    std::unordered_map<InputLanguage, std::unique_ptr<Parser>> a_parsers, 
+                            std::unordered_map<OutputLanguage, std::unique_ptr<Generator>> a_generators
+            );
             ~ParsingTree();
 
             void SetCurrentNode(std::shared_ptr<Node> a_node);
             void Reset();
             void Clean(std::shared_ptr<Node> a_node);
 
-            std::unique_ptr<Parser> parser;
-            std::unique_ptr<Generator> generator;
+            std::unordered_map<InputLanguage, std::unique_ptr<Parser>> parsers;
+            std::unordered_map<OutputLanguage, std::unique_ptr<Generator>> generators;
             std::shared_ptr<Node> root_node;
             std::weak_ptr<Node> current_node;
             String output;

@@ -16,8 +16,7 @@ namespace mcon
         return;
     }
     
-    // Read a string of characters from the clipboard.
-    // Returns true on error, false on success.
+    // Read a string of characters from the clipboard
     void CharacterStream::ReadFromClipboard() 
     {
         index = 0;

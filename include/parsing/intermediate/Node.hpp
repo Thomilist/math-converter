@@ -1,12 +1,14 @@
 #ifndef __NODE_H__
 #define __NODE_H__
 
-#include "../../definitions.hpp"
-
 // Standard libraries
 #include <string>
 #include <vector>
 #include <memory>
+
+// Definitions and forward declarations
+#include "../../Definitions.hpp"
+#include "../../ForwardDeclarations.hpp"
 
 // Custom headers
 #include "NodeTypes.hpp"
