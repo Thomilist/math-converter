@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.0)
-project(math-converter VERSION 0.1.0)
+project(math-converter VERSION 1.3.0)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
@@ -12,8 +12,14 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
+# Icon
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/icon/icon.rc")
+
 # Main program
-add_executable(math-converter main.cpp)
+add_executable(${PROJECT_NAME}
+        main.cpp
+        ${APP_ICON_RESOURCE_WINDOWS}
+    )
 
 # JSON for Modern C++
 include(FetchContent)
