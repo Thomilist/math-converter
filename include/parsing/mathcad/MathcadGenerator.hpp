@@ -21,11 +21,13 @@ namespace mcon
             ~MathcadGenerator();
 
             void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
+            const std::unordered_map<String, String>& GetSubstitutionList();
             String ApplyTemplates(std::shared_ptr<Node> a_node);
             String GenerateMatrix(std::shared_ptr<Node> a_node);
+            String GenerateCompositeText(std::shared_ptr<Node> a_node);
 
         private:
-            const std::unordered_map<NodeType, String> math_operators =
+            const std::unordered_map<NodeType, String> math_templates =
             {
                 {NodeType::Void,                STR(" ")},
                 {NodeType::Number,              STR(" ")},
@@ -75,6 +77,12 @@ namespace mcon
                 {NodeType::Degree,              STR("(@DEG #0)")},
                 {NodeType::MatrixRowCount,      STR(" ")},
                 {NodeType::MatrixCollumnCount,  STR(" ")},
+            };
+
+            const std::unordered_map<String, String> substitution_list =
+            {
+                // Escape sequences
+                {STR("\\#"), STR("#")},
             };
     };
 }

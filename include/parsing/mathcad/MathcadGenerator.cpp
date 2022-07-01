@@ -20,13 +20,29 @@ namespace mcon
 
         return;
     }
+
+    const std::unordered_map<String, String>& MathcadGenerator::GetSubstitutionList()
+    {
+        return substitution_list;
+    }
     
     String MathcadGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
     {
-        // Special case for matrices
-        if (a_node->type == NodeType::Matrix)
+        // Special cases
+        switch (a_node->type)
         {
-            return GenerateMatrix(a_node);
+            case NodeType::Matrix:
+            {
+                return GenerateMatrix(a_node);
+            }
+            case NodeType::TextComposite:
+            {
+                return GenerateCompositeText(a_node);
+            }
+            default:
+            {
+                break;
+            }
         }
         
         String result = STR("");
@@ -35,7 +51,7 @@ namespace mcon
         // Fetch math operator template text
         try
         {
-            template_text = math_operators.at(a_node->type);
+            template_text = math_templates.at(a_node->type);
         }
         catch(const std::out_of_range& e)
         {
@@ -70,20 +86,32 @@ namespace mcon
                 // ... and the # is followed by a number indicating the child node index to fetch content from
                 if (current_token.type == TokenType::Number)
                 {
-                    int index = std::stoi(current_token.content);
+                    if (a_node->child_node_count > 0)
+                    {
+                        int index = std::stoi(current_token.content);
 
-                    try
-                    {
-                        result += ApplyTemplates(a_node->child_nodes.at(index));
+                        try
+                        {
+                            result += ApplyTemplates(a_node->child_nodes.at(index));
+                        }
+                        catch(const std::out_of_range& e)
+                        {
+                            ERROR_OUTPUT << STR("Mathcad template indexing error.\n");
+                            ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
+                            result += STR("#ERROR");
+                        }
                     }
-                    catch(const std::out_of_range& e)
+                    else
                     {
-                        ERROR_OUTPUT << STR("Mathcad template indexing error.\n");
-                        ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
-                        result += STR("#ERROR");
+                        result += a_node->content;
                     }
                     
                     current_token = lexer.Consume(0);
+
+                    if (current_token.type == TokenType::EndOfStream)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -92,7 +120,7 @@ namespace mcon
             }
             // Non-placeholder text is simply appended
             {
-                if (a_node->child_node_count > 0)
+                if (template_text != STR(" "))
                 {
                     result += current_token.content;
                 }
@@ -121,6 +149,24 @@ namespace mcon
         }
 
         result += matrix_end;
+
+        return result;
+    }
+
+    String MathcadGenerator::GenerateCompositeText(std::shared_ptr<Node> a_node)
+    {
+        uint64_t item_count = a_node->child_node_count;
+        String text_start = STR("(@ID");
+        String text_end = STR(")");
+
+        String result = text_start;
+
+        for (uint64_t item = 0; item < item_count; ++item)
+        {
+            result += STR(" ") + ApplyTemplates(a_node->child_nodes.at(item));
+        }
+
+        result += text_end;
 
         return result;
     }

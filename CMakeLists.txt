@@ -3,10 +3,6 @@ project(math-converter VERSION 1.3.0)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
-# Automated testing
-include(CTest)
-enable_testing()
-
 # Installer packaging
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
@@ -51,4 +47,6 @@ target_link_libraries(math-converter PRIVATE MathcadParser)
 target_link_libraries(math-converter PRIVATE MathcadGenerator)
 target_link_libraries(math-converter PRIVATE LatexParser)
 target_link_libraries(math-converter PRIVATE LatexGenerator)
+target_link_libraries(math-converter PRIVATE MathMLParser)
+target_link_libraries(math-converter PRIVATE MathMLGenerator)
 target_link_libraries(math-converter PRIVATE Settings)

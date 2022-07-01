@@ -38,9 +38,9 @@ namespace mcon
         Mathcad,
         /*
         Latex,
+        MathML,
         UnicodeMath,
         AsciiMath,
-        MathML,
         Mathematica,
         Excel,
         MathJSON
@@ -51,10 +51,10 @@ namespace mcon
     {
         Mathcad,
         Latex,
+        MathML,
         /*
         UnicodeMath,
         AsciiMath,
-        MathML,
         Mathematica,
         Excel,
         MathJSON
@@ -191,10 +191,10 @@ namespace mcon
             {
                 {OutputLanguage::Mathcad,       STR("Mathcad")},
                 {OutputLanguage::Latex,         STR("LaTeX")},
+                {OutputLanguage::MathML,        STR("MathML")},
                 /*
                 {OutputLanguage::UnicodeMath,   STR("UnicodeMath")},
                 {OutputLanguage::AsciiMath,     STR("AsciiMath")},
-                {OutputLanguage::MathML,        STR("MathML")},
                 {OutputLanguage::Mathematica,   STR("Mathematica")},
                 {OutputLanguage::Excel,         STR("Excel")},
                 {OutputLanguage::MathJSON,      STR("MathJSON")},
@@ -208,6 +208,8 @@ namespace mcon
                 {STR("LaTeX"),          OutputLanguage::Latex},
                 {STR("Latex"),          OutputLanguage::Latex},
                 {STR("latex"),          OutputLanguage::Latex},
+                {STR("MathML"),         OutputLanguage::MathML},
+                {STR("mathml"),         OutputLanguage::MathML},
                 /*
                 {STR("UnicodeMath"),    OutputLanguage::UnicodeMath},
                 {STR("unicodemath"),    OutputLanguage::UnicodeMath},
@@ -218,8 +220,6 @@ namespace mcon
                 {STR("Ascii"),          OutputLanguage::AsciiMath},
                 {STR("ASCII"),          OutputLanguage::AsciiMath},
                 {STR("ascii"),          OutputLanguage::AsciiMath},
-                {STR("MathML"),         OutputLanguage::MathML},
-                {STR("mathml"),         OutputLanguage::MathML},
                 {STR("Mathematica"),    OutputLanguage::Mathematica},
                 {STR("mathematica"),    OutputLanguage::Mathematica},
                 {STR("Excel"),          OutputLanguage::Excel},

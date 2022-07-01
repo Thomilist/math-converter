@@ -22,17 +22,19 @@ namespace mcon
             ~LatexGenerator();
 
             void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
+            const std::unordered_map<String, String>& GetSubstitutionList();
             String ApplyTemplates(std::shared_ptr<Node> a_node);
-            void Substitute(std::shared_ptr<ParsingTree> a_parsing_tree);
             String GenerateMatrix(std::shared_ptr<Node> a_node);
+            String GenerateCompositeText(std::shared_ptr<Node> a_node);
             String FormatComplexNumber(String a_number);
+            
         
         private:
 
-            const std::unordered_map<NodeType, String> math_operators =
+            const std::unordered_map<NodeType, String> math_templates =
             {
                 // LaTeX expression placeholders are denoted #i, with #0 being the first
-                // Provide a string containing only a space to use the content of a nose as-is
+                // Provide a string containing only a space to use the content of a node as-is
                 // Provide an empty string to not use the content of a node at all
                 {NodeType::Void,                STR("")},
                 {NodeType::Number,              STR(" ")},
@@ -55,7 +57,6 @@ namespace mcon
                 {NodeType::ScaledResult,        STR("{#0}{\\:\\mathrm{#1}}")},
                 {NodeType::Radix,               STR("\\sqrt[#0]{#1}")},
                 {NodeType::Exponentiation,      STR("{#0}^{#1}")},
-                {NodeType::TextComposite,       STR("{#0}{#1}")},
                 {NodeType::TextSubscript,       STR("_{#0}")},
                 {NodeType::Factorial,           STR("{#0}!")},
                 {NodeType::LessThan,            STR("{#0}<{#1}")},

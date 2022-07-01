@@ -30,6 +30,8 @@
 #include "parsing/mathcad/MathcadGenerator.hpp"
 #include "parsing/latex/LatexParser.hpp"
 #include "parsing/latex/LatexGenerator.hpp"
+#include "parsing/mathml/MathMLParser.hpp"
+#include "parsing/mathml/MathMLGenerator.hpp"
 
 // Definitions
 #define MCON_HOTKEY_SEND 1

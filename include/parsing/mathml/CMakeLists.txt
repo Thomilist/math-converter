@@ -1,0 +1,7 @@
+add_library(MathMLParser MathMLParser.cpp)
+add_library(MathMLGenerator MathMLGenerator.cpp)
+
+target_link_libraries(MathMLParser Parser)
+target_link_libraries(MathMLParser ParsingTree)
+target_link_libraries(MathMLGenerator Generator)
+target_link_libraries(MathMLGenerator ParsingTree)

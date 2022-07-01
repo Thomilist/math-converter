@@ -6,3 +6,7 @@ build/*
 
 # Ignore releases
 releases/*
+
+# Ignore test documents
+TestCases.mcdx
+mathml.html

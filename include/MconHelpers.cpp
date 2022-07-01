@@ -101,15 +101,16 @@ namespace mcon
         parsers.insert({mcon::InputLanguage::Mathcad, std::make_unique<mcon::MathcadParser>(lexer)});
 
         std::unordered_map<mcon::OutputLanguage, std::unique_ptr<mcon::Generator>> generators;
-        generators.insert({mcon::OutputLanguage::Mathcad, std::make_unique<mcon::MathcadGenerator>(character_set)});
-        generators.insert({mcon::OutputLanguage::Latex,   std::make_unique<mcon::LatexGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::Mathcad,   std::make_unique<mcon::MathcadGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::Latex,     std::make_unique<mcon::LatexGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::MathML,    std::make_unique<mcon::MathMLGenerator>(character_set)});
         
         auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(parsers), std::move(generators));
 
         // Register hotkey ALT + G or print error if it fails to register
         if (RegisterHotKey(NULL, MCON_HOTKEY_SEND, MOD_CONTROL | MOD_SHIFT, 'V'))
         {
-            STRING_OUTPUT << STR("Hotkey registered successfully.\n") << std::endl;
+            STRING_OUTPUT << STR("Hotkey registered successfully. Use CTRL + SHIFT + V to convert math expressions from the clipboard.\n") << std::endl;
         }
         else
         {

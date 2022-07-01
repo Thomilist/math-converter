@@ -23,6 +23,8 @@ namespace mcon
     class MathcadGenerator;
     class LatexParser;
     class LatexGenerator;
+    class MathMLParser;
+    class MathMLGenerator;
 }
 
 #endif // __FORWARDDECLARATIONS_H__
