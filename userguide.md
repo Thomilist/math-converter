@@ -1,4 +1,4 @@
-# User guide for math-converter-1.3.0
+# User guide for math-converter-1.4.0
 
 ## Hotkeys
 
@@ -20,6 +20,7 @@ List of supported math languages for output:
 
 - Mathcad
 - LaTeX
+- MathML (presentation)
 
 ## Supported math features
 
@@ -48,7 +49,7 @@ While not all math syntax is supported, a variety of commonly-used features are 
 
 ## Configuration
 
-The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`, which are loaded at program launch. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. Settings are saved to `/config/settings.conf`. The currently supported configuration commands include:
+The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`, which are loaded at program launch. Characters not in the character sets will be discarded. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. Settings are saved to `/config/settings.conf`. The currently supported configuration commands include:
 
 - Display help
 - Open download page
@@ -102,7 +103,7 @@ Example: `i mathcad`
 This command sets the output language. This is the math language to convert to for use at the destination.
 
 Command aliases: `o out output`<br>
-Available arguments: `Mathcad mathcad LaTeX Latex latex`<br>
+Available arguments: `Mathcad mathcad LaTeX Latex latex MathML mathml`<br>
 Example: `o latex`
 
 ## Contact
