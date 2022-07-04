@@ -1,4 +1,4 @@
-# User guide for math-converter-1.4.0
+# User guide for math-converter-1.5.0
 
 ## Hotkeys
 
@@ -21,6 +21,7 @@ List of supported math languages for output:
 - Mathcad
 - LaTeX
 - MathML (presentation)
+- UnicodeMath
 
 ## Supported math features
 
@@ -103,7 +104,7 @@ Example: `i mathcad`
 This command sets the output language. This is the math language to convert to for use at the destination.
 
 Command aliases: `o out output`<br>
-Available arguments: `Mathcad mathcad LaTeX Latex latex MathML mathml`<br>
+Available arguments: `Mathcad mathcad LaTeX Latex latex MathML mathml UnicodeMath unicodemath Unicode unicode`<br>
 Example: `o latex`
 
 ## Contact

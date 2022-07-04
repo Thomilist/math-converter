@@ -1,17 +1,15 @@
-#include "LatexGenerator.hpp"
-
-
+#include "UnicodeMathGenerator.hpp"
 
 namespace mcon
 {
-    LatexGenerator::LatexGenerator(std::shared_ptr<CharacterSet> a_character_set)
+    UnicodeMathGenerator::UnicodeMathGenerator(std::shared_ptr<CharacterSet> a_character_set)
         : Generator(a_character_set)
     { }
     
-    LatexGenerator::~LatexGenerator()
+    UnicodeMathGenerator::~UnicodeMathGenerator()
     { }
-    
-    void LatexGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
+
+    void UnicodeMathGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
     {
         a_parsing_tree->output = STR("");
         
@@ -24,12 +22,12 @@ namespace mcon
         return;
     }
 
-    const std::unordered_map<String, String>& LatexGenerator::GetSubstitutionList()
+    const std::unordered_map<String, String>& UnicodeMathGenerator::GetSubstitutionList()
     {
         return substitution_list;
     }
-    
-    String LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
+
+    String UnicodeMathGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
     {
         // Special cases
         switch (a_node->type)
@@ -76,16 +74,16 @@ namespace mcon
             current_token = lexer.Consume(0);
         }
 
-        // Iterate over tokens to find LaTeX expression placeholders
+        // Iterate over tokens to find UnicodeMath expression placeholders
         while (current_token.type != TokenType::EndOfStream)
         {
-            // LaTeX expressions placeholders begin with #...
+            // UnicodeMath expression placeholders begin with #...
             if (    current_token.content == STR("#")   &&
                     lexer.Peek(-1).content != STR("\\")
             )
             {
                 current_token = lexer.Consume(0);
-
+                
                 // ... and the # is followed by a number indicating the child node index to fetch content from
                 if (current_token.type == TokenType::Number)
                 {
@@ -99,7 +97,7 @@ namespace mcon
                         }
                         catch(const std::out_of_range& e)
                         {
-                            ERROR_OUTPUT << STR("LaTeX template indexing error.\n");
+                            ERROR_OUTPUT << STR("UnicodeMath template indexing error.\n");
                             ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
                             result += STR("#ERROR");
                         }
@@ -108,7 +106,7 @@ namespace mcon
                     {
                         result += a_node->content;
                     }
-
+                    
                     current_token = lexer.Consume(0);
 
                     if (current_token.type == TokenType::EndOfStream)
@@ -122,21 +120,14 @@ namespace mcon
                 }
             }
             // Non-placeholder text is simply appended
-            else
             {
                 if (template_text != STR(" "))
                 {
                     result += current_token.content;
                 }
+                // When the template text is only a single space, simply append the node contents
                 else
                 {
-                    /*
-                    if (a_node->type == NodeType::Number)
-                    {
-                        a_node->content = FormatComplexNumber(a_node->content);
-                    }
-                    */
-                    
                     result += a_node->content;
                 }
 
@@ -147,15 +138,16 @@ namespace mcon
         return result;
     }
     
-    String LatexGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
+    String UnicodeMathGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
     {
         uint64_t row_count = std::stoi(a_node->child_nodes.at(0)->content);
         uint64_t collumn_count = std::stoi(a_node->child_nodes.at(1)->content);
         
-        String matrix_begin = STR("\\left[\\begin{matrix}");
-        String matrix_end = STR("\\end{matrix}\\right]");
-        String matrix_break = STR("\\\\[0.0em]");
-        
+        String matrix_begin = STR("[\\matrix (");
+        String matrix_end = STR(")]");
+        String matrix_break = STR("@");
+        String matrix_delimiter = STR("&");
+
         String result = matrix_begin;
 
         for (uint64_t row = 0; row < row_count; ++row)
@@ -163,11 +155,11 @@ namespace mcon
             for (uint64_t collumn = 0; collumn < collumn_count; ++collumn)
             {
                 uint64_t index = 2 + row * collumn_count + collumn;
-                result += STR("{") + ApplyTemplates(a_node->child_nodes.at(index)) + STR("}");
+                result += ApplyTemplates(a_node->child_nodes.at(index));
 
-                if ((collumn + 1) < collumn_count)
+                if (collumn + 1 < collumn_count)
                 {
-                    result += STR("&");
+                    result += matrix_delimiter;
                 }
             }
 
@@ -182,10 +174,22 @@ namespace mcon
         return result;
     }
 
-    String LatexGenerator::GenerateCompositeText(std::shared_ptr<Node> a_node)
+    String UnicodeMathGenerator::GenerateCompositeText(std::shared_ptr<Node> a_node)
     {
         uint64_t item_count = a_node->child_node_count;
         String result = STR("");
+
+        for (uint64_t item = 1; item < item_count; ++item)
+        {
+            if (a_node->child_nodes.at(item)->type == NodeType::TextSubscript)
+            {
+                a_node->child_nodes.at(item)->AddChildNode();
+                a_node->child_nodes.at(item)->child_nodes.back() = a_node->child_nodes.at(item)->child_nodes.front();
+                a_node->child_nodes.at(item)->child_nodes.front() = std::make_shared<Node>(*a_node->child_nodes.at(item - 1));
+
+                a_node->child_nodes.at(item - 1)->content = STR("");
+            }
+        }
 
         for (uint64_t item = 0; item < item_count; ++item)
         {
@@ -193,21 +197,5 @@ namespace mcon
         }
 
         return result;
-    }
-    
-    String LatexGenerator::FormatComplexNumber(String a_number)
-    {
-        int index = a_number.length() - 1;
-
-        if (a_number.at(index) == STR('i'))
-        {
-            a_number.replace(index, 1, STR("\\mathrm{i}"));
-        }
-        else if (a_number.at(index) == STR('j'))
-        {
-            a_number.replace(index, 1, STR("\\mathrm{j}"));
-        }
-
-        return a_number;
     }
 }

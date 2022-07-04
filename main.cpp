@@ -38,7 +38,7 @@ SOFTWARE.
 #include "include/ForwardDeclarations.hpp"
 
 // OS-specific libraries
-#ifdef WINDOWS
+#ifdef WIN32
 #include <windows.h>
 #endif
 
@@ -48,7 +48,7 @@ SOFTWARE.
 
 int main()
 {
-    #ifdef WINDOWS
+    #ifdef WIN32
     // Support wide characters
     //https://stackoverflow.com/a/50055280/17557793
     std::ios_base::sync_with_stdio(false);

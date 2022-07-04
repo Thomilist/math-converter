@@ -189,8 +189,10 @@ namespace mcon
         }
 
         // Escape characters
-        EscapeCharacter(a_node, STR("#"), STR("\\#"));
-        EscapeCharacter(a_node, STR("_"), STR("\\_"));
+        for (auto& escape_character : escape_list)
+        {
+            EscapeCharacter(a_node, escape_character.first, escape_character.second);
+        }
 
         // Correct type of matrix size nodes
         if (a_node->type == NodeType::Matrix)

@@ -52,8 +52,8 @@ namespace mcon
         Mathcad,
         Latex,
         MathML,
-        /*
         UnicodeMath,
+        /*
         AsciiMath,
         Mathematica,
         Excel,
@@ -192,8 +192,8 @@ namespace mcon
                 {OutputLanguage::Mathcad,       STR("Mathcad")},
                 {OutputLanguage::Latex,         STR("LaTeX")},
                 {OutputLanguage::MathML,        STR("MathML")},
-                /*
                 {OutputLanguage::UnicodeMath,   STR("UnicodeMath")},
+                /*
                 {OutputLanguage::AsciiMath,     STR("AsciiMath")},
                 {OutputLanguage::Mathematica,   STR("Mathematica")},
                 {OutputLanguage::Excel,         STR("Excel")},
@@ -210,11 +210,11 @@ namespace mcon
                 {STR("latex"),          OutputLanguage::Latex},
                 {STR("MathML"),         OutputLanguage::MathML},
                 {STR("mathml"),         OutputLanguage::MathML},
-                /*
                 {STR("UnicodeMath"),    OutputLanguage::UnicodeMath},
                 {STR("unicodemath"),    OutputLanguage::UnicodeMath},
                 {STR("Unicode"),        OutputLanguage::UnicodeMath},
                 {STR("unicode"),        OutputLanguage::UnicodeMath},
+                /*
                 {STR("AsciiMath"),      OutputLanguage::AsciiMath},
                 {STR("asciimath"),      OutputLanguage::AsciiMath},
                 {STR("Ascii"),          OutputLanguage::AsciiMath},

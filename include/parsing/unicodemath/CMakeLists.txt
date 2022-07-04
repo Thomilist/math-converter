@@ -1,0 +1,7 @@
+add_library(UnicodeMathParser UnicodeMathParser.cpp)
+add_library(UnicodeMathGenerator UnicodeMathGenerator.cpp)
+
+target_link_libraries(UnicodeMathParser Parser)
+target_link_libraries(UnicodeMathParser ParsingTree)
+target_link_libraries(UnicodeMathGenerator Generator)
+target_link_libraries(UnicodeMathGenerator ParsingTree)

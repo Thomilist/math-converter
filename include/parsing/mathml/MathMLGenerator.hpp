@@ -64,13 +64,13 @@ namespace mcon
                 {NodeType::Function,            STR("<mrow><mi>#0</mi>#1</mrow>")},
                 {NodeType::Negative,            STR("<mrow><mo>&minus;</mo>#0</mrow>")},
                 {NodeType::LogicalNOT,          STR("<mrow><mo>&not;</mo>#0</mrow>")},
-                {NodeType::LogicalAND,          STR("<mrow><mo>&and;</mo>#0</mrow>")},
-                {NodeType::LogicalOR,           STR("<mrow><mo>&or;</mo>#0</mrow>")},
+                {NodeType::LogicalAND,          STR("<mrow>#0<mo>&and;</mo>#1</mrow>")},
+                {NodeType::LogicalOR,           STR("<mrow>#0<mo>&or;</mo>#1</mrow>")},
                 {NodeType::Sum,                 STR("<mrow><munderover><mo>&Sigma;</mo>#0 #1</munderover>#2<mrow>")},
                 {NodeType::Product,             STR("<mrow><munderover><mo>&Pi;</mo>#0 #1</munderover>#2<mrow>")},
                 {NodeType::Polar,               STR("<mrow>#0<mo>&angle;</mo>#1</mrow>")},
-                {NodeType::Derivative,          STR("<mrow><mfrac><msup><mi mathvariant=\"normal\">d</mi>#1</msup><msup><mrow><mi mathvariant=\"normal\">d</mi>#0</mrow>#1</msup></mfrac>#2</mrow>")},
-                {NodeType::Integral,            STR("<mrow><munderover><mo>&int;</mo>#0 #1</munderover>#2<mi mathvariant=\"normal\">&ensp;d</mi>#3<mrow>")},
+                {NodeType::Derivative,          STR("<mrow><mfrac><msup><mi mathvariant=\"italic\">d</mi>#1</msup><msup><mrow><mi mathvariant=\"italic\">d</mi>#0</mrow>#1</msup></mfrac>#2</mrow>")},
+                {NodeType::Integral,            STR("<mrow><munderover><mo>&int;</mo>#0 #1</munderover>#2<mi mathvariant=\"italic\">&ensp;d</mi>#3<mrow>")},
                 {NodeType::Percent,             STR("<mrow>#0<mo>%</mo></mrow>")},
                 {NodeType::ElementOf,           STR("<mrow>#0<mo>&Element;</mo>#1</mrow>")},
                 {NodeType::Degree,              STR("<mrow>#0<mo>&deg;</mo></mrow>")},
@@ -79,7 +79,15 @@ namespace mcon
             const std::unordered_map<String, String> substitution_list =
             {
                 // Escape sequences
+                {STR("\\#"), STR("#")},
+                {STR("\\&"), STR("&amp;")},
+                {STR("\\_"), STR("_")},
+
+                // Redundant code cleanup
                 {STR("<mi>&ensp;</mi><mi mathvariant=\"normal\"></mi>"), STR("")},
+
+                // Special characters
+                {STR("∞"), STR("&#x221E;")},
             };
     };
 }

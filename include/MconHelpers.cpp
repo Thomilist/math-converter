@@ -101,9 +101,10 @@ namespace mcon
         parsers.insert({mcon::InputLanguage::Mathcad, std::make_unique<mcon::MathcadParser>(lexer)});
 
         std::unordered_map<mcon::OutputLanguage, std::unique_ptr<mcon::Generator>> generators;
-        generators.insert({mcon::OutputLanguage::Mathcad,   std::make_unique<mcon::MathcadGenerator>(character_set)});
-        generators.insert({mcon::OutputLanguage::Latex,     std::make_unique<mcon::LatexGenerator>(character_set)});
-        generators.insert({mcon::OutputLanguage::MathML,    std::make_unique<mcon::MathMLGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::Mathcad,       std::make_unique<mcon::MathcadGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::Latex,         std::make_unique<mcon::LatexGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::MathML,        std::make_unique<mcon::MathMLGenerator>(character_set)});
+        generators.insert({mcon::OutputLanguage::UnicodeMath,   std::make_unique<mcon::UnicodeMathGenerator>(character_set)});
         
         auto parsing_tree = std::make_shared<mcon::ParsingTree>(std::move(parsers), std::move(generators));
 

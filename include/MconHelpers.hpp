@@ -15,7 +15,8 @@
 #include "Definitions.hpp"
 #include "ForwardDeclarations.hpp"
 
-#ifdef WINDOWS
+// OS-specific libraries
+#ifdef WIN32
 #include <windows.h>
 #endif
 
@@ -32,6 +33,8 @@
 #include "parsing/latex/LatexGenerator.hpp"
 #include "parsing/mathml/MathMLParser.hpp"
 #include "parsing/mathml/MathMLGenerator.hpp"
+#include "parsing/unicodemath/UnicodeMathParser.hpp"
+#include "parsing/unicodemath/UnicodeMathGenerator.hpp"
 
 // Definitions
 #define MCON_HOTKEY_SEND 1

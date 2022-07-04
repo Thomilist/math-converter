@@ -47,7 +47,7 @@ namespace mcon
             {"symbol", &symbol}
         };
 
-        #ifdef WINDOWS
+        #ifdef WIN32
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
         #endif
 
@@ -61,7 +61,7 @@ namespace mcon
                 for (auto& character : json_character_set.at(set.first).items())
                 {
                     // Insert new character if not present already
-                    #ifdef WINDOWS
+                    #ifdef WIN32
                         set.second->insert(converter.from_bytes(character.value()));
                     #else
                         set.second->insert(character.value());

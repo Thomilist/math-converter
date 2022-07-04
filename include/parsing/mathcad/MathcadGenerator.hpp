@@ -83,6 +83,8 @@ namespace mcon
             {
                 // Escape sequences
                 {STR("\\#"), STR("#")},
+                {STR("\\_"), STR("_")},
+                {STR("\\&"), STR("&")},
             };
     };
 }

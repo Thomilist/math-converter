@@ -9,8 +9,10 @@
 #include "Definitions.hpp"
 #include "ForwardDeclarations.hpp"
 
-// Windows header
+// OS-specific libraries
+#ifdef WIN32
 #include <windows.h>
+#endif
 
 namespace mcon
 {

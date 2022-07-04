@@ -87,6 +87,14 @@ namespace mcon
                 {STR("@DEG"),           NodeType::Degree},
                 {STR("@MATRIX"),        NodeType::Matrix},
             };
+
+            const std::unordered_map<String, String> escape_list =
+            {
+                // Escape sequences
+                {STR("#"), STR("\\#")},
+                {STR("_"), STR("\\_")},
+                {STR("&"), STR("\\&")},
+            };
     };
 }
 

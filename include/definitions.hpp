@@ -5,9 +5,7 @@
 
 namespace mcon
 {
-    #define WINDOWS
-
-    #ifdef WINDOWS
+    #ifdef WIN32
         using String = std::wstring;
         #define STRING_OUTPUT std::wcout
         #define ERROR_OUTPUT std::wcerr
@@ -19,7 +17,7 @@ namespace mcon
         #define STR(s) s
     #endif
     
-    #define VERSION STR("1.4.0")
+    #define VERSION STR("1.5.0")
 }
 
 #endif // __DEFINITIONS_H__
