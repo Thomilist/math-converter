@@ -168,7 +168,6 @@ namespace mcon
                 parsing_tree->parsers.at(input_language)->Clean(parsing_tree->root_node);
                 parsing_tree->Clean(parsing_tree->root_node);
                 parsing_tree->generators.at(output_language)->Generate(parsing_tree);
-                parsing_tree->generators.at(output_language)->Substitute(parsing_tree);
 
                 STRING_OUTPUT
                     << STR("Input:  ")

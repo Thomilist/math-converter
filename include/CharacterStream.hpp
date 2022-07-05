@@ -24,8 +24,8 @@ namespace mcon
 
             void Read(String a_input);
             void ReadFromClipboard();
-            String Peek(uint8_t a_offset);
-            String Consume(uint8_t a_offset);
+            String Peek(uint8_t a_offset = 0);
+            String Consume(uint8_t a_offset = 0);
             
             String buffer;
 

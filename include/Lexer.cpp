@@ -9,7 +9,9 @@ namespace mcon
     ):
         character_stream(std::move(a_character_stream)),
         character_set(a_character_set)
-    { }
+    {
+        Scan();
+    }
 
     Lexer::~Lexer()
     { }
@@ -38,7 +40,7 @@ namespace mcon
             bool character_appended = false;
 
             // Obtain the current character
-            String current_character = character_stream->Peek(0);
+            String current_character = character_stream->Peek();
 
             // Iterate over the character sets
             for (auto& set : character_sets)
@@ -56,7 +58,7 @@ namespace mcon
                     }
 
                     // Append the current character to the current token
-                    character_appended = temp_token.Append(character_stream->Consume(0));
+                    character_appended = temp_token.Append(character_stream->Consume());
 
                     // If the current token marks the end of the stream, finish lexing
                     if (temp_token.type == TokenType::EndOfStream)
@@ -73,7 +75,7 @@ namespace mcon
                 // If the character does not belong to a set, place it in a token of type Unknown
                 tokens.push_back(temp_token);
                 temp_token = Token(TokenType::Unknown);
-                temp_token.Append(character_stream->Consume(0));
+                temp_token.Append(character_stream->Consume());
 
                 // Report the error to the console
                 ERROR_OUTPUT << STR("Unknown character: ") << current_character << STR("\n")

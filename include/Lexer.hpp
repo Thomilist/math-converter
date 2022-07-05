@@ -30,8 +30,8 @@ namespace mcon
 
             void Scan();
             void Reset();
-            Token Peek(uint8_t a_offset);
-            Token Consume(uint8_t a_offset);
+            Token Peek(uint8_t a_offset = 0);
+            Token Consume(uint8_t a_offset = 0);
 
             std::unique_ptr<CharacterStream> character_stream;
             std::shared_ptr<CharacterSet> character_set;

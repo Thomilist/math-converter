@@ -10,141 +10,15 @@ namespace mcon
     
     LatexGenerator::~LatexGenerator()
     { }
-    
-    void LatexGenerator::Generate(std::shared_ptr<ParsingTree> a_parsing_tree)
-    {
-        a_parsing_tree->output = STR("");
-        
-        // Only allow generation if the parsing tree is not empty
-        if (a_parsing_tree->root_node->child_node_count > 0)
-        {
-            a_parsing_tree->output = ApplyTemplates(a_parsing_tree->root_node->child_nodes.at(0));
-        }
 
-        return;
+    const std::unordered_map<NodeType, String>& LatexGenerator::GetMathTemplates()
+    {
+        return math_templates;
     }
 
     const std::unordered_map<String, String>& LatexGenerator::GetSubstitutionList()
     {
         return substitution_list;
-    }
-    
-    String LatexGenerator::ApplyTemplates(std::shared_ptr<Node> a_node)
-    {
-        // Special cases
-        switch (a_node->type)
-        {
-            case NodeType::Matrix:
-            {
-                return GenerateMatrix(a_node);
-            }
-            case NodeType::TextComposite:
-            {
-                return GenerateCompositeText(a_node);
-            }
-            default:
-            {
-                break;
-            }
-        }
-        
-        String result = STR("");
-        String template_text;
-        
-        // Fetch math operator template text
-        try
-        {
-            template_text = math_templates.at(a_node->type);
-        }
-        catch(const std::out_of_range& e)
-        {
-            ERROR_OUTPUT << STR("Unable to print math expression.\n");
-            ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
-            return STR("#ERROR");
-        }
-
-        // Run the template text through a lexer
-        auto template_stream = std::make_unique<CharacterStream>(template_text);
-        auto lexer = Lexer(std::move(template_stream), character_set);
-        lexer.Scan();
-
-        // Prepare token stream
-        Token current_token(TokenType::StartOfStream);
-
-        while (current_token.type == TokenType::StartOfStream)
-        {
-            current_token = lexer.Consume(0);
-        }
-
-        // Iterate over tokens to find LaTeX expression placeholders
-        while (current_token.type != TokenType::EndOfStream)
-        {
-            // LaTeX expressions placeholders begin with #...
-            if (    current_token.content == STR("#")   &&
-                    lexer.Peek(-1).content != STR("\\")
-            )
-            {
-                current_token = lexer.Consume(0);
-
-                // ... and the # is followed by a number indicating the child node index to fetch content from
-                if (current_token.type == TokenType::Number)
-                {
-                    if (a_node->child_node_count > 0)
-                    {
-                        int index = std::stoi(current_token.content);
-
-                        try
-                        {
-                            result += ApplyTemplates(a_node->child_nodes.at(index));
-                        }
-                        catch(const std::out_of_range& e)
-                        {
-                            ERROR_OUTPUT << STR("LaTeX template indexing error.\n");
-                            ERROR_OUTPUT << STR("Out-of-range exception in ") << e.what() << STR("\n") << std::endl;
-                            result += STR("#ERROR");
-                        }
-                    }
-                    else
-                    {
-                        result += a_node->content;
-                    }
-
-                    current_token = lexer.Consume(0);
-
-                    if (current_token.type == TokenType::EndOfStream)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    result += STR("#ERROR");
-                }
-            }
-            // Non-placeholder text is simply appended
-            else
-            {
-                if (template_text != STR(" "))
-                {
-                    result += current_token.content;
-                }
-                else
-                {
-                    /*
-                    if (a_node->type == NodeType::Number)
-                    {
-                        a_node->content = FormatComplexNumber(a_node->content);
-                    }
-                    */
-                    
-                    result += a_node->content;
-                }
-
-                current_token = lexer.Consume(0);
-            }
-        }
-
-        return result;
     }
     
     String LatexGenerator::GenerateMatrix(std::shared_ptr<Node> a_node)
@@ -193,21 +67,5 @@ namespace mcon
         }
 
         return result;
-    }
-    
-    String LatexGenerator::FormatComplexNumber(String a_number)
-    {
-        int index = a_number.length() - 1;
-
-        if (a_number.at(index) == STR('i'))
-        {
-            a_number.replace(index, 1, STR("\\mathrm{i}"));
-        }
-        else if (a_number.at(index) == STR('j'))
-        {
-            a_number.replace(index, 1, STR("\\mathrm{j}"));
-        }
-
-        return a_number;
     }
 }

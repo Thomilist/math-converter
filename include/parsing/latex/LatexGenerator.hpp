@@ -20,16 +20,12 @@ namespace mcon
         public:
             LatexGenerator(std::shared_ptr<CharacterSet> a_character_set);
             ~LatexGenerator();
-
-            void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
-            const std::unordered_map<String, String>& GetSubstitutionList();
-            String ApplyTemplates(std::shared_ptr<Node> a_node);
-            String GenerateMatrix(std::shared_ptr<Node> a_node);
-            String GenerateCompositeText(std::shared_ptr<Node> a_node);
-            String FormatComplexNumber(String a_number);
-            
         
         private:
+            const std::unordered_map<NodeType, String>& GetMathTemplates();
+            const std::unordered_map<String, String>& GetSubstitutionList();
+            String GenerateMatrix(std::shared_ptr<Node> a_node);
+            String GenerateCompositeText(std::shared_ptr<Node> a_node);
 
             const std::unordered_map<NodeType, String> math_templates =
             {

@@ -20,7 +20,7 @@ namespace mcon
     {
         public:
             Parser(std::shared_ptr<Lexer> a_lexer);
-            ~Parser();
+            virtual ~Parser();
 
             virtual void Parse(std::shared_ptr<ParsingTree> a_parsing_tree);
             virtual void Clean(std::shared_ptr<Node> a_node);

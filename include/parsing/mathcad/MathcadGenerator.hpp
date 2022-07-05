@@ -20,13 +20,12 @@ namespace mcon
             MathcadGenerator(std::shared_ptr<CharacterSet> a_character_set);
             ~MathcadGenerator();
 
-            void Generate(std::shared_ptr<ParsingTree> a_parsing_tree);
+        private:
+            const std::unordered_map<NodeType, String>& GetMathTemplates();
             const std::unordered_map<String, String>& GetSubstitutionList();
-            String ApplyTemplates(std::shared_ptr<Node> a_node);
             String GenerateMatrix(std::shared_ptr<Node> a_node);
             String GenerateCompositeText(std::shared_ptr<Node> a_node);
-
-        private:
+            
             const std::unordered_map<NodeType, String> math_templates =
             {
                 {NodeType::Void,                STR(" ")},
