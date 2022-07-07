@@ -18,6 +18,11 @@
 // OS-specific libraries
 #ifdef WIN32
 #include <windows.h>
+#else
+// https://git.yoctoproject.org/libfakekey/tree/src/libfakekey.c
+#include "libfakekey.h"
+#include <X11/Xatom.h>
+#undef min // min macro from Xlibint.h, included by fakekey.h, causes errors in fstream.tcc
 #endif
 
 // Custom headers
@@ -45,6 +50,11 @@ namespace mcon
     void SetClipboardString(String a_string);
     void MathConversionHotkey(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
     void ConfigInput(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex);
+    void ConvertMath(std::shared_ptr<Settings> a_settings, std::shared_ptr<std::mutex> a_settings_mutex, std::shared_ptr<ParsingTree> a_parsing_tree);
+    
+    #ifndef WIN32
+    void ChangeKeyGrab(Display* a_display, Window a_window, bool a_grab, unsigned int a_keycode, unsigned int a_modifiers, unsigned int a_ignored_modifiers);
+    #endif
 }
 
 #endif // __MCONHELPERS_H__

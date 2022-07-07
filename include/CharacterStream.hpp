@@ -12,6 +12,8 @@
 // OS-specific libraries
 #ifdef WIN32
 #include <windows.h>
+#else
+#include <X11/Xlib.h>
 #endif
 
 namespace mcon

@@ -17,7 +17,7 @@
 #include "ForwardDeclarations.hpp"
 
 // JSON header
-#include <nlohmann\json.hpp>
+#include <nlohmann/json.hpp>
 
 namespace mcon
 {

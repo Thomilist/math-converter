@@ -8,29 +8,60 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-# Icon
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/icon/icon.rc")
-
 # Main program
-add_executable(${PROJECT_NAME}
+IF(WIN32)
+    set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/icon/icon.rc")
+    add_executable(
+        ${PROJECT_NAME}
         main.cpp
         ${APP_ICON_RESOURCE_WINDOWS}
     )
+ELSE()
+    add_executable(
+        ${PROJECT_NAME}
+        main.cpp
+    )
+ENDIF()
 
 # JSON for Modern C++
 include(FetchContent)
 
 FetchContent_Declare(json
   GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_TAG v3.10.4)
+  GIT_PROGRESS TRUE
+  GIT_SHALLOW TRUE
+  GIT_TAG v3.10.5)
 
-FetchContent_GetProperties(json)
-if(NOT json_POPULATED)
-  FetchContent_Populate(json)
-  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+FetchContent_MakeAvailable(json)
 
 target_link_libraries(math-converter PRIVATE nlohmann_json::nlohmann_json)
+
+# X11
+IF(WIN32)
+ELSE()
+    find_package(X11 REQUIRED)
+    link_libraries(${X11_LIBRARIES})
+    include_directories(${X11_INCLUDE_DIR})
+
+    find_path(  XTEST_INCLUDE_DIR NAMES X11/extensions/XTest.h
+                PATH_SUFFIXES X11/extensions
+                DOC "The XTest include directory"
+    )
+
+    find_library(   XTEST_LIBRARY NAMES Xtst
+                    DOC "The XTest library"
+    )
+
+    find_package(PackageHandleStandardArgs REQUIRED)
+    FIND_PACKAGE_HANDLE_STANDARD_ARGS(XTest DEFAULT_MSG XTEST_LIBRARY XTEST_INCLUDE_DIR)
+
+    if(XTEST_FOUND)
+        set(XTEST_LIBRARIES ${XTEST_LIBRARY})
+        set(XTEST_INCLUDE_DIRS ${XTEST_INCLUDE_DIR})
+    endif()
+
+    include_directories(/user/include/fakekey)
+ENDIF()
 
 # Custom headers
 add_subdirectory(include)
@@ -52,3 +83,8 @@ target_link_libraries(math-converter PRIVATE MathMLGenerator)
 target_link_libraries(math-converter PRIVATE UnicodeMathParser)
 target_link_libraries(math-converter PRIVATE UnicodeMathGenerator)
 target_link_libraries(math-converter PRIVATE Settings)
+
+IF(WIN32)
+ELSE()
+    target_link_libraries(math-converter PRIVATE LibFakeKey)
+ENDIF()

@@ -64,7 +64,7 @@ namespace mcon
                     #ifdef WIN32
                         set.second->insert(converter.from_bytes(character.value()));
                     #else
-                        set.second->insert(character.value());
+                        set.second->insert(String(character.value()));
                     #endif
                 }
             }

@@ -1,6 +1,9 @@
 #ifndef __NODETYPES_H__
 #define __NODETYPES_H__
 
+// Xlib defines Absolute to 1
+#undef Absolute
+
 namespace mcon
 {
     enum class NodeType

@@ -7,7 +7,7 @@ namespace mcon
     Settings::Settings():
         lexer(std::move(character_stream), character_set)
     {
-        character_set->LoadFromFolder(".\\resources\\character-sets");
+        character_set->LoadFromFolder("./resources/character-sets");
         STRING_OUTPUT << STR("For usage information, enter \"help\" (without the quote marks) or read the associated user guide.") << std::endl;
         LoadSettings();
     }
@@ -15,7 +15,7 @@ namespace mcon
     Settings::~Settings()
     { }
     
-    void Settings::UpdateSettings(std::wstring a_console_input, bool a_user_triggered)
+    void Settings::UpdateSettings(String a_console_input, bool a_user_triggered)
     {
         lexer.character_stream->Read(a_console_input);
         lexer.Scan();
@@ -157,7 +157,7 @@ namespace mcon
         return;
     }
     
-    void Settings::CommandNotRecognised(std::wstring a_unknown_command)
+    void Settings::CommandNotRecognised(String a_unknown_command)
     {
         ERROR_OUTPUT  << STR("\nCommand \"") << a_unknown_command << STR("\" not recognised.\n")
                     << STR("Use the command \"help\" to display help.\n");
@@ -289,7 +289,7 @@ namespace mcon
     
     void Settings::LoadSettings()
     {
-        std::wifstream config_file(".\\config\\settings.conf");
+        INPUT_FILE_STREAM config_file("./config/settings.conf");
         
         for (String command; std::getline(config_file, command); )
         {
@@ -307,7 +307,7 @@ namespace mcon
             input_language.second + STR("\n") +
             output_language.second + STR("\n");
         
-        std::wofstream config_file(".\\config\\settings.conf");
+        OUTPUT_FILE_STREAM config_file("./config/settings.conf");
         config_file << commands;
 
         return;
