@@ -1,8 +1,6 @@
 #include "MconHelpers.hpp"
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
 namespace mcon
 {
     // Wrapper function for SendInput to send an entire unicode string
@@ -112,6 +110,15 @@ namespace mcon
 
         CloseClipboard();
         #else
+        ERROR_OUTPUT
+            << STR("Unable to place converted math expression in clipboard:\n")
+            << STR("Clipboard mode is not implemented on Linux.\n")
+            << std::endl;
+        
+        a_string.length(); // Prevent unused parameter warning
+
+        // The code below is intended to provide clipboard mode functionality, but does not work
+
         /*
         Display* display = XOpenDisplay(NULL);
         Window window = XDefaultRootWindow(display);
@@ -345,6 +352,7 @@ namespace mcon
         return;
     }
     
+    #ifndef WIN32
     void ChangeKeyGrab
     (
         Display* a_display,
@@ -392,6 +400,5 @@ namespace mcon
             ++ignored_mask;
         }
     }
+    #endif
 }
-
-#pragma GCC diagnostic pop
