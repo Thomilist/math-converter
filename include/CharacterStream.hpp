@@ -15,6 +15,8 @@
 // OS-specific libraries
 #ifdef WIN32
 #include <windows.h>
+#include <locale>
+#include <codecvt>
 #else
 #include <X11/Xlib.h>
 #endif

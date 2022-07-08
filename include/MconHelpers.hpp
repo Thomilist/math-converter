@@ -21,6 +21,8 @@
 // OS-specific libraries
 #ifdef WIN32
 #include <windows.h>
+#include <locale>
+#include <codecvt>
 #else
 // https://git.yoctoproject.org/libfakekey/tree/src/libfakekey.c
 #include "libfakekey.h"
