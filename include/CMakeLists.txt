@@ -15,6 +15,7 @@ target_link_libraries(Lexer CharacterSet)
 add_library(MconHelpers MconHelpers.cpp)
 target_link_libraries(MconHelpers nlohmann_json::nlohmann_json)
 target_link_libraries(MconHelpers Settings)
+target_link_libraries(MconHelpers clip)
 
 add_library(Settings Settings.cpp)
 target_link_libraries(Settings Lexer)

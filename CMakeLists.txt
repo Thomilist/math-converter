@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.22.0)
 project(math-converter VERSION 1.3.0)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+add_compile_options(
+    -Wall
+    -Wextra
+    -pedantic
+    -Werror
+)
 
 # Installer packaging
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
@@ -62,6 +67,17 @@ ELSE()
 
     include_directories(/user/include/fakekey)
 ENDIF()
+
+# Clip Library
+set(CLIP_EXAMPLES OFF CACHE BOOL "Compile clip examples")
+set(CLIP_TESTS OFF CACHE BOOL "Compile clip tests")
+
+add_subdirectory(clip)
+target_link_libraries(math-converter PRIVATE clip)
+
+get_target_property(target_options clip COMPILE_OPTIONS)
+list(REMOVE_ITEM target_options "-Werror")
+set_property(TARGET clip PROPERTY COMPILE_OPTIONS ${target_options})
 
 # Custom headers
 add_subdirectory(include)

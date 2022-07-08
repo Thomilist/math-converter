@@ -87,6 +87,14 @@ namespace mcon
     void SetClipboardString(String a_string)
     {
         #ifdef WIN32
+        std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+        std::string data = converter.to_bytes(a_string);
+        #endif
+        
+        clip::set_text(data);
+        return;
+        
+        #ifdef WIN32
         if (!OpenClipboard(NULL))
         {
             return;

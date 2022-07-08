@@ -11,6 +11,9 @@
 // JSON header
 #include <nlohmann/json.hpp>
 
+// Clipboard
+#include "../clip/clip.h"
+
 // Definitions and forward declarations
 #include "Definitions.hpp"
 #include "ForwardDeclarations.hpp"
