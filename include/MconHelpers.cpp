@@ -89,97 +89,11 @@ namespace mcon
         #ifdef WIN32
         std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
         std::string data = converter.to_bytes(a_string);
+        #else
+        std::string data = a_string;
         #endif
         
         clip::set_text(data);
-        return;
-        
-        #ifdef WIN32
-        if (!OpenClipboard(NULL))
-        {
-            return;
-        }
-
-        EmptyClipboard();
-
-        HGLOBAL memory_buffer = GlobalAlloc(GMEM_MOVEABLE, (wcslen(a_string.c_str()) + 1) * sizeof(WCHAR));
-
-        if (memory_buffer == NULL)
-        {
-            CloseClipboard();
-            return;
-        }
-
-        LPTSTR buffer_handle = static_cast<LPTSTR>(GlobalLock(memory_buffer));
-        memcpy(buffer_handle, a_string.c_str(), (wcslen(a_string.c_str()) + 1) * sizeof(WCHAR));
-        GlobalUnlock(memory_buffer);
-
-        SetClipboardData(CF_UNICODETEXT, memory_buffer);
-
-        CloseClipboard();
-        #else
-        ERROR_OUTPUT
-            << STR("Unable to place converted math expression in clipboard:\n")
-            << STR("Clipboard mode is not implemented on Linux.\n")
-            << std::endl;
-        
-        a_string.length(); // Prevent unused parameter warning
-
-        // The code below is intended to provide clipboard mode functionality, but does not work
-
-        /*
-        Display* display = XOpenDisplay(NULL);
-        Window window = XDefaultRootWindow(display);
-        Atom clipboard = XInternAtom(display, "CLIPBOARD", true);
-        XSetSelectionOwner(display, clipboard, window, CurrentTime);
-
-        XEvent event_request;
-
-        do
-        {
-            XNextEvent(display, &event_request);
-        } while (event_request.type != SelectionRequest);
-
-        XSelectionRequestEvent* request = &event_request.xselectionrequest;
-
-        if (request->selection != clipboard)
-        {
-            ERROR_OUTPUT << STR("Clipboard error.\n") << std::endl;
-            XCloseDisplay(display);
-            return;
-        }
-
-        auto string_data = reinterpret_cast<const unsigned char*>(a_string.c_str());
-
-        XChangeProperty
-        (
-            display,
-            request->requestor,
-            request->property,
-            XA_STRING,
-            8,
-            PropModeReplace,
-            string_data,
-            strlen(a_string.c_str())
-        );
-
-        XEvent event_notify;
-        event_notify.xselection.type = SelectionNotify;
-        event_notify.xselection.display = request->display;
-        event_notify.xselection.requestor = request->requestor;
-        event_notify.xselection.selection = request->selection;
-        event_notify.xselection.target = request->target;
-        event_notify.xselection.property = request->property;
-        event_notify.xselection.time = request->time;
-
-        XSendEvent(display, request->requestor, false, 0, &event_notify);
-
-        Window owner = XGetSelectionOwner(display, clipboard);
-        STRING_OUTPUT << window << std::endl << owner << std::endl;
-
-        XCloseDisplay(display);
-        */
-        #endif
         return;
     }
 

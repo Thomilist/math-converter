@@ -5,6 +5,9 @@
 #include <string>
 #include <iostream>
 
+// Clipboard
+#include "../clip/clip.h"
+
 // Definitions and forward declarations
 #include "Definitions.hpp"
 #include "ForwardDeclarations.hpp"
