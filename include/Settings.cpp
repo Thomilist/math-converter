@@ -291,7 +291,7 @@ namespace mcon
     
     void Settings::Download()
     {
-        system("start https://github.com/Thomilist/math-converter/releases/latest");
+        (void)! system("start https://github.com/Thomilist/math-converter/releases/latest");
         STRING_OUTPUT << STR("\nOpening download page in browser...\n") << std::endl;
         return;
     }
