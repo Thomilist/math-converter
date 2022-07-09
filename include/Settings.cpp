@@ -289,15 +289,27 @@ namespace mcon
     
     void Settings::Download()
     {
-        (void)! system("start https://github.com/Thomilist/math-converter/releases/latest");
         STRING_OUTPUT << STR("\nOpening download page in browser...\n") << std::endl;
+
+        #ifdef WIN32
+        (void)! system("start https://github.com/Thomilist/math-converter/releases/latest");
+        #else
+        (void)! system("xdg-open https://github.com/Thomilist/math-converter/releases/latest");
+        #endif
+
         return;
     }
     
     void Settings::ShowGuide()
     {
+        STRING_OUTPUT << STR("\nOpening user guide in browser...\n") << std::endl;
+
+        #ifdef WIN32
         (void)! system("start https://github.com/Thomilist/math-converter/blob/main/userguide.md");
-        STRING_OUTPUT << STR("\nOpening user guide...\n") << std::endl;
+        #else
+        (void)! system("xdg-open https://github.com/Thomilist/math-converter/blob/main/userguide.md");
+        #endif
+
         return;
     }
 }
