@@ -20,6 +20,7 @@ namespace mcon
     {
         Help,
         ShowSettings,
+        ShowGuide,
         Download,
         DecimalSeparator,
         InputLanguage,
@@ -87,6 +88,7 @@ namespace mcon
             void CommandNotRecognised(String a_unknown_command);
             void PrintHelp();
             void Download();
+            void ShowGuide();
 
             std::unique_ptr<CharacterStream> character_stream = std::make_unique<CharacterStream>();
             std::shared_ptr<CharacterSet> character_set = std::make_shared<CharacterSet>();
@@ -101,6 +103,9 @@ namespace mcon
                 {STR("s"),          Setting::ShowSettings},
                 {STR("show"),       Setting::ShowSettings},
                 {STR("settings"),   Setting::ShowSettings},
+                {STR("g"),          Setting::ShowGuide},
+                {STR("guide"),      Setting::ShowGuide},
+                {STR("userguide"),  Setting::ShowGuide},
                 {STR("d"),          Setting::DecimalSeparator},
                 {STR("dec"),        Setting::DecimalSeparator},
                 {STR("ds"),         Setting::DecimalSeparator},

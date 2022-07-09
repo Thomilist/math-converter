@@ -61,6 +61,7 @@ namespace mcon
         {
             if (    setting == Setting::Help            ||
                     setting == Setting::ShowSettings    ||
+                    setting == Setting::ShowGuide       ||
                     setting == Setting::Download
             )
             {
@@ -94,6 +95,11 @@ namespace mcon
                 case Setting::ShowSettings:
                 {
                     ShowSettings();
+                    break;
+                }
+                case Setting::ShowGuide:
+                {
+                    ShowGuide();
                     break;
                 }
                 case Setting::Download:
@@ -184,33 +190,25 @@ namespace mcon
         << STR("MathML                X\n")
         << STR("UnicodeMath           X\n")
         << STR("\n")
-        << STR("Command overview:\n")
-        << STR("\n")
-        << STR("1. Show help\n")
-        << STR("2. Show current settings\n")
-        << STR("3. Open download page\n")
-        << STR("4. Set decimal separator\n")
-        << STR("5. Set output mode\n")
-        << STR("6. Set input format\n")
-        << STR("7. Set output format\n")
-        << STR("\n")
         << STR("   Command                  Command aliases     Possible arguments                      Example\n")
         << STR("----------------------------------------------------------------------------------------------------\n")
         << STR("1. Show help                h help ?            [no arguments]                          h\n")
         << STR("\n")
         << STR("2. Show current settings    s show settings     [no arguments]                          s\n")
         << STR("\n")
-        << STR("3. Open download page       download            [no arguments]                          download\n")
+        << STR("3. Show user guide          g guide userguide   [no arguments]                          g\n")
         << STR("\n")
-        << STR("4. Set decimal separator    d dec ds sep        period .                                d ,\n")
+        << STR("4. Open download page       download            [no arguments]                          download\n")
+        << STR("\n")
+        << STR("5. Set decimal separator    d dec ds sep        period .                                d ,\n")
         << STR("                                                comma ,\n")
         << STR("\n")
-        << STR("5. Set output mode          m mode              keys keystrokes                         m clip\n")
+        << STR("6. Set output mode          m mode              keys keystrokes                         m clip\n")
         << STR("                                                clip clipboard\n")
         << STR("\n")
-        << STR("6. Set input format         i in input          Mathcad mathcad                         i mathcad\n")
+        << STR("7. Set input format         i in input          Mathcad mathcad                         i mathcad\n")
         << STR("\n")
-        << STR("7. Set output format        o out output        Mathcad mathcad                         o latex\n")
+        << STR("8. Set output format        o out output        Mathcad mathcad                         o latex\n")
         << STR("                                                LaTeX Latex latex\n")
         << STR("                                                MathML mathml\n")
         << STR("                                                UnicodeMath unicodemath Unicode unicode\n")
@@ -293,6 +291,13 @@ namespace mcon
     {
         (void)! system("start https://github.com/Thomilist/math-converter/releases/latest");
         STRING_OUTPUT << STR("\nOpening download page in browser...\n") << std::endl;
+        return;
+    }
+    
+    void Settings::ShowGuide()
+    {
+        (void)! system("start https://github.com/Thomilist/math-converter/blob/main/userguide.md");
+        STRING_OUTPUT << STR("\nOpening user guide...\n") << std::endl;
         return;
     }
 }
