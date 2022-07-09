@@ -1,14 +1,24 @@
-# User guide for math-converter-1.5.0
+# User guide for math-converter-1.5.1
+
+## Supported platforms
+
+### Windows
+
+Math-converter has been tested on Windows 10 version 21H2, but should be compatible with most modern versions of Windows. Three non-standard DLL-files are required (`libgcc_s_seh-1.dll`, `libstdc++-6.dll` and `libwinpthread-1.dll`,), but these are distributed alongside the program.
+
+### Linux
+
+Math-converter has been tested on Ubuntu 22.04 LTS, but should be compatible with most modern Linux distributions. The Linux-version of math-converter relies on the X Window System or X11 for hotkey, "clipboard" and keystroke functionality, and therefore only works with X11-based applications. 
 
 ## Hotkeys
 
-There is only one hotkey in math-converter: `CTRL + SHIFT + V`. This will attempt to convert plain text from the user's clipboard from the selected input math language to the selected output math language and then type it into the active window or place it in the user's clipboard.
+There is only one hotkey in math-converter: `CTRL + SHIFT + V`. This will attempt to convert plain text from the user's clipboard from the selected input math format to the selected output math format and then type it into the active window or place it in the user's clipboard.
 
-## Supported math languages
+## Supported math formats
 
 ### Input
 
-List of supported math languages for input:
+List of supported math formats for input:
 
 - Mathcad
 
@@ -16,7 +26,7 @@ When copying from Mathcad, be sure to copy from within a math field i.e. with th
 
 ### Output
 
-List of supported math languages for output:
+List of supported math formats for output:
 
 - Mathcad
 - LaTeX
@@ -56,8 +66,8 @@ The supported input character set can be extended with additional, user-made `.j
 - Open download page
 - Set decimal separator
 - Set output mode
-- Set input language
-- Set output language
+- Set input format
+- Set output format
 
 ### Display help
 
@@ -91,17 +101,17 @@ Command aliases: `m mode`<br>
 Available arguments: `keystrokes keys clipboard clip`<br>
 Example: `m clip`
 
-### Set input language
+### Set input format
 
-This command sets the input language. This is the language of the source math that the user copies to the clipboard. If the clipboard contents do not correspond to the input language setting, math-converter will not function correctly. 
+This command sets the input format. This is the format of the source math that the user copies to the clipboard. If the clipboard contents do not correspond to the input format setting, math-converter will not function correctly. 
 
 Command aliases: `i in input`<br>
 Available arguments: `Mathcad mathcad`<br>
 Example: `i mathcad`
 
-### Set output language
+### Set output format
 
-This command sets the output language. This is the math language to convert to for use at the destination.
+This command sets the output format. This is the math format to convert to for use at the destination.
 
 Command aliases: `o out output`<br>
 Available arguments: `Mathcad mathcad LaTeX Latex latex MathML mathml UnicodeMath unicodemath Unicode unicode`<br>
