@@ -1,4 +1,4 @@
-# User guide for math-converter-1.5.1
+# User guide for math-converter-1.5.2
 
 ## Supported platforms
 
@@ -8,7 +8,7 @@ Math-converter has been tested on Windows 10 version 21H2, but should be compati
 
 ### Linux
 
-Math-converter has been tested on Ubuntu 22.04 LTS, but should be compatible with most modern Linux distributions. The Linux-version of math-converter relies on the X Window System or X11 for hotkey, "clipboard" and keystroke functionality, and therefore only works with X11-based applications. 
+Math-converter has been tested on Ubuntu 22.04 LTS, but should be compatible with most modern Linux distributions. The Linux-version of math-converter relies on the X Window System or X11 for hotkey, "clipboard" and keystroke functionality, and therefore only works with X11-based applications. Additionally, the commands to show the help text and the user guide rely on `xdg-open` to open URLs.
 
 ## Hotkeys
 
@@ -75,11 +75,19 @@ This command displays help about the configuration commands.
 
 Command aliases: `h help ?`<br>
 Available arguments: none<br>
-Example: `help`
+Example: `h`
+
+### Show user guide
+
+This command opens the user guide on math-converter's Github.
+
+Command aliases: `g guide userguide`<br>
+Available arguments: none<br>
+Example: `g`
 
 ### Open download page
 
-This command opens the Releases page on math-converter's Github for ease of access to the latest version.
+This command opens the release page for the latest release on math-converter's Github for ease of access to the latest version.
 
 Command aliases: `download`<br>
 Available arguments: none<br>
@@ -91,7 +99,7 @@ This command sets the decimal separator to either a period or a comma. The defau
 
 Command aliases: `d dec ds sep`<br>
 Available arguments: `period . comma ,`<br>
-Example: `d comma`
+Example: `d ,`
 
 ### Set output mode
 

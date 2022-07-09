@@ -23,7 +23,7 @@ namespace mcon
         #define STR(s) s
     #endif
     
-    #define VERSION STR("1.5.1")
+    #define VERSION STR("1.5.2")
 }
 
 #endif // __DEFINITIONS_H__
