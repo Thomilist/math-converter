@@ -14,6 +14,7 @@ namespace mcon
     enum class InputLanguage;
     enum class OutputLanguage;
     enum class OutputMode;
+    class Version;
     class Node;
     enum class NodeType;
     class ParsingTree;
@@ -25,6 +26,8 @@ namespace mcon
     class LatexGenerator;
     class MathMLParser;
     class MathMLGenerator;
+    class UnicodeMathParser;
+    class UnicodeMathGenerator;
 }
 
 #endif // __FORWARDDECLARATIONS_H__

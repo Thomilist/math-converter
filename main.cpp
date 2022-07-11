@@ -39,12 +39,14 @@ SOFTWARE.
 
 // OS-specific libraries
 #ifdef WIN32
+#include <winsock2.h>
 #include <windows.h>
 #endif
 
 // Custom headers
 #include "include/MconHelpers.hpp"
 #include "include/Settings.hpp"
+#include "include/Version.hpp"
 
 int main()
 {
@@ -56,11 +58,27 @@ int main()
     std::wcout.imbue(utf8);
     #endif
 
-    STRING_OUTPUT << STR("math-converter-") << VERSION << std::endl;
+    // Version output and check
+    STRING_OUTPUT << STR("math-converter-") << MCON_VERSION_WRAPPED << std::endl;
 
+    try
+    {
+        auto version = mcon::Version(MCON_VERSION);
+        version.Check();
+    }
+    catch(const std::exception& e)
+    {
+        ERROR_OUTPUT
+            << "An error occured while checking for an updated version.\n"
+            << std::endl;
+    }
+
+    // Settings initialisation
     auto settings_mutex = std::make_shared<std::mutex>();
     auto settings = std::make_shared<mcon::Settings>();
 
+    // hotkey_thread to catch hotkey triggers and convert math expressions
+    // config_thread to handle input from the console
     std::thread hotkey_thread(mcon::MathConversionHotkey, settings, settings_mutex);
     std::thread config_thread(mcon::ConfigInput, settings, settings_mutex);
     hotkey_thread.join();

@@ -8,7 +8,9 @@ namespace mcon
         lexer(std::move(character_stream), character_set)
     {
         character_set->LoadFromFolder("./resources/character-sets");
-        STRING_OUTPUT << STR("For usage information, enter \"help\" (without the quote marks) or read the associated user guide.") << std::endl;
+        STRING_OUTPUT
+            << STR("For usage information, enter \"help\" (without quote marks) or read the associated user guide.")
+            << std::endl;
         LoadSettings();
     }
     

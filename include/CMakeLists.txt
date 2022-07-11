@@ -21,6 +21,11 @@ add_library(Settings Settings.cpp)
 target_link_libraries(Settings Lexer)
 target_link_libraries(Settings ParsingTree)
 
+add_library(Version Version.cpp)
+target_link_libraries(Version Lexer)
+target_link_libraries(Version nlohmann_json::nlohmann_json)
+target_link_libraries(Version CURL::libcurl)
+
 IF(WIN32)
 ELSE()
     add_library(LibFakeKey libfakekey.c)

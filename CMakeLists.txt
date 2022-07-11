@@ -79,6 +79,11 @@ get_target_property(target_options clip COMPILE_OPTIONS)
 list(REMOVE_ITEM target_options "-Werror")
 set_property(TARGET clip PROPERTY COMPILE_OPTIONS ${target_options})
 
+# cURL
+find_package(CURL REQUIRED)
+link_libraries(${CURL_LIBRARIES})
+include_directories(${CURL_INCLUDE_DIRS})
+
 # Custom headers
 add_subdirectory(include)
 target_link_libraries(math-converter PRIVATE CharacterStream)
@@ -88,6 +93,8 @@ target_link_libraries(math-converter PRIVATE CharacterSet)
 target_link_libraries(math-converter PRIVATE ParsingTree)
 target_link_libraries(math-converter PRIVATE Node)
 target_link_libraries(math-converter PRIVATE MconHelpers)
+target_link_libraries(math-converter PRIVATE Settings)
+target_link_libraries(math-converter PRIVATE Version)
 target_link_libraries(math-converter PRIVATE Parser)
 target_link_libraries(math-converter PRIVATE Generator)
 target_link_libraries(math-converter PRIVATE MathcadParser)
@@ -98,7 +105,6 @@ target_link_libraries(math-converter PRIVATE MathMLParser)
 target_link_libraries(math-converter PRIVATE MathMLGenerator)
 target_link_libraries(math-converter PRIVATE UnicodeMathParser)
 target_link_libraries(math-converter PRIVATE UnicodeMathGenerator)
-target_link_libraries(math-converter PRIVATE Settings)
 
 IF(WIN32)
 ELSE()

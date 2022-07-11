@@ -119,11 +119,16 @@ namespace mcon
         #ifdef WIN32
         if (RegisterHotKey(NULL, MCON_HOTKEY_SEND, MOD_CONTROL | MOD_SHIFT, 'V'))
         {
-            STRING_OUTPUT << STR("Hotkey registered successfully. Use CTRL + SHIFT + V to convert math expressions from the clipboard.\n") << std::endl;
+            STRING_OUTPUT
+                << STR("Hotkey registered successfully. ")
+                << STR("Use CTRL + SHIFT + V to convert math expressions from the clipboard.\n")
+                << std::endl;
         }
         else
         {
-            ERROR_OUTPUT << STR("Hotkey registration error.\n") << std::endl;
+            ERROR_OUTPUT
+                << STR("Hotkey registration error.\n")
+                << std::endl;
             return;
         }
         #endif

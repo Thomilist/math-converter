@@ -20,6 +20,7 @@
 
 // OS-specific libraries
 #ifdef WIN32
+#include <winsock2.h>
 #include <windows.h>
 #include <locale>
 #include <codecvt>
