@@ -1,4 +1,4 @@
-# User guide for math-converter-1.5.2
+# User guide for math-converter-1.5.3
 
 ## Supported platforms
 
@@ -87,7 +87,7 @@ Example: `g`
 
 ### Open download page
 
-This command opens the release page for the latest release on math-converter's Github for ease of access to the latest version.
+This command opens the release page for the latest release on math-converter's Github for ease of access to the latest version. The program will automatically check for new releases on launch.
 
 Command aliases: `download`<br>
 Available arguments: none<br>
