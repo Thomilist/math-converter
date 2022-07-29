@@ -22,10 +22,17 @@ namespace mcon
         ShowSettings,
         ShowGuide,
         Download,
+        CheckUpdate,
         DecimalSeparator,
         InputLanguage,
         OutputLanguage,
         OutputMode
+    };
+    
+    enum class UpdateChecking
+    {
+        Enabled,
+        Disabled
     };
     
     enum class DecimalSeparator
@@ -78,7 +85,9 @@ namespace mcon
             void ShowSettings();
             void LoadSettings();
             void SaveSettings();
+            void PrintTip();
 
+            std::pair<UpdateChecking, String> check_update = {UpdateChecking::Enabled, STR("check enabled")};
             std::pair<DecimalSeparator, String> decimal_separator = {DecimalSeparator::Period, STR("decimal period")};
             std::pair<OutputMode, String> output_mode = {OutputMode::Keystrokes, STR("mode keystrokes")};
             std::pair<InputLanguage, String> input_language = {InputLanguage::Mathcad, STR("input mathcad")};
@@ -100,6 +109,7 @@ namespace mcon
                 {STR("help"),       Setting::Help},
                 {STR("?"),          Setting::Help},
                 {STR("download"),   Setting::Download},
+                {STR("check"),      Setting::CheckUpdate},
                 {STR("s"),          Setting::ShowSettings},
                 {STR("show"),       Setting::ShowSettings},
                 {STR("settings"),   Setting::ShowSettings},
@@ -118,6 +128,20 @@ namespace mcon
                 {STR("output"),     Setting::OutputLanguage},
                 {STR("mode"),       Setting::OutputMode},
                 {STR("m"),          Setting::OutputMode},
+            };
+
+            const std::unordered_map<UpdateChecking, String> check_update_names =
+            {
+                {UpdateChecking::Enabled,   STR("Enabled")},
+                {UpdateChecking::Disabled,  STR("Disabled")},
+            };
+
+            const std::unordered_map<String, UpdateChecking> check_update_settings = 
+            {
+                {STR("enabled"),    UpdateChecking::Enabled},
+                {STR("true"),       UpdateChecking::Enabled},
+                {STR("disabled"),   UpdateChecking::Disabled},
+                {STR("false"),      UpdateChecking::Disabled},
             };
 
             const std::unordered_map<DecimalSeparator, String> decimal_separator_names =

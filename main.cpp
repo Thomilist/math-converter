@@ -58,24 +58,37 @@ int main()
     std::wcout.imbue(utf8);
     #endif
 
-    // Version output and check
+    // Version output
     STRING_OUTPUT << STR("math-converter-") << MCON_VERSION_WRAPPED << std::endl;
-
-    try
-    {
-        auto version = mcon::Version(MCON_VERSION);
-        version.Check();
-    }
-    catch(const std::exception& e)
-    {
-        ERROR_OUTPUT
-            << "An error occured while checking for an updated version.\n"
-            << std::endl;
-    }
 
     // Settings initialisation
     auto settings_mutex = std::make_shared<std::mutex>();
     auto settings = std::make_shared<mcon::Settings>();
+
+    // Check for new releases
+    if (settings->check_update.first == mcon::UpdateChecking::Enabled)
+    {
+        try
+        {
+            auto version = mcon::Version(MCON_VERSION);
+            version.Check();
+        }
+        catch(const std::exception& e)
+        {
+            ERROR_OUTPUT
+                << STR("An error occured while checking for new releases.\n")
+                << std::endl;
+        }
+    }
+    else
+    {
+        STRING_OUTPUT
+            << STR("Currently not checking for new releases upon launch.\n")
+            << std::endl;
+    }
+
+    // Print usage tip
+    settings->PrintTip();
 
     // hotkey_thread to catch hotkey triggers and convert math expressions
     // config_thread to handle input from the console

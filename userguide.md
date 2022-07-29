@@ -1,4 +1,4 @@
-# User guide for math-converter-1.5.3
+# User guide for math-converter-1.5.4
 
 ## Supported platforms
 
@@ -62,14 +62,17 @@ While not all math syntax is supported, a variety of commonly-used features are 
 
 The supported input character set can be extended with additional, user-made `.json` files under `/resources/character-sets/`, which are loaded at program launch. Characters not in the character sets will be discarded. Additionally, configuration can be achieved at runtime via the terminal window the program runs in. Settings are saved to `/config/settings.conf`. The currently supported configuration commands include:
 
-- Display help
+- Show help
+- Show current settings
+- Open user guide
 - Open download page
+- Set update checking behavior
 - Set decimal separator
 - Set output mode
 - Set input format
 - Set output format
 
-### Display help
+### Show help
 
 This command displays help about the configuration commands.
 
@@ -77,7 +80,15 @@ Command aliases: `h help ?`<br>
 Available arguments: none<br>
 Example: `h`
 
-### Show user guide
+### Show current settings
+
+This command displays the current settings for decimal separator, output mode, input format and output format.
+
+Command aliases: `s show settings`<br>
+Available arguments: none<br>
+Example: `s`
+
+### Open user guide
 
 This command opens the user guide on math-converter's Github.
 
@@ -92,6 +103,14 @@ This command opens the release page for the latest release on math-converter's G
 Command aliases: `download`<br>
 Available arguments: none<br>
 Example: `download`
+
+### Set update checking behavior
+
+This command controls whether or not math-converter checks for new releases upon launch.
+
+Command aliases: `check`<br>
+Available arguments: `enabled true disabled false`<br>
+Example: `check false`
 
 ### Set decimal separator
 

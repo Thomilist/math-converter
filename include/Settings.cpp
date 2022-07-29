@@ -8,9 +8,6 @@ namespace mcon
         lexer(std::move(character_stream), character_set)
     {
         character_set->LoadFromFolder("./resources/character-sets");
-        STRING_OUTPUT
-            << STR("For usage information, enter \"help\" (without quote marks) or read the associated user guide.")
-            << std::endl;
         LoadSettings();
     }
     
@@ -109,6 +106,16 @@ namespace mcon
                     Download();
                     break;
                 }
+                case Setting::CheckUpdate:
+                {
+                    check_update.first = check_update_settings.at(current_token.content);
+                    check_update.second = a_console_input;
+                    if (a_user_triggered)
+                    {
+                        STRING_OUTPUT << STR("\nUpdate checking behavior updated.\n") << std::endl;
+                    }
+                    break;
+                }
                 case Setting::DecimalSeparator:
                 {
                     decimal_separator.first = decimal_separator_settings.at(current_token.content);
@@ -198,19 +205,22 @@ namespace mcon
         << STR("\n")
         << STR("2. Show current settings    s show settings     [no arguments]                          s\n")
         << STR("\n")
-        << STR("3. Show user guide          g guide userguide   [no arguments]                          g\n")
+        << STR("3. Open user guide          g guide userguide   [no arguments]                          g\n")
         << STR("\n")
         << STR("4. Open download page       download            [no arguments]                          download\n")
         << STR("\n")
-        << STR("5. Set decimal separator    d dec ds sep        period .                                d ,\n")
+        << STR("5. Set update checking      check               enabled true                            check false\n")
+        << STR("                                                disabled false\n")
+        << STR("\n")
+        << STR("6. Set decimal separator    d dec ds sep        period .                                d ,\n")
         << STR("                                                comma ,\n")
         << STR("\n")
-        << STR("6. Set output mode          m mode              keys keystrokes                         m clip\n")
+        << STR("7. Set output mode          m mode              keys keystrokes                         m clip\n")
         << STR("                                                clip clipboard\n")
         << STR("\n")
-        << STR("7. Set input format         i in input          Mathcad mathcad                         i mathcad\n")
+        << STR("8. Set input format         i in input          Mathcad mathcad                         i mathcad\n")
         << STR("\n")
-        << STR("8. Set output format        o out output        Mathcad mathcad                         o latex\n")
+        << STR("9. Set output format        o out output        Mathcad mathcad                         o latex\n")
         << STR("                                                LaTeX Latex latex\n")
         << STR("                                                MathML mathml\n")
         << STR("                                                UnicodeMath unicodemath Unicode unicode\n")
@@ -222,6 +232,7 @@ namespace mcon
     
     void Settings::ShowSettings()
     {
+        String current_update_checking;
         String current_decimal_separator;
         String current_input_language;
         String current_output_language;
@@ -229,6 +240,7 @@ namespace mcon
 
         try
         {
+            current_update_checking = check_update_names.at(check_update.first);
             current_decimal_separator = decimal_separator_names.at(decimal_separator.first);
             current_output_mode = output_mode_names.at(output_mode.first);
             current_input_language = input_language_names.at(input_language.first);
@@ -246,16 +258,19 @@ namespace mcon
         << STR("\n")
         << STR("Displaying current settings\n")
         << STR("----------------------------------------------------------------------------------------------------\n")
+        << STR("Update checking:    ")
+        << current_update_checking
+        << STR("\n")
         << STR("Decimal separator:  ")
         << current_decimal_separator
         << STR("\n")
         << STR("Output mode:        ")
         << current_output_mode
         << STR("\n")
-        << STR("Input language:     ")
+        << STR("Input format:       ")
         << current_input_language
         << STR("\n")
-        << STR("Output language:    ")
+        << STR("Output format:      ")
         << current_output_language
         << STR("\n")
         << std::endl;
@@ -278,6 +293,7 @@ namespace mcon
     void Settings::SaveSettings()
     {
         String commands =
+            check_update.second + STR("\n") +
             decimal_separator.second + STR("\n") +
             output_mode.second + STR("\n") +
             input_language.second + STR("\n") +
@@ -286,6 +302,14 @@ namespace mcon
         OUTPUT_FILE_STREAM config_file("./config/settings.conf");
         config_file << commands;
 
+        return;
+    }
+    
+    void Settings::PrintTip()
+    {
+        STRING_OUTPUT
+            << STR("For usage information, enter \"help\" (without quote marks) or read the associated user guide.")
+            << std::endl;
         return;
     }
     
