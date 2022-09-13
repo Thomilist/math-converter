@@ -16,6 +16,8 @@ namespace mcon
     
     void Settings::UpdateSettings(String a_console_input, bool a_user_triggered)
     {
+        ToLowerCase(a_console_input);
+        
         lexer.character_stream->Read(a_console_input);
         lexer.Scan();
 
@@ -334,6 +336,17 @@ namespace mcon
         (void)! system("start https://github.com/Thomilist/math-converter/blob/main/userguide.md");
         #else
         (void)! system("xdg-open https://github.com/Thomilist/math-converter/blob/main/userguide.md");
+        #endif
+
+        return;
+    }
+    
+    void Settings::ToLowerCase(String& a_string)
+    {
+        #ifdef WIN32
+        std::transform(a_string.begin(), a_string.end(), a_string.begin(), std::towlower);
+        #else
+        std::transform(a_string.begin(), a_string.end(), a_string.begin(), std::tolower);
         #endif
 
         return;

@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include <fstream>
+#include <cwctype>
 
 // Definitions and forward declarations
 #include "Definitions.hpp"
@@ -98,6 +99,7 @@ namespace mcon
             void PrintHelp();
             void Download();
             void ShowGuide();
+            void ToLowerCase(String& a_string);
 
             std::unique_ptr<CharacterStream> character_stream = std::make_unique<CharacterStream>();
             std::shared_ptr<CharacterSet> character_set = std::make_shared<CharacterSet>();
@@ -188,30 +190,17 @@ namespace mcon
 
             const std::unordered_map<String, InputLanguage> input_language_settings = 
             {
-                {STR("Mathcad"),        InputLanguage::Mathcad},
                 {STR("mathcad"),        InputLanguage::Mathcad},
                 /*
-                {STR("LaTeX"),          InputLanguage::Latex},
-                {STR("Latex"),          InputLanguage::Latex},
                 {STR("latex"),          InputLanguage::Latex},
-                {STR("UnicodeMath"),    InputLanguage::UnicodeMath},
                 {STR("unicodemath"),    InputLanguage::UnicodeMath},
-                {STR("Unicode"),        InputLanguage::UnicodeMath},
                 {STR("unicode"),        InputLanguage::UnicodeMath},
-                {STR("AsciiMath"),      InputLanguage::AsciiMath},
                 {STR("asciimath"),      InputLanguage::AsciiMath},
-                {STR("Ascii"),          InputLanguage::AsciiMath},
-                {STR("ASCII"),          InputLanguage::AsciiMath},
                 {STR("ascii"),          InputLanguage::AsciiMath},
-                {STR("MathML"),         InputLanguage::MathML},
                 {STR("mathml"),         InputLanguage::MathML},
-                {STR("Mathematica"),    InputLanguage::Mathematica},
                 {STR("mathematica"),    InputLanguage::Mathematica},
-                {STR("Excel"),          InputLanguage::Excel},
                 {STR("excel"),          InputLanguage::Excel},
-                {STR("MathJSON"),       InputLanguage::MathJSON},
                 {STR("mathjson"),       InputLanguage::MathJSON},
-                {STR("JSON"),           InputLanguage::MathJSON},
                 {STR("json"),           InputLanguage::MathJSON},
                 */
             };
@@ -232,30 +221,17 @@ namespace mcon
 
             const std::unordered_map<String, OutputLanguage> output_language_settings = 
             {
-                {STR("Mathcad"),        OutputLanguage::Mathcad},
                 {STR("mathcad"),        OutputLanguage::Mathcad},
-                {STR("LaTeX"),          OutputLanguage::Latex},
-                {STR("Latex"),          OutputLanguage::Latex},
                 {STR("latex"),          OutputLanguage::Latex},
-                {STR("MathML"),         OutputLanguage::MathML},
                 {STR("mathml"),         OutputLanguage::MathML},
-                {STR("UnicodeMath"),    OutputLanguage::UnicodeMath},
                 {STR("unicodemath"),    OutputLanguage::UnicodeMath},
-                {STR("Unicode"),        OutputLanguage::UnicodeMath},
                 {STR("unicode"),        OutputLanguage::UnicodeMath},
                 /*
-                {STR("AsciiMath"),      OutputLanguage::AsciiMath},
                 {STR("asciimath"),      OutputLanguage::AsciiMath},
-                {STR("Ascii"),          OutputLanguage::AsciiMath},
-                {STR("ASCII"),          OutputLanguage::AsciiMath},
                 {STR("ascii"),          OutputLanguage::AsciiMath},
-                {STR("Mathematica"),    OutputLanguage::Mathematica},
                 {STR("mathematica"),    OutputLanguage::Mathematica},
-                {STR("Excel"),          OutputLanguage::Excel},
                 {STR("excel"),          OutputLanguage::Excel},
-                {STR("MathJSON"),       OutputLanguage::MathJSON},
                 {STR("mathjson"),       OutputLanguage::MathJSON},
-                {STR("JSON"),           OutputLanguage::MathJSON},
                 {STR("json"),           OutputLanguage::MathJSON},
                 */
             };
