@@ -201,31 +201,31 @@ namespace mcon
         << STR("MathML                X\n")
         << STR("UnicodeMath           X\n")
         << STR("\n")
-        << STR("   Command                  Command aliases     Possible arguments                      Example\n")
+        << STR("   Command                  Command aliases     Possible arguments          Example\n")
         << STR("----------------------------------------------------------------------------------------------------\n")
-        << STR("1. Show help                h help ?            [no arguments]                          h\n")
+        << STR("1. Show help                h help ?            [no arguments]              h\n")
         << STR("\n")
-        << STR("2. Show current settings    s show settings     [no arguments]                          s\n")
+        << STR("2. Show current settings    s show settings     [no arguments]              s\n")
         << STR("\n")
-        << STR("3. Open user guide          g guide userguide   [no arguments]                          g\n")
+        << STR("3. Open user guide          g guide userguide   [no arguments]              g\n")
         << STR("\n")
-        << STR("4. Open download page       download            [no arguments]                          download\n")
+        << STR("4. Open download page       download            [no arguments]              download\n")
         << STR("\n")
-        << STR("5. Set update checking      check               enabled true                            check false\n")
+        << STR("5. Set update checking      check               enabled true                check false\n")
         << STR("                                                disabled false\n")
         << STR("\n")
-        << STR("6. Set decimal separator    d dec ds sep        period .                                d ,\n")
+        << STR("6. Set decimal separator    d dec ds sep        period .                    d ,\n")
         << STR("                                                comma ,\n")
         << STR("\n")
-        << STR("7. Set output mode          m mode              keys keystrokes                         m clip\n")
+        << STR("7. Set output mode          m mode              keys keystrokes             m clip\n")
         << STR("                                                clip clipboard\n")
         << STR("\n")
-        << STR("8. Set input format         i in input          Mathcad mathcad                         i mathcad\n")
+        << STR("8. Set input format         i in input          mathcad                     i mathcad\n")
         << STR("\n")
-        << STR("9. Set output format        o out output        Mathcad mathcad                         o latex\n")
-        << STR("                                                LaTeX Latex latex\n")
-        << STR("                                                MathML mathml\n")
-        << STR("                                                UnicodeMath unicodemath Unicode unicode\n")
+        << STR("9. Set output format        o out output        mathcad                     o latex\n")
+        << STR("                                                latex\n")
+        << STR("                                                mathml\n")
+        << STR("                                                unicodemath unicode\n")
         << STR("\n")
         << std::endl;
         
@@ -343,12 +343,7 @@ namespace mcon
     
     void Settings::ToLowerCase(String& a_string)
     {
-        #ifdef WIN32
         std::transform(a_string.begin(), a_string.end(), a_string.begin(), std::towlower);
-        #else
-        std::transform(a_string.begin(), a_string.end(), a_string.begin(), std::tolower);
-        #endif
-
         return;
     }
 }

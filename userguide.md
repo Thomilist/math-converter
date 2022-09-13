@@ -72,6 +72,8 @@ The supported input character set can be extended with additional, user-made `.j
 - Set input format
 - Set output format
 
+All configuration commands are case-insensitive. Should the user enter a non-ASCII character in a command, it may cause an "unknown character" error. The error message may specify that "the character was not found in any of the supplied character sets". The character sets referred to in the error message have nothing do with with the character sets in `/resources/character-sets/`. Indeed, the error message should be of no concern, since none of the commands use characters from outside the ASCII set. 
+
 ### Show help
 
 This command displays help about the configuration commands.
@@ -133,7 +135,7 @@ Example: `m clip`
 This command sets the input format. This is the format of the source math that the user copies to the clipboard. If the clipboard contents do not correspond to the input format setting, math-converter will not function correctly. 
 
 Command aliases: `i in input`<br>
-Available arguments: `Mathcad mathcad`<br>
+Available arguments: `mathcad`<br>
 Example: `i mathcad`
 
 ### Set output format
@@ -141,7 +143,7 @@ Example: `i mathcad`
 This command sets the output format. This is the math format to convert to for use at the destination.
 
 Command aliases: `o out output`<br>
-Available arguments: `Mathcad mathcad LaTeX Latex latex MathML mathml UnicodeMath unicodemath Unicode unicode`<br>
+Available arguments: `mathcad latex mathml unicodemath unicode`<br>
 Example: `o latex`
 
 ## Contact
