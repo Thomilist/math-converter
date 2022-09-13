@@ -23,8 +23,8 @@ namespace mcon
         #define STR(s) s
     #endif
     
-    #define MCON_VERSION              "1.5.4"
-    #define MCON_VERSION_WRAPPED STR( "1.5.4" )
+    #define MCON_VERSION              "1.5.5"
+    #define MCON_VERSION_WRAPPED STR( "1.5.5" )
 }
 
 #endif // __DEFINITIONS_H__

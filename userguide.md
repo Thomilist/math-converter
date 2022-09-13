@@ -1,4 +1,4 @@
-# User guide for math-converter-1.5.4
+# User guide for math-converter-1.5.5
 
 ## Supported platforms
 
